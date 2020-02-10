@@ -16,7 +16,7 @@ $background: rgb(2, 0, 36);
 
 .tb-card-container {
 	background: rgb(40, 154, 189);
-	height: 90vh;
+	height: max-content;
 	width: 100vw;
 	display: grid;
 	grid-template-columns: 3fr 3fr;
@@ -30,6 +30,7 @@ $background: rgb(2, 0, 36);
 	text-align: center;
 	align-content: flex-start;
 }
+
 
 .tb-posting-title {
 	grid-area: pageTitle;
@@ -147,11 +148,12 @@ $background: rgb(2, 0, 36);
 }
 
 .post-comments-container {
+	background-color:  rgb(40,154,189);
 	grid-area: responsesFeed;
 	font-size: $font_size;
 	font-family: $font;
 	font-weight: $comm_boldness;
-	background-color: $inBodyColor;
+
 	text-align: left;
 	justify-content: center;
 	align-content: right;
@@ -159,7 +161,7 @@ $background: rgb(2, 0, 36);
 	color: black;
 	margin: 5px;
 	border-radius: 10px;
-	border: .5px inset black;
+	
 }
 .response-input-container {
 	grid-area: respondWithPost;

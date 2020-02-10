@@ -1,5 +1,7 @@
 import React from 'react';
 import './PostingBody.scss';
+import '../TouchBaseCard/TouchBaseCard.scss'
+import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 
 const PostingBody = (props) => {
 	const defaultImage = require('../../Assets/default.png');
@@ -11,7 +13,7 @@ const PostingBody = (props) => {
 					<span>TouchBase with Others</span>
 				</div>
 
-				<div className='tb-card-original-post'>
+				 <div className='tb-card-original-post'>
 					<div className='postingPicture'>
 						<img
 							src={defaultImage}
@@ -26,11 +28,13 @@ const PostingBody = (props) => {
 						over in his grave if his body and mind were still intact{' '}
 					</div>
 					<div className='like-span'>Like heart Icons</div>
-				</div>
-
-				<div className='post-comments-container'>{props.storedResponsePost}</div>
+				</div> 
+				<div className='post-comments-container'>
+				<TouchBaseCard  condition = {props.storedUserComment}/>
+</div>
+				{/* <div className='post-comments-container'>{props.responsePost}</div> */}
 				<div className='response-input-container'>
-					{!props.storedResponsePost ? (
+					{!props.storedUserComment ? (
 						<div>
 							<div className='typed-post'> {props.responsePost} </div>
 

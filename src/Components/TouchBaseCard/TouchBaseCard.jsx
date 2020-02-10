@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-const TouchBaseCard = () => {
+const TouchBaseCard = (props) => {
 	const defaultImage = require('../../Assets/default.png');
 
 	return (
@@ -24,10 +24,16 @@ const TouchBaseCard = () => {
 					/>
 				</div>
 				<div className='touchbase-user-handle'> Posting Author / User Here </div>
-				<div className='user-handle-post-body'>
-					What is going on in Russia right now? Vladimir Lenin would roll over
-					in his grave if his body and mind were still intact{' '}
-				</div>
+
+				{!props.condition ? (
+					<div className='user-handle-post-body'>
+						{' '}
+						'What is going on in Russia right now? Vladimir Lenin would roll
+						over in his grave if his body and mind were still intact'{' '}
+					</div>
+				) : (
+					<div className='user-handle-post-body'>{props.condition}</div>
+				)}
 				<div className='side-panel'>
 					<span id='angry'>
 						<FontAwesomeIcon icon={faAngry} />
