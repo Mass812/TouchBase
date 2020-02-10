@@ -1,0 +1,122 @@
+$font: 'Comfortaa', cursive;
+$font_size: 16px;
+$iconSize: 16px;
+$color: black;
+$comm_boldness: 700;
+$inBodyColor: white;
+$gradient: linear-gradient(
+	90deg,
+	rgba(2, 0, 36, 1) 0%,
+	rgba(47, 88, 141, 1) 43%,
+	rgba(41, 147, 184, 1) 100%
+);
+$background: rgb(2, 0, 36);
+
+.touchbase-card {
+	grid-area: originalPost;
+	font-size: $font_size;
+	font-family: $font;
+	font-weight: $comm_boldness;
+	background-color: $inBodyColor;
+	text-align: left;
+	justify-content: space-evenly;
+	padding: 10px 0px 10px 10px;
+	color: black;
+	margin: 5px;
+	border-radius: 10px;
+	border: .5px inset black;
+	display: grid;
+	grid-template-columns: 1fr 16fr 1fr;
+	grid-template-rows: auto auto;
+	grid-template-areas: "postingPicture postersName likeSpan"
+        "originalPosting originalPosting likeSpan";
+        box-shadow: 2px 2px 4px black;;
+}
+
+.postingPicture {
+	grid-area: postingPicture;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	display: flex;
+	height: 75px;
+	width: 85px;
+	border-radius: 50%;
+	background: $background;
+	background: $gradient;
+	margin-right: 15px;
+}
+.default-user-image {
+	align-self: center;
+	justify-self: center;
+	height: 75px;
+	width: 75px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+.touchbase-user-handle {
+	grid-area: postersName;
+	font-weight: $comm_boldness;
+	justify-self: left;
+	align-self: center;
+	font-family: $font;
+	font-size: 20px;
+	color: rgb(0, 0, 0);
+}
+
+.user-handle-post-body {
+	margin: 5px;
+	border-top: 2px solid rgb(10, 146, 224);
+	grid-area: originalPosting;
+	padding: 15px 35px;
+	font-family: $font;
+	font-size: $font_size;
+	font-weight: $comm_boldness;
+}
+.side-panel {
+	grid-area: likeSpan;
+	text-align: center;
+    align-content: right;
+    align-items: right;
+	justify-content: center;
+    border: 3px inset rgb(9, 165, 204);
+    background: $background;
+    background-color: rgba(255, 255, 255, 0.781);
+    box-shadow: 1px 1px 3px;
+    border-radius: 10px;
+	height: 100%;
+	margin: 5px 5px;
+    padding: 3px;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-areas: "angry" 'sad' 'love' 'comment' 'like';
+}
+
+#angry{
+    border-width: 5px;
+color: $color;
+grid-area: angry;
+font-size: $iconSize;
+
+} 
+ #sad {
+    color: $color;
+    grid-area: sad;
+    font-size: $iconSize;
+} 
+#like{
+    color: $color;
+    grid-area: like;
+    font-size: $iconSize;
+} 
+#comment {
+    color: $color;    
+    font-size: $iconSize;
+    grid-area: comment;
+}
+#love {
+    color: $color;
+    font-size: $iconSize;
+    grid-area: love;
+}

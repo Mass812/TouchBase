@@ -1,0 +1,116 @@
+* {
+	box-sizing: border-box;
+}
+
+.create-account-module {
+	height: 100vh;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
+	border: 2px solid rgb(10, 212, 162);
+	background-color: rgba(10, 58, 121, 0.849);
+	color: white;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 10px;
+	align-items: center;
+	margin: 5px 20px;
+
+	input[type=text]:focus {
+		background-color: rgb(39, 214, 205);
+		color: black;
+	  }
+	input[type=password]:focus {
+		background-color: rgb(39, 214, 205);
+		color: black;
+	  }
+}
+.input-field {
+	color: rgb(25, 168, 137);
+	font-size: 14px;
+	margin: 5px;
+	letter-spacing: 1px;
+	padding: 5px;
+	padding-left: 25px;
+	margin: 15px;
+	border: none;
+	border-bottom: 1px solid rgb(56, 105, 56);
+	border-radius: 7px;
+	max-width: 600px;
+	min-width: 375px;
+
+}
+
+.outer-text {
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+}
+
+.sign-title {
+	font-family: 'Lobster', cursive;
+	font-size: 38px;
+	font-weight: 500;
+	padding: 20px;
+	top: 10px;
+	left: 0;
+	right: 0;
+}
+
+.password-rq {
+	font-size: 10px;
+	padding-bottom: 20px;
+}
+.inner-account-parent {
+	display: flex;
+	height: 90vh;
+	flex-direction: column;
+	padding: 5px;
+	justify-content: center;
+	align-content: center;
+	align-self: center;
+	min-width: 300px;
+	min-height: 400px;
+	overflow: hidden;
+}
+
+.pw-help-message {
+	justify-self: center;
+	align-self: left;
+	color: rgb(255, 189, 47);
+	font-size: 17px;
+
+	padding-left: 10px;
+}
+
+.error-message {
+	justify-self: center;
+	align-self: center;
+	color: rgb(8, 253, 253);
+	font-size: 12px;
+}
+
+.submit-button {
+	margin-right: 15px;
+	background-color: #254576;
+	color: white;
+	border: 1px solid turquoise;
+	border-radius: 50px;
+	width: 280px;
+	height: 40px;
+	padding: 3px;
+	align-self: center;
+
+	&:hover {
+		color: white;
+		border: 1px inset turquoise;
+		background-color: rgb(39, 214, 205);
+	}
+	&::active{
+		background-color: rgb(98, 112, 112);
+	}
+}

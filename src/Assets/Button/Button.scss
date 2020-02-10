@@ -1,0 +1,13 @@
+.indent-button {
+	margin-right: 15px;
+	border: 1px solid turquoise;
+	border-radius: 50px;
+    width: 80px;
+    
+    &:hover{
+        color: white;
+        border: 1px inset 	rgba(40, 154, 189, 1);
+        background-color: 	rgba(40, 154, 189, 1);
+
+    }
+}

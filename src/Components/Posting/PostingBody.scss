@@ -1,0 +1,247 @@
+* {
+	box-sizing: content-box;
+}
+
+$font: 'Comfortaa', cursive;
+$font_size: 16px;
+$comm_boldness: 700;
+$inBodyColor: white;
+$gradient: linear-gradient(
+	90deg,
+	rgba(2, 0, 36, 1) 0%,
+	rgba(47, 88, 141, 1) 43%,
+	rgba(41, 147, 184, 1) 100%
+);
+$background: rgb(2, 0, 36);
+
+.tb-card-container {
+	background: rgb(40, 154, 189);
+	height: 90vh;
+	width: 100vw;
+	display: grid;
+	grid-template-columns: 3fr 3fr;
+	grid-template-rows: auto auto auto auto;
+	grid-template-areas: "pageTitle pageTitle pageTitle"
+		"originalPost originalPost originalPost"
+		"respondWithPost respondWithPost respondWithPost"
+		"responsesFeed responsesFeed responsesFeed";
+
+	justify-content: center;
+	text-align: center;
+	align-content: flex-start;
+}
+
+.tb-posting-title {
+	grid-area: pageTitle;
+	font-family: 'Lobster', cursive;
+	font-size: 16px;
+	background-color: $inBodyColor;
+	padding: 10px;
+	margin: 5px;
+	border-radius: 10px;
+	font-weight: $comm_boldness;
+	border: .5px inset black;
+}
+
+.typed-post {
+	grid-area: commentOnPost;
+	margin: 0px;
+	overflow-wrap: break-word;
+	$font_size: 16px;
+	font-weight: $comm_boldness;
+}
+
+.comment-on-post {
+	grid-area: postButton;
+	$font_size: 16px;
+	margin: 15px;
+	font-weight: $comm_boldness;
+}
+
+.post-comment-button {
+	grid-area: postButton;
+	$font_size: 16px;
+	font-weight: $comm_boldness;
+	float: right;
+}
+
+.input-field-posts {
+	overflow-wrap: break-word;
+	max-width: 95vw;
+	height: 30px;
+
+	width: 100%;
+	$font_size: 16px;
+	font-weight: $comm_boldness;
+	input[type=textArea]:focus {
+		background-color: rgb(39, 214, 205);
+		color: black;
+	}
+}
+
+.tb-card-original-post {
+	grid-area: originalPost;
+	font-size: $font_size;
+	font-family: $font;
+	font-weight: $comm_boldness;
+	background-color: $inBodyColor;
+	text-align: left;
+	justify-content: center;
+	padding: 10px;
+	color: black;
+	margin: 5px;
+	border-radius: 10px;
+	border: .5px inset black;
+	display: grid;
+	grid-template-columns: 1fr 6fr;
+	grid-template-rows: auto auto auto;
+	grid-template-areas: "postingPicture postersName" "originalPosting originalPosting"
+		"likeSpan likeSpan";
+}
+
+.postingPicture {
+	grid-area: postingPicture;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	display: flex;
+	height: 85px;
+	width: 85px;
+	border-radius: 50%;
+	background: $background;
+	background: $gradient;
+	margin-right: 15px;
+}
+.default-user-image {
+	align-self: center;
+	justify-self: center;
+	height: 75px;
+	width: 75px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+.postersName {
+	grid-area: postersName;
+	font-weight: $comm_boldness;
+	justify-self: left;
+	align-self: center;
+	font-family: $font;
+	font-size: 20px;
+	color: rgb(0, 0, 0);
+}
+
+.originalPosting {
+	margin: 5px;
+	border-top: 2px solid rgb(10, 146, 224);
+	grid-area: originalPosting;
+	padding: 15px 35px;
+	font-family: $font;
+	font-size: $font_size;
+	font-weight: $comm_boldness;
+}
+.like-span {
+	grid-area: likeSpan;
+	align-self: flex-end;
+	justify-self: right;
+	margin: 10px 5px;
+}
+
+.post-comments-container {
+	grid-area: responsesFeed;
+	font-size: $font_size;
+	font-family: $font;
+	font-weight: $comm_boldness;
+	background-color: $inBodyColor;
+	text-align: left;
+	justify-content: center;
+	align-content: right;
+	padding: 20px;
+	color: black;
+	margin: 5px;
+	border-radius: 10px;
+	border: .5px inset black;
+}
+.response-input-container {
+	grid-area: respondWithPost;
+	font-size: $font_size;
+	font-family: $font;
+	font-weight: $comm_boldness;
+	background-color: $inBodyColor;
+	flex-wrap: wrap;
+	text-align: center;
+	justify-content: center;
+	align-content: center;
+	color: black;
+	margin: 5px;
+	border-radius: 10px;
+	border: .5px inset black;
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	grid-template-areas: "commentOnPost postButton";
+	justify-content: space-around;
+}
+
+@media all and (max-width: 420px) {
+	.tb-card-area-two {
+		max-width: 98vw;
+		font-size: $font_size;
+	}
+	.tb-card-area-two {
+		max-width: 98vw;
+		font-size: $font_size;
+	}
+	.body-like-container {
+		max-width: 98vw;
+		font-size: $font_size;
+	}
+	.response-body-post-container {
+		max-width: 98vw;
+		font-size: $font_size;
+	}
+	.input-field-posts {
+		max-width: 90vw;
+		align-self: left;
+		margin: 0;
+		font-size: $font_size;
+	}
+}
+
+@media (orientation: landscape) and (max-height: 420px) {
+	.tb-card-container {
+		background: rgb(40, 154, 189);
+		height: fit-content;
+	}
+	.postingPicture {
+		grid-area: postingPicture;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		margin: 5px;
+		height: 60px;
+		width: 60px;
+	}
+	.default-user-image {
+		height: 50px;
+		width: 50px;
+		overflow: hidden;
+		border-radius: 50%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.edge-case-large {
+		display: grid;
+		grid-template-columns: 33fr 34fr 33fr;
+		grid-template-rows: 1fr;
+		grid-template-areas: 'self app null';
+		background: rgb(40, 154, 189);
+	}
+
+	.tb-card-container {
+		grid-area: app;
+		max-width: 1200px;
+		background-color: transparent;
+	}
+}

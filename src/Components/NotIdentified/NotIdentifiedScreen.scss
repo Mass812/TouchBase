@@ -1,0 +1,54 @@
+.not-identified-container {
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(10, 58, 121, 0.849);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: center;
+}
+
+.not-identified-title {
+	font-family: 'Lobster', cursive;
+	padding: 10px;
+	font-size: 74px;
+	color: rgb(40, 154, 189);
+}
+
+.not-identified-subtitle{
+    position: fixed;
+    color: white;
+    margin-top: -20px;
+    margin-left: 130px;
+    
+}
+.sign-options-logo {
+    height: contain;
+	padding-left: 0px;
+}
+
+.home-logo {
+    size: contain;
+	height: 150px;
+}
+
+
+.options-button-splay {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.not-identifiable-screen-button {
+	margin: 10px;
+	border: none;
+	border: 1px solid white;
+	font-family: 'Lobster', cursive;
+	color: white;
+	letter-spacing: 1px;
+	font-weight: 100;
+	font-size: 18px;
+	padding: 5px;
+
+	background-color: rgba(0, 255, 255, 0);
+}

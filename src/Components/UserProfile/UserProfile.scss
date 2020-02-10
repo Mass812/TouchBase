@@ -1,0 +1,16 @@
+
+
+
+
+
+.user-profile-container{
+    display: grid;
+
+}
+
+.profile-left{
+    grid-area: left;
+}
+.profile-right{
+    grid-area: right;
+}

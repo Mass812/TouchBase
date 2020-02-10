@@ -1,0 +1,20 @@
+//		background-color: rgb(39, 214, 205);
+
+
+.feed-body-container{
+    background-color: rgb(39, 214, 205);
+    display: flex;
+   
+    height: 75vh;
+
+}
+.feed-body-container{
+display: grid;
+grid-template-columns: 8fr 2fr;
+grid-template-rows: 1fr;
+grid-template-areas: 'postFeed sideRail';
+}
+.side-rail{
+grid-area: sideRail;
+
+}
