@@ -19,7 +19,7 @@ const Navbar = () => {
 				<Link to='/feed'>
 					<button className='nav-button'>Feed</button>
 				</Link>
-				<Link to='/profile'>
+				<Link to='/edit_personal_profile'>
 					<button className='nav-button'>Settings</button>
 				</Link>
 			</div>

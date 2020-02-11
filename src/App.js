@@ -7,6 +7,7 @@ import SignUp from './Components/AuthSignUpOrInComponents/SignUp/CreateAccount';
 import NotIdentifiedScreen from './Components/NotIdentified/NotIdentifiedScreen';
 import Feed from './Components/Feed/Feed';
 import PersonalProfile from './Components/PersonalProfile/PersonalProfile';
+import PersonalProfileEdit from './Components/PersonalProfile/PersonalProfileEdit';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				<Route path='/feed' component={Feed} />
 				<Route path='/specific_post' component={Posting} />
 				<Route path='/personal_profile' component={PersonalProfile} />
+				<Route path='/edit_personal_profile' component={PersonalProfileEdit} />
 			</Switch>
 		</Router>
 	);

@@ -4,11 +4,13 @@ import Navbar from '../Navbar/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowLeft,
+	faCloudUploadAlt,
 	faMapMarkerAlt,
-	faBriefcase
+	faBriefcase,
+	faUserEdit
 } from '@fortawesome/free-solid-svg-icons';
 
-const PersonalProfile = () => {
+const PersonalProfileEdit = () => {
 	const defaultPic = require('../../Assets/default.png');
 	return (
 		<div>
@@ -23,22 +25,8 @@ const PersonalProfile = () => {
 								alt={'default'}
 							/>
 						</div>
-						<div className='under-icon-pair-group'>
-							<FontAwesomeIcon
-								icon={faBriefcase}
-								size={'sm'}
-								color={'brown'}
-							/>{' '}
-							<span className='image-upload-bar'>Work</span>
-						</div>
-						<div className='under-icon-pair-group'>
-							<FontAwesomeIcon
-								icon={faMapMarkerAlt}
-								size={'sm'}
-								color={'darkGreen'}
-							/>{' '}
-							<span className='image-upload-bar'>Location</span>
-						</div>
+						<FontAwesomeIcon icon={faCloudUploadAlt} size={'lg'} />{' '}
+						<span className='image-upload-bar'>Upload bar</span>
 					</div>
 					<div className='details-block'>
 						<div className='profile-details'>
@@ -73,4 +61,4 @@ const PersonalProfile = () => {
 		</div>
 	);
 };
-export default PersonalProfile;
+export default PersonalProfileEdit;

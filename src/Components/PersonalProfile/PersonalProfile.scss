@@ -1,11 +1,35 @@
 $fontFam: 'Comfortaa';
-$fontColor: blue;
+$fontColor: white;
 $fontSize: 18px;
-$backgroundColor: white;
+$backgroundColor: transparent;
+
+
+
+.profile-detail-item  {
+    margin: 10px 0px;
+    padding: 0px 0px;
+    border-bottom: .5px inset white;
+}
+.profile-detail-key-font{
+    font-weight: 200;
+    margin: 10px;
+    padding: 10px;
+    line-height: auto;
+    color: rgb(0, 247, 255);
+}
+.profile-detail-value-font{
+    font-weight: 200;
+    padding: 3px;
+    color: rgb(238, 245, 244);
+    font-size: 17px;
+    
+    
+    
+}
 
 .profile-container {
-	background-color: whitesmoke;
-	margin: 30px;
+	background-color: transparent;
+	margin: 1px;
 	height: auto;
 	justify-content: center;
 	align-content: center;
@@ -13,7 +37,9 @@ $backgroundColor: white;
 	display: flex;
 	flex-direction: column;
 	font-family: $fontFam;
-	font-size: $fontSize;
+    font-size: $fontSize;
+    
+   
 }
 
 .profile-image-block {
@@ -21,7 +47,9 @@ $backgroundColor: white;
 	justify-content: center;
 	align-content: center;
 	text-align: center;
-	padding: 20px;
+    padding: 20px;
+    
+
 }
 
 .profile-image {
@@ -30,8 +58,14 @@ $backgroundColor: white;
 }
 
 .image-upload-bar {
-	border: 2px solid grey;
 	max-width: 180px;
+    padding: 4px;
+    
+}
+
+.under-icon-pair-group {
+	display: inline-table;
+	margin: 7px;
 }
 
 .details-block {
@@ -41,12 +75,15 @@ $backgroundColor: white;
 	justify-content: center;
 	align-content: center;
 	text-align: left;
-	padding: 20px;
+    padding: 25px 15px ;
+    
 }
 
 .profile-details {
 	grid-area: basic;
-	height: 150px;
+    height: fit-content;
+    text-align: center;
+   
 }
 
 .more-details {
@@ -61,5 +98,44 @@ $backgroundColor: white;
 		grid-template-rows: 1fr;
 		grid-template-areas: 'long short';
 		margin: 30px;
+	}
+}
+
+
+@media (orientation: landscape) and (max-height: 420px) {
+	.tb-card-container {
+		background: rgb(41,147,184);
+		height: fit-content;
+	}
+	.postingPicture {
+		grid-area: postingPicture;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		margin: 5px;
+		height: 60px;
+		width: 60px;
+	}
+	.default-user-image {
+		height: 50px;
+		width: 50px;
+		overflow: hidden;
+		border-radius: 50%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.edge-case-large {
+		display: grid;
+		grid-template-columns: 33fr 34fr 33fr;
+		grid-template-rows: 1fr;
+		grid-template-areas: 'self app null';
+		background: rgb(40, 154, 189);
+	}
+
+	.profile-container {
+		grid-area: app;
+		max-width: 1200px;
+		background-color: transparent;
 	}
 }
