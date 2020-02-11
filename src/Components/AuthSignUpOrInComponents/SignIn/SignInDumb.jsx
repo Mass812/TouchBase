@@ -15,7 +15,7 @@ const SignInDumb = (props) => {
 				<form>
 					{' '}
 					<input
-						className='input-field'
+						className='input-field-sign'
 						placeholder='Enter your Email Here'
 						type='text'
 						onChange={props.userEmailEntered}
@@ -23,7 +23,7 @@ const SignInDumb = (props) => {
 						autoFocus
 					/>{' '}
 					<input
-						className='input-field'
+						className='input-field-sign'
 						placeholder='Enter a Password Here'
 						type='password'
 						onChange={props.userPasswordEntered}

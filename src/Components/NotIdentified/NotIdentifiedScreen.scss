@@ -40,15 +40,22 @@
 }
 
 .not-identifiable-screen-button {
-	margin: 10px;
-	border: none;
-	border: 1px solid white;
-	font-family: 'Lobster', cursive;
+	margin-right: 15px;
+	background-color: #254576;
 	color: white;
-	letter-spacing: 1px;
-	font-weight: 100;
-	font-size: 18px;
-	padding: 5px;
+	border: 1px solid turquoise;
+	border-radius: 50px;
+	width: 100px;
+	height: 40px;
+	padding: 3px;
+	align-self: center;
 
-	background-color: rgba(0, 255, 255, 0);
+	&:hover {
+		color: white;
+		border: 1px inset turquoise;
+		background-color: rgb(39, 214, 205);
+	}
+	&::active{
+		background-color: rgb(98, 112, 112);
+	}
 }

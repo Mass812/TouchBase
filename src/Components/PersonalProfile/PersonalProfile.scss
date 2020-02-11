@@ -1,0 +1,65 @@
+$fontFam: 'Comfortaa';
+$fontColor: blue;
+$fontSize: 18px;
+$backgroundColor: white;
+
+.profile-container {
+	background-color: whitesmoke;
+	margin: 30px;
+	height: auto;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	font-family: $fontFam;
+	font-size: $fontSize;
+}
+
+.profile-image-block {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
+	padding: 20px;
+}
+
+.profile-image {
+	height: 180px;
+	padding-top: 20px;
+}
+
+.image-upload-bar {
+	border: 2px solid grey;
+	max-width: 180px;
+}
+
+.details-block {
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	grid-template-areas: 'basic' 'interests';
+	justify-content: center;
+	align-content: center;
+	text-align: left;
+	padding: 20px;
+}
+
+.profile-details {
+	grid-area: basic;
+	height: 150px;
+}
+
+.more-details {
+	grid-area: interests;
+	height: 150px;
+}
+
+@media all and (min-width: 1000px) {
+	.profile-image-block {
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		grid-template-rows: 1fr;
+		grid-template-areas: 'long short';
+		margin: 30px;
+	}
+}

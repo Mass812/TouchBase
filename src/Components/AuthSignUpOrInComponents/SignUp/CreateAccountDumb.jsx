@@ -16,28 +16,28 @@ const Signup = (props) => {
 				<form>
 					{' '}
 					<input
-						className='input-field'
+						className='input-field-sign'
 						placeholder='Enter your Email Here'
 						type='text'
 						onChange={props.userEmailEntered}
 						autoFocus
 					/>{' '}
 					<input
-						className='input-field'
+						className='input-field-sign'
 						placeholder='Enter a Password Here'
 						type='password'
 						onChange={props.fireOffTheseRockets}
 						autoComplete='true'
 					/>{' '}
 					<input
-						className='input-field'
+						className='input-field-sign'
 						placeholder='Confirm Password Here'
 						type='password'
 						onChange={props.userPasswordConfirmed}
 						autoComplete='true'
 					/>{' '}
 					<input
-						className='input-field'
+						className='input-field-sign'
 						placeholder='Enter your User Handle'
 						type='text'
 						onChange={props.userHandleChose}

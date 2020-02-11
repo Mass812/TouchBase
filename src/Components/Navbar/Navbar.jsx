@@ -13,7 +13,7 @@ const Navbar = () => {
 			</div>
 
 			<div className='nav-icon-bar'>
-				<Link to='/profile'>
+				<Link to='/personal_profile'>
 					<button className='nav-button'>Profile</button>
 				</Link>
 				<Link to='/feed'>
