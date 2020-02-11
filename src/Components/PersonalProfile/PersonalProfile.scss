@@ -7,20 +7,21 @@ $backgroundColor: transparent;
 
 .profile-detail-item  {
     margin: 10px 0px;
-    padding: 0px 0px;
-    border-bottom: .5px inset white;
+	padding: 0px 0px;
+	
 }
 .profile-detail-key-font{
     font-weight: 200;
     margin: 10px;
     padding: 10px;
     line-height: auto;
-    color: rgb(0, 247, 255);
+	color: rgb(0, 247, 255);
+	
 }
 .profile-detail-value-font{
-    font-weight: 200;
+    font-weight: 600;
     padding: 3px;
-    color: rgb(238, 245, 244);
+	color: rgb(8, 8, 8);
     font-size: 17px;
     
     
@@ -39,18 +40,8 @@ $backgroundColor: transparent;
 	font-family: $fontFam;
     font-size: $fontSize;
     
-   
 }
 
-.profile-image-block {
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	text-align: center;
-    padding: 20px;
-    
-
-}
 
 .profile-image {
 	height: 180px;

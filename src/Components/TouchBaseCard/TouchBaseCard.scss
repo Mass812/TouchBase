@@ -75,9 +75,9 @@ $background: rgb(2, 0, 36);
 .side-panel {
 	grid-area: likeSpan;
 	text-align: center;
-	align-content: right;
+	align-content: flex-end;
 	align-items: right;
-	justify-content: center;
+	justify-content: flex-end;
 	border: 3px inset rgb(9, 165, 204);
 	background: $background;
 	background-color: rgba(255, 255, 255, 0.781);
@@ -92,6 +92,17 @@ $background: rgb(2, 0, 36);
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 	grid-template-areas: "angry" 'sad' 'love' 'comment' 'like';
 }
+
+.user-handle-post-body {
+	margin: 5px;
+	border-top: 2px solid rgb(10, 146, 224);
+	grid-area: originalPosting;
+	padding: 5px 5px;
+	font-family: $font;
+	font-size: $font_size;
+	font-weight: $comm_boldness;
+}
+
 
 #angry {
 	border-width: 5px;

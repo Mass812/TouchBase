@@ -8,7 +8,7 @@ const Feed = () => {
 	return (
 		<div className='feed-container'>
 			<Navbar />
-            <TouchBaseCard/>
+            <TouchBaseCard bar={true}/>
 		</div>
 	);
 };

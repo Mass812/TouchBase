@@ -34,6 +34,8 @@ const TouchBaseCard = (props) => {
 				) : (
 					<div className='user-handle-post-body'>{props.condition}</div>
 				)}
+
+				{props.bar ?
 				<div className='side-panel'>
 					<span id='angry'>
 						<FontAwesomeIcon icon={faAngry} />
@@ -52,7 +54,8 @@ const TouchBaseCard = (props) => {
 							<FontAwesomeIcon icon={faComment} />
 						</Link>
 					</span>
-				</div>
+				</div> 
+				: null}
 			</div>
 		</div>
 	);

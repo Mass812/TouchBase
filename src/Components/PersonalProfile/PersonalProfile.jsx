@@ -3,7 +3,6 @@ import './PersonalProfile.scss';
 import Navbar from '../Navbar/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	faArrowLeft,
 	faMapMarkerAlt,
 	faBriefcase
 } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +14,7 @@ const PersonalProfile = () => {
 			<Navbar />
 			<div className='edge-case-large'>
 				<section className='profile-container'>
-					<div ClassName='profile-image-block'>
+					<div >
 						<div>
 							<img
 								className='profile-image'

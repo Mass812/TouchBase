@@ -3,11 +3,8 @@ import './PersonalProfile.scss';
 import Navbar from '../Navbar/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	faArrowLeft,
 	faCloudUploadAlt,
-	faMapMarkerAlt,
-	faBriefcase,
-	faUserEdit
+
 } from '@fortawesome/free-solid-svg-icons';
 
 const PersonalProfileEdit = () => {
@@ -17,7 +14,7 @@ const PersonalProfileEdit = () => {
 			<Navbar />
 			<div className='edge-case-large'>
 				<section className='profile-container'>
-					<div ClassName='profile-image-block'>
+					<div>
 						<div>
 							<img
 								className='profile-image'
@@ -25,8 +22,11 @@ const PersonalProfileEdit = () => {
 								alt={'default'}
 							/>
 						</div>
-						<FontAwesomeIcon icon={faCloudUploadAlt} size={'lg'} />{' '}
-						<span className='image-upload-bar'>Upload bar</span>
+						<div className='under-icon-pair-group'>
+
+						<FontAwesomeIcon icon={faCloudUploadAlt} size={'1x'} />{' '}
+						<span className='image-upload-bar'>Change Picture</span>
+						</div>
 					</div>
 					<div className='details-block'>
 						<div className='profile-details'>

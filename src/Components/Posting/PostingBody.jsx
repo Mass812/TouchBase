@@ -2,6 +2,7 @@ import React from 'react';
 import './PostingBody.scss';
 import '../TouchBaseCard/TouchBaseCard.scss';
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard';
+import TouchBaseCardResponse from '../TouchBaseCard/TouchBaseResponse';
 
 const PostingBody = (props) => {
 	const defaultImage = require('../../Assets/default.png');
@@ -20,40 +21,18 @@ const PostingBody = (props) => {
 		'nisi scelerisque eu. Est placerat in egestas erat imperdiet sed euismod nisi. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam. In est ante in nibh mauris cursus mattis molestie a. Tristique senectus et netus et malesuada'
 	];
 
-
-const hero= array.map((n, idx)=><TouchBaseCard condition={n}/>)
-
-
+	const originalPost = <TouchBaseCard condition={'Here is the original post'} key={869875}/>;
+	const hero = array.map((n, idx) => <TouchBaseCardResponse condition={n} key={idx}/>);
 
 	return (
 		<div className='edge-case-large'>
+		<div className='original-sticky'>
+			{originalPost}
+		</div>
 			<div className='tb-card-container'>
 				<div className='tb-posting-title'>
 					<span>TouchBase with Others</span>
 				</div>
-				{/* dummy data Dynamic when served*/}
-				<div className='tb-card-original-post'>
-					<div className='postingPicture'>
-						<img
-							src={defaultImage}
-							alt={'default logo'}
-							className='default-user-image'
-						/>
-					</div>
-					<div className='postersName'> Posting Author / User Here </div>
-
-					<div className='originalPosting'>
-						What is going on in Russia right now? Vladimir Lenin would roll
-						over in his grave if his body and mind were still intact{' '}
-					</div>
-					<div className='like-span'>Like heart Icons</div>
-				</div>
-
-				<div className='post-comments-container'>
-					<TouchBaseCard condition={props.storedUserComment} />
-				</div>
-
-				{/* dummy data */}
 
 				<div className='response-input-container'>
 					<div>
@@ -69,6 +48,7 @@ const hero= array.map((n, idx)=><TouchBaseCard condition={n}/>)
 							/>
 						</div>
 						<div className='post-comment-button'>
+						{props.storedUserComment ? 'Posted Successfully!  ' : null}
 							<button
 								onClick={props.storeThisResponsePost}
 								className='nav-button'>
@@ -78,9 +58,7 @@ const hero= array.map((n, idx)=><TouchBaseCard condition={n}/>)
 					</div>
 					{/* dudelete mmy data */}
 				</div>
-				<div className='previous-comments-block'>
-					{hero}
-				</div>
+				<div className='previous-comments-block'>{hero}</div>
 			</div>
 		</div>
 	);

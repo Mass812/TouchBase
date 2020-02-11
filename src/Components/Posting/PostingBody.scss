@@ -14,18 +14,19 @@ $gradient: linear-gradient(
 );
 $background: rgb(2, 0, 36);
 
+
+
+
 .tb-card-container {
 	background: rgb(40, 154, 189);
-	height: max-content;
+	height: 90vh;
 	width: inherit;
-	
+	overflow-y: scroll;
 	display: grid;
 	grid-template-columns: 3fr 3fr;
 	grid-template-rows: auto auto auto auto auto;
-	grid-template-areas: "pageTitle pageTitle "
-		"originalPost originalPost "
-		"respondWithPost respondWithPost "
-		"responsesFeed responsesFeed "
+	grid-template-areas: "pageTitle pageTitle " "originalPost originalPost "
+		"respondWithPost respondWithPost " "responsesFeed responsesFeed "
 		"prevCommentsBlock prevCommentsBlock";
 
 	justify-content: center;
@@ -33,16 +34,10 @@ $background: rgb(2, 0, 36);
 	align-content: flex-start;
 }
 
-.previous-comments-block{
+.previous-comments-block {
 	grid-area: prevCommentsBlock;
 	display: grid;
-
-	
-
 }
-
-
-
 
 .tb-posting-title {
 	grid-area: pageTitle;
@@ -160,7 +155,7 @@ $background: rgb(2, 0, 36);
 }
 
 .post-comments-container {
-	background-color:  rgb(40,154,189);
+	background-color: rgb(40, 154, 189);
 	grid-area: responsesFeed;
 	font-size: $font_size;
 	font-family: $font;
@@ -173,7 +168,6 @@ $background: rgb(2, 0, 36);
 	color: black;
 	margin: 5px;
 	border-radius: 10px;
-	
 }
 .response-input-container {
 	grid-area: respondWithPost;
@@ -225,7 +219,7 @@ $background: rgb(2, 0, 36);
 @media (orientation: landscape) and (max-height: 420px) {
 	.tb-card-container {
 		background: rgb(40, 154, 189);
-		height: fit-content;
+		height: 100%;
 	}
 	.postingPicture {
 		grid-area: postingPicture;

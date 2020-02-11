@@ -14,6 +14,9 @@ const Posting = () => {
 	const storeThisResponsePost = (e) => {
 		if (e.target.value.trim() !== '') {
 			setStoredUserComment(e.target.value);
+			e.target.value='';
+		
+			;
 		}
 	};
 
