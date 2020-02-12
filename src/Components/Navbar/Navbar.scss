@@ -24,10 +24,9 @@
 }
 
 .nav-icon-image {
-	height: 8vh;
-	align-self: center;
-	padding: 5px;
-	margin: 5px;
+	height: 5vh;
+	padding: 0px;
+	margin: 15px;
 }
 
 .nav-icon-bar {
@@ -54,7 +53,8 @@
 
 @media (orientation: landscape) and (max-height: 450px) {
 	.nav-icon-image {
-		height: 43px;
-		margin-top: -5px;
+		height: 33px;
+		margin-top: -2px;
+		padding: 5px;
 	}
 }

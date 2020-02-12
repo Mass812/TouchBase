@@ -3,29 +3,27 @@ $fontColor: white;
 $fontSize: 18px;
 $backgroundColor: transparent;
 
-
-
-.profile-detail-item  {
-    margin: 10px 0px;
+.profile-detail-item {
+	margin: 0px 0px;
 	padding: 0px 0px;
-	
+	&:nth-child(1) {
+		padding-top: 20px;
+	}
 }
-.profile-detail-key-font{
-    font-weight: 200;
-    margin: 10px;
-    padding: 10px;
-    line-height: auto;
-	color: rgb(0, 247, 255);
-	
+.profile-detail-key-font {
+	font-weight: 200;
+	margin: 10px;
+	padding: 10px;
+	line-height: auto;
+	color: rgb(251, 255, 0);
 }
-.profile-detail-value-font{
-    font-weight: 600;
-    padding: 3px;
-	color: rgb(8, 8, 8);
-    font-size: 17px;
-    
-    
-    
+.profile-detail-value-font {
+	font-weight: 600;
+	padding: 0px;
+	color: rgb(255, 255, 255);
+	font-size: 17px;
+	margin-top: 5px;
+	padding-bottom: 20px;
 }
 
 .profile-container {
@@ -38,10 +36,8 @@ $backgroundColor: transparent;
 	display: flex;
 	flex-direction: column;
 	font-family: $fontFam;
-    font-size: $fontSize;
-    
+	font-size: $fontSize;
 }
-
 
 .profile-image {
 	height: 180px;
@@ -50,8 +46,8 @@ $backgroundColor: transparent;
 
 .image-upload-bar {
 	max-width: 180px;
-    padding: 4px;
-    
+	padding: 4px;
+	font-weight: 700;
 }
 
 .under-icon-pair-group {
@@ -66,15 +62,13 @@ $backgroundColor: transparent;
 	justify-content: center;
 	align-content: center;
 	text-align: left;
-    padding: 25px 15px ;
-    
+	padding: 25px 15px;
 }
 
 .profile-details {
 	grid-area: basic;
-    height: fit-content;
-    text-align: center;
-   
+	height: fit-content;
+	text-align: center;
 }
 
 .more-details {
@@ -92,10 +86,9 @@ $backgroundColor: transparent;
 	}
 }
 
-
 @media (orientation: landscape) and (max-height: 420px) {
 	.tb-card-container {
-		background: rgb(41,147,184);
+		background: rgb(41, 147, 184);
 		height: fit-content;
 	}
 	.postingPicture {

@@ -3,13 +3,13 @@ import './Navbar.scss';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-	const navIcon = require('../../Assets/tb_4.png');
+	const navIcon = require('../../Assets/nav.png');
 	return (
 		<div className='navbar'>
 			<div className='image-container'>
 				<Link to='/'>
 					<img src={navIcon} alt={'nav-icon'} className='nav-icon-image' />
-				</Link>
+				</Link> 
 			</div>
 
 			<div className='nav-icon-bar'>

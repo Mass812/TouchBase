@@ -5,7 +5,6 @@ import TouchBaseCard from '../TouchBaseCard/TouchBaseCard';
 import TouchBaseCardResponse from '../TouchBaseCard/TouchBaseResponse';
 
 const PostingBody = (props) => {
-	const defaultImage = require('../../Assets/default.png');
 	const array = [
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat ac felis donec et. Amet purus gravida quis blandit turpis. Laoreet id donec ultrices tincidunt arcu. Morbi non arcu risus quis. Adipiscing at in tellus integer feugiat scelerisque varius morbi. Enim praesent elementum facilisis leo vel fringilla. Nunc scelerisque viverra mauris in. Auctor eu augue ut lectus arcu bibendum at varius vel. Curabitur gravida arcu ac tortor dignissim. Fermentum iaculis eu non diam phasellus vestibulum.',
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat ac felis donec et. ',
@@ -21,17 +20,20 @@ const PostingBody = (props) => {
 		'nisi scelerisque eu. Est placerat in egestas erat imperdiet sed euismod nisi. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam. In est ante in nibh mauris cursus mattis molestie a. Tristique senectus et netus et malesuada'
 	];
 
-	const originalPost = <TouchBaseCard condition={'Here is the original post'} key={869875}/>;
-	const hero = array.map((n, idx) => <TouchBaseCardResponse condition={n} key={idx}/>);
+	const originalPost = (
+		<TouchBaseCard condition={'Here is the original post'} key={869875} />
+	);
+	const hero = array.map((n, idx) => <TouchBaseCardResponse condition={n} key={idx} />);
 
 	return (
 		<div className='edge-case-large'>
-		<div className='original-sticky'>
-			{originalPost}
-		</div>
+			<div className='original-sticky'>{originalPost}</div>
 			<div className='tb-card-container'>
 				<div className='tb-posting-title'>
-					<span>TouchBase with Others</span>
+					<span>
+						<span style={{ color: 'teal' }}>Touch {''}</span>
+						Base with DYNAMIC
+					</span>
 				</div>
 
 				<div className='response-input-container'>
@@ -45,10 +47,13 @@ const PostingBody = (props) => {
 								type='textArea'
 								onChange={props.responseMainPost}
 								onBlur={props.storeThisResponsePost}
+								onKeyPress={props.onEnter}
 							/>
 						</div>
 						<div className='post-comment-button'>
-						{props.storedUserComment ? 'Posted Successfully!  ' : null}
+							{props.storedUserComment ? (
+								<span className='post-success'>Posted Successfully!</span>
+							) : null}
 							<button
 								onClick={props.storeThisResponsePost}
 								className='nav-button'>

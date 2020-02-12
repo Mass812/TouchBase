@@ -7,7 +7,7 @@ const NotIdentifiedScreen = () => {
 	return (
 		<div className='not-identified-container'>
 			<div>
-				<div className='not-identified-title'>TouchBase</div>
+				<div className='not-identified-title'><span style={{color: 'white'}}>Touch</span>Base</div>
 				<span className='not-identified-subtitle'>
 					A Social Networking Platform
 				</span>

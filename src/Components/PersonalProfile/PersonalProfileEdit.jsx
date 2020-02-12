@@ -24,7 +24,7 @@ const PersonalProfileEdit = () => {
 						</div>
 						<div className='under-icon-pair-group'>
 
-						<FontAwesomeIcon icon={faCloudUploadAlt} size={'1x'} />{' '}
+						<FontAwesomeIcon icon={faCloudUploadAlt} size={'1x'} color={'white'}/>{' '}
 						<span className='image-upload-bar'>Change Picture</span>
 						</div>
 					</div>

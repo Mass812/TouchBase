@@ -14,26 +14,31 @@ const Posting = () => {
 	const storeThisResponsePost = (e) => {
 		if (e.target.value.trim() !== '') {
 			setStoredUserComment(e.target.value);
-			e.target.value='';
-		
-			;
+			e.target.value = '';
+		}
+	};
+
+	const onEnter = (event) => {
+		if (event.which === 13 || event.keyCode === 13) {
+			console.log('onEnter Fired');
+			setStoredUserComment(responsePost);
+			event.target.blur();
 		}
 	};
 
 	console.log('stored response', storedUserComment);
 
 	return (
-		<div >
-			
+		<div>
 			<Navbar />
 			<PostingBody
 				responseMainPost={responseMainPost}
 				responsePost={responsePost}
 				storeThisResponsePost={storeThisResponsePost}
 				storedUserComment={storedUserComment}
+				onEnter={onEnter}
 			/>
 		</div>
-	
 	);
 };
 export default Posting;

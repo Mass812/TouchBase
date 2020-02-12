@@ -7,6 +7,7 @@ import {
 	faBriefcase
 } from '@fortawesome/free-solid-svg-icons';
 
+
 const PersonalProfile = () => {
 	const defaultPic = require('../../Assets/default.png');
 	return (
@@ -26,7 +27,7 @@ const PersonalProfile = () => {
 							<FontAwesomeIcon
 								icon={faBriefcase}
 								size={'sm'}
-								color={'brown'}
+								color={'white'}
 							/>{' '}
 							<span className='image-upload-bar'>Work</span>
 						</div>
@@ -34,9 +35,10 @@ const PersonalProfile = () => {
 							<FontAwesomeIcon
 								icon={faMapMarkerAlt}
 								size={'sm'}
-								color={'darkGreen'}
+								color={'white'}
 							/>{' '}
 							<span className='image-upload-bar'>Location</span>
+					
 						</div>
 					</div>
 					<div className='details-block'>
