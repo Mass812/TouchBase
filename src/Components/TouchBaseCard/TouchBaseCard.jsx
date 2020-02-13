@@ -1,24 +1,18 @@
 import React from 'react';
 import './TouchBaseCard.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faAngry,
-	faComment,
-	faThumbsUp,
-	faFrownOpen,
-	faHeart
-} from '@fortawesome/free-solid-svg-icons';
+import OptionBar from './OptionBar/OptionBar';
 import { Link } from 'react-router-dom';
 
 const TouchBaseCard = (props) => {
 	const defaultImage = require('../../Assets/default.png');
+
 
 	return (
 		<div className=' '>
 			<div className='touchbase-card'>
 				<div className='postingPicture'>
 					<img
-						src={defaultImage}
+						src={!props.picture ? defaultImage : props.picture}
 						alt={'default logo'}
 						className='default-user-image'
 					/>
@@ -35,29 +29,12 @@ const TouchBaseCard = (props) => {
 					<div className='user-handle-post-body'>{props.condition}</div>
 				)}
 
-				{props.bar ?
-				<div className='side-panel'>
-					<span id='angry'>
-						<FontAwesomeIcon icon={faAngry} />
-					</span>
-					<span id='sad'>
-						<FontAwesomeIcon icon={faFrownOpen} />
-					</span>
-					<span id='like'>
-						<FontAwesomeIcon icon={faThumbsUp} />
-					</span>
-					<span id='love'>
-						<FontAwesomeIcon icon={faHeart} />
-					</span>
-					<span id='comment'>
-						<Link to='/specific_post'>
-							<FontAwesomeIcon icon={faComment} />
-						</Link>
-					</span>
-				</div> 
+				{props.sidebar ?
+				<OptionBar to={`specific_post/${123}`}/>
 				: null}
 			</div>
 		</div>
+	
 	);
 };
 export default TouchBaseCard;

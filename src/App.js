@@ -17,7 +17,7 @@ function App() {
 				<Route path='/sign_in' component={SignIn} />
 				<Route path='/sign_up' component={SignUp} />
 				<Route path='/feed' component={Feed} />
-				<Route path='/specific_post' component={Posting} />
+				<Route path='/specific_post/:id' component={Posting} />
 				<Route path='/personal_profile' component={PersonalProfile} />
 				<Route path='/edit_personal_profile' component={PersonalProfileEdit} />
 			</Switch>

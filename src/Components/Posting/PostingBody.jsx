@@ -10,7 +10,6 @@ const PostingBody = (props) => {
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat ac felis donec et. ',
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat ac felis donec et. Amet purus gravida quis blandit turpis. Laoreet id donec ultrices tincidunt arcu. Morbi non arcu risus quis. Adipiscing at in tellus integer feugiat scelerisque varius morbi. Enim praesent elementum facilisis leo vel fringilla. ',
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat ac felis donec et. Amet purus gravida quis blandit turpis. Laoreet id donec ultrices tincidunt arcu. Morbi non arcu risus quis. Adipiscing at in tellus integer feugiat scelerisque varius morbi. Enim praesent elementum facilisis leo vel fringilla. Nunc scelerisque viverra mauris in. Auctor eu augue ut lectus arcu bibendum at varius vel. Curabitur gravida arcu ac tortor dignissim. Fermentum iaculis eu non diam phasellus vestibulum.',
-
 		'Lectus magna fringilla urna porttitor rhoncus dolor. Non diam phasellus vestibulum lorem. Arcu v',
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat ac felis donec et. Amet purus gravida quis blandit turpis. Laoreet id donec ultrices tincidunt arcu. Morbi non arcu risus quis. Adipiscing at in tellus integer feugiat scelerisque varius morbi. Enim praesent elementum facilisis leo vel fringilla. Nunc scelerisque viverra mauris in. Auctor eu augue ut lectus arcu bibendum at varius vel. Curabitur gravida arcu ac tortor dignissim. Fermentum iaculis eu non diam phasellus vestibulum.',
 
@@ -32,7 +31,7 @@ const PostingBody = (props) => {
 				<div className='tb-posting-title'>
 					<span>
 						<span style={{ color: 'teal' }}>Touch {''}</span>
-						Base with DYNAMIC
+						Base with Dynamic
 					</span>
 				</div>
 
