@@ -20,14 +20,15 @@ const TouchBaseCardResponse = (props) => {
 				</div>{' '}
             
 				<div className='response-user-handle'>
-					{!props.condition ? (
+					{!props.body ? (
 						<div className='response-post-body'>
 							{' '}
 							'What is going on in Russia right now? Vladimir Lenin would
 							roll over in his grave if his body and mind were still intact'{' '}
+							<hr/>
 						</div>
 					) : (
-						<div className='user-handle-post-body'>{props.condition}</div>
+						<div className='user-handle-post-body'>{props.body}<hr/></div>
 					)}
 				</div>
 			</div>

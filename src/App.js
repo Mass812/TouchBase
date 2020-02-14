@@ -8,10 +8,12 @@ import NotIdentifiedScreen from './Components/NotIdentified/NotIdentifiedScreen'
 import Feed from './Components/Feed/Feed';
 import PersonalProfile from './Components/PersonalProfile/PersonalProfile';
 import PersonalProfileEdit from './Components/PersonalProfile/PersonalProfileEdit';
+import ScrollToTop from './Components/ScrollToTop/ScrollToTop';
 
 function App() {
 	return (
 		<Router>
+			<ScrollToTop />
 			<Switch>
 				<Route path='/' exact={true} component={NotIdentifiedScreen} />
 				<Route path='/sign_in' component={SignIn} />

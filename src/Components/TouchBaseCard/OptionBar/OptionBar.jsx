@@ -18,9 +18,7 @@ import {Link} from 'react-router-dom';
 					<span id='angry'>
 						<FontAwesomeIcon icon={faAngry} />
 					</span>
-					<span id='sad'>
-						<FontAwesomeIcon icon={faFrownOpen} />
-					</span>
+				
 					<span id='like'>
 						<FontAwesomeIcon icon={faThumbsUp} />
 					</span>

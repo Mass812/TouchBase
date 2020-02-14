@@ -1,8 +1,8 @@
 $font: 'Comfortaa', cursive;
-$font_size: 16px;
+$font_size: 18px;
 $iconSize: 16px;
 $color: black;
-$comm_boldness: 700;
+$comm_boldness: 900;
 $inBodyColor: white;
 $gradient: linear-gradient(
 	90deg,
@@ -25,7 +25,7 @@ $background: rgb(2, 0, 36);
 	border-radius: 10px;
 	border: .5px inset black;
 	display: grid;
-	grid-template-columns: 1fr 16fr 1fr;
+	grid-template-columns: 3fr 16fr 3fr;
 	grid-template-rows: auto auto;
 	grid-template-areas: "postingPicture postersName likeSpan"
 		"originalPosting originalPosting likeSpan";
@@ -48,14 +48,14 @@ $background: rgb(2, 0, 36);
 .default-user-image {
 	align-self: center;
 	justify-self: center;
-	height: 75px;
-	width: 75px;
+
 	overflow: hidden;
 	border-radius: 50%;
+	object-fit: cover;
 }
 .touchbase-user-handle {
 	grid-area: postersName;
-	font-weight: $comm_boldness;
+	font-weight: 900;
 	justify-self: left;
 	align-self: center;
 	font-family: $font;
@@ -67,7 +67,7 @@ $background: rgb(2, 0, 36);
 	margin: 5px;
 	border-top: 2px solid rgb(10, 146, 224);
 	grid-area: originalPosting;
-	padding: 15px 35px;
+	padding: 15px 15px;
 	font-family: $font;
 	font-size: $font_size;
 	font-weight: $comm_boldness;
@@ -86,11 +86,11 @@ $background: rgb(2, 0, 36);
 	height: 100%;
 	margin: 5px 5px;
 	padding: 3px;
-	
+
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-	grid-template-areas: "angry" 'sad' 'love' 'comment' 'like';
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-template-areas: "angry" 'love' 'comment' 'like';
 }
 
 .user-handle-post-body {
@@ -102,7 +102,6 @@ $background: rgb(2, 0, 36);
 	font-size: $font_size;
 	font-weight: $comm_boldness;
 }
-
 
 #angry {
 	border-width: 5px;
