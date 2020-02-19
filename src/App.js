@@ -1,9 +1,9 @@
 import React from 'react';
 import './index.css';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import Posting from './Components/Posting/Posting';
-import SignIn from './Components/AuthSignUpOrInComponents/SignIn/SignIn';
-import SignUp from './Components/AuthSignUpOrInComponents/SignUp/CreateAccount';
+import SignIn from './Components/NotIdentified/SignIn/SignIn';
+import SignUp from './Components/NotIdentified/SignUp/CreateAccount';
+import Response from './Components/ResponsePostPage/ResponseComponent';
 import NotIdentifiedScreen from './Components/NotIdentified/NotIdentifiedScreen';
 import Feed from './Components/Feed/Feed';
 import PersonalProfile from './Components/PersonalProfile/PersonalProfile';
@@ -19,9 +19,9 @@ function App() {
 				<Route path='/sign_in' component={SignIn} />
 				<Route path='/sign_up' component={SignUp} />
 				<Route path='/feed' component={Feed} />
-				<Route path='/specific_post/:id' component={Posting} />
+				<Route path='/specific_post/:id' component={Response} />
 				<Route path='/personal_profile' component={PersonalProfile} />
-				<Route path='/edit_personal_profile' component={PersonalProfileEdit} />
+				<Route path='/edit_personal_profile/:id' component={PersonalProfileEdit} />
 			</Switch>
 		</Router>
 	);

@@ -1,11 +1,10 @@
 import React from 'react';
 import './TouchBaseCard.scss';
-import OptionBar from './OptionBar/OptionBar';
-import {Link} from 'react-router-dom';
-
+import OptionBar from '../OptionBar/OptionBar';
+import { Link } from 'react-router-dom';
 
 const TouchBaseCard = (props) => {
-	const defaultImage = require('../../Assets/default.png');
+	const defaultImage = require('../../../Assets/default.png');
 	return (
 		<div className=' '>
 			<div className='touchbase-card'>
@@ -20,14 +19,19 @@ const TouchBaseCard = (props) => {
 				</div>
 				<div className='touchbase-user-handle'> {props.userHandle}</div>
 
-				{!props.body ? (
-					<div className='user-handle-post-body'>
+				{!props.post ? (
+					<div className='response-body'>
 						{' '}
-						'What is going on in Russia right now? Vladimir Lenin would roll
-						over in his grave if his body and mind were still intact'{' '}
+						{' '}
+						<div className='body-paragraph'>
+							'What is going on in Russia right now? Vladimir Lenin would
+							roll over in his grave if his body and mind were still intact'{' '}
+						</div>
 					</div>
 				) : (
-					<div className='user-handle-post-body'>{props.body}</div>
+					<div className='response-body'>
+						<div className='body-paragraph'>{props.post}</div>
+					</div>
 				)}
 
 				{props.sidebar ? <OptionBar to={`specific_post/${props.id}`} /> : null}

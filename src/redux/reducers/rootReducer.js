@@ -1,12 +1,14 @@
 import authReducer from './authReducer';
-import postReducer from './postReducer';
 import feedReducer from './feedReducer';
+import responseReducer from './responseReducer';
 import { combineReducers } from 'redux';
+
+
 
 const rootReducer = combineReducers({
 	auth: authReducer,
-	post: postReducer,
-	feed: feedReducer
+	feed: feedReducer,
+	response: responseReducer
 });
 
 export default rootReducer;

@@ -7,7 +7,7 @@ import {
 	faFrownOpen,
 	faHeart
 } from '@fortawesome/free-solid-svg-icons';
-import '../TouchBaseCard.scss'
+import '../TouchBaseCard/TouchBaseCard.scss'
 import {Link} from 'react-router-dom';
 
 
@@ -16,7 +16,7 @@ import {Link} from 'react-router-dom';
       
 <div className='side-panel'>
 					<span id='angry'>
-						<FontAwesomeIcon icon={faAngry} />
+						<FontAwesomeIcon icon={faAngry}/>
 					</span>
 				
 					<span id='like'>

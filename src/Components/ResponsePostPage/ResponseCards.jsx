@@ -1,26 +1,26 @@
 import React from 'react';
-import './TouchBaseCard.scss';
+import '../Feed/TouchBaseCard/TouchBaseCard.scss';
 import {
 
 } from '@fortawesome/free-solid-svg-icons';
 
-const TouchBaseCardResponse = (props) => {
+const ResponseCards = (props) => {
 	const defaultImage = require('../../Assets/default.png');
 
 	return (
-		<div className=' '>
-			<div className='touchbase-card'>
-				<div className='postingPicture'>
+		<div className='response-post-component-container'>
+		
+				<div className='posting-picture'>
 					<img
-						src={defaultImage}
+						src={props.picture? props.picture : defaultImage}
 						alt={'default logo'}
 						className='default-user-image'
-					/>
-                
+					/> 
 				</div>{' '}
+				<div>{props.userHandle? props.userHandle : null}</div>
             
 				<div className='response-user-handle'>
-					{!props.body ? (
+					{!props.responses ? (
 						<div className='response-post-body'>
 							{' '}
 							'What is going on in Russia right now? Vladimir Lenin would
@@ -28,11 +28,11 @@ const TouchBaseCardResponse = (props) => {
 							<hr/>
 						</div>
 					) : (
-						<div className='user-handle-post-body'>{props.body}<hr/></div>
+						<div className='user-handle-post-body'>{props.responses? props.responses : null}<hr/></div>
 					)}
 				</div>
 			</div>
-		</div>
+	
 	);
 };
-export default TouchBaseCardResponse;
+export default ResponseCards;

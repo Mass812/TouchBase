@@ -1,7 +1,7 @@
 $font: 'Comfortaa', cursive;
 $font_size: 18px;
 $iconSize: 16px;
-$color: black;
+$color: rgb(0, 196, 196);
 $comm_boldness: 900;
 $inBodyColor: white;
 $gradient: linear-gradient(
@@ -19,27 +19,34 @@ $background: rgb(2, 0, 36);
 	background-color: $inBodyColor;
 	text-align: left;
 	justify-content: space-evenly;
-	padding: 10px 10px 10px 10px;
+	padding: 10px;
 	color: black;
-	margin: 5px;
+	margin: 10px;
 	border-radius: 10px;
 	border: .5px inset black;
 	display: grid;
-	grid-template-columns: 3fr 16fr 3fr;
-	grid-template-rows: auto auto;
-	grid-template-areas: "postingPicture postersName likeSpan"
-		"originalPosting originalPosting likeSpan";
+	grid-template-columns: 1fr 3fr 16fr 3fr 1fr;
+	grid-template-rows: auto auto  auto;
+	grid-template-areas: " postingPicture postersName postersName posterName ."
+		" . originalPosting originalPosting originalPosting ."
+		". likeSpan likeSpan likeSpan .";
 	box-shadow: 2px 2px 4px black;
 }
+.response-post-component-container{
+	background-color: white;
+	margin: 15px;
+	padding: 5px;
+	border-radius: 10px;
+}
 
-.postingPicture {
+.posting-picture {
 	grid-area: postingPicture;
 	justify-content: center;
 	align-content: center;
 	align-items: center;
 	display: flex;
 	height: 75px;
-	width: 85px;
+	width: 75px;
 	border-radius: 50%;
 	background: $background;
 	background: $gradient;
@@ -48,7 +55,8 @@ $background: rgb(2, 0, 36);
 .default-user-image {
 	align-self: center;
 	justify-self: center;
-
+	height: 80px;
+	width: 80px;
 	overflow: hidden;
 	border-radius: 50%;
 	object-fit: cover;
@@ -61,36 +69,40 @@ $background: rgb(2, 0, 36);
 	font-family: $font;
 	font-size: 20px;
 	color: rgb(0, 0, 0);
+	padding-left: 5px;
 }
 
-.user-handle-post-body {
-	margin: 5px;
+.response-body {
 	border-top: 2px solid rgb(10, 146, 224);
+	border-bottom: 2px solid rgb(10, 146, 224);
 	grid-area: originalPosting;
-	padding: 15px 15px;
+	margin-bottom: 25px;
+	padding-top: 5px;
 	font-family: $font;
 	font-size: $font_size;
 	font-weight: $comm_boldness;
 }
+
+.body-paragraph{
+	margin: 10px;
+	font-weight: 900;
+}
 .side-panel {
 	grid-area: likeSpan;
 	text-align: center;
-	align-content: flex-end;
-	align-items: right;
-	justify-content: flex-end;
-	border: 3px inset rgb(9, 165, 204);
+	align-content: flex-start;
+	align-items: center;
+	justify-content: flex-start;
 	background: $background;
-	background-color: rgba(255, 255, 255, 0.781);
+	background-color: rgba(248, 250, 250, 0.781);
 	box-shadow: 1px 1px 3px;
 	border-radius: 10px;
 	height: 100%;
-	margin: 5px 5px;
-	padding: 3px;
-
 	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 1fr 1fr 1fr;
-	grid-template-areas: "angry" 'love' 'comment' 'like';
+	grid-template-columns: 1fr 1fr 1fr 1fr;;
+	grid-template-rows: 1fr;
+	grid-template-areas: 'angry love comment like';
+	
 }
 
 .user-handle-post-body {
