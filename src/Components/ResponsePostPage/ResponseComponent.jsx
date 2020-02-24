@@ -85,7 +85,7 @@ const Response = () => {
 						sidebar={false}
 						key={n.id}
 						post={n.post}
-						userHandle={n.userHandle}
+						displayName={n.displayName}
 						id={n.id}
 						picture={n.picture}
 						to={'/personal_profile'}
@@ -94,7 +94,7 @@ const Response = () => {
 						<span>
 							<span style={{ color: 'teal' }}>Touch {''}</span>
 							Base with{' '}
-							<span style={{ color: 'darkBlue' }}>{n.userHandle}</span>
+							<span style={{ color: 'darkBlue' }}>{n.displayName}</span>
 						</span>
 					</div>
 				</div>
@@ -108,7 +108,7 @@ const Response = () => {
 				sidebar={false}
 				key={n.id}
 				post={n.post}
-				userHandle={n.userHandle}
+				displayName={n.displayName}
 				id={n.id}
 				picture={n.picture}
 				to={'/personal_profile'}

@@ -3,10 +3,14 @@ import './Feed.scss';
 import Navbar from '../Navbar/Navbar';
 import TouchBaseCard from './TouchBaseCard/TouchBaseCard';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { getFeedPosts, createFeedPost } from '../../redux/actions/feedActions';
+
+//TODO Refresh list after new post
 
 const Feed = (props) => {
 	const feedList = useSelector((state) => state.feed.posts);
+	const loading = useSelector((state)=> state.loading.isLoading)
 	const dispatch = useDispatch();
 	const [ typedPost, setTypedPost ] = useState('');
 	const [ post, setPost ] = useState('');
@@ -15,9 +19,11 @@ const Feed = (props) => {
 		setTypedPost(e.target.value);
 	};
 
-	(() => {
-		if (post) {
+//ask kev, this seems like a really janky work around; 
+	(()=>{
+		if( !!post ){
 			dispatch(createFeedPost(post));
+			setPost(null)
 		}
 	})();
 
@@ -35,30 +41,42 @@ const Feed = (props) => {
 		}
 	};
 
-	useEffect(() => {
-	dispatch(getFeedPosts());	
+	useEffect(
+		() => {
+			dispatch(getFeedPosts());
+		},
+		[dispatch]
+	);
 
-	}, [dispatch]);
+	const displayFeed = feedList
+		? feedList.map((n, idx) => (
+				<TouchBaseCard
+					sidebar={true}
+					key={n.id}
+					post={n.post}
+					displayName={n.displayName}
+					id={n.id}
+					picture={n.picture}
+					to={'/personal_profile'}
+				/>
+			))
+		: null;
 
-	
+		console.log(loading, 'loading value');
 
 
-	const displayFeed = (feedList ? feedList.map((n, idx) => (
-		<TouchBaseCard
-			sidebar={true}
-			key={n.id}
-			post={n.post}
-			userHandle={n.userHandle}
-			id={n.id}
-			picture={n.picture}
-			to={'/personal_profile'}
-		/>
-	)): null )
+
 
 	return (
 		<div className='feed-container'>
 			<Navbar />
 			<div className='feed-throw-post-block'>
+				<div className='tb-posting-title'>
+					<span>
+						<span style={{ color: 'teal' }}>Touch {''}</span>
+						Base with <span style={{ color: 'darkBlue' }}>Others</span>
+					</span>
+				</div>
 				<div className='feed-inner-post-block'>
 					<div className='feed-show-typed'> {typedPost} </div>
 					<div className='feed-input-form-block'>
@@ -67,7 +85,6 @@ const Feed = (props) => {
 							placeholder='Enter a new post here'
 							type='textArea'
 							onChange={onChange}
-							onBlur={submit}
 							onKeyPress={onKeyPress}
 						/>
 					</div>
@@ -77,7 +94,7 @@ const Feed = (props) => {
 								Posted Successfully!
 							</span>
 						) : null}
-						<button onClick={submit} className='nav-button'>
+						<button disabled={!!post} onClick={submit} className='nav-button'>
 							Post
 						</button>
 					</div>
@@ -85,6 +102,7 @@ const Feed = (props) => {
 			</div>
 			<div className='db-posts'>{displayFeed}</div>
 		</div>
+	
 	);
 };
 

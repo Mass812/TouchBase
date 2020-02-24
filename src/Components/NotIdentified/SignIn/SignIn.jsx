@@ -1,32 +1,39 @@
 import React, { useState } from 'react';
 import SignInDumb from './SignInDumb';
+import { auth } from '../../Firebase/firebaseConfig';
+import { useHistory } from 'react-router-dom';
+import Feed from '../../Feed/Feed';
 
 const SignIn = () => {
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
-	const [ totalUserInfo, setTotalUserInfo ] = useState([]);
+	const [ info, setInfo ] = useState({ email: '', password: '' });
+
+	const history = useHistory();
 
 	const userEmailEntered = (e) => {
-		console.log('sign in email', email);
-		setEmail(e.target.value);
+		setInfo({ ...info, email: e.target.value });
 	};
 
 	const userPasswordEntered = (e) => {
-		console.log('sign in Password entered', e.target.value);
-		setPassword(e.target.value);
+		setInfo({ ...info, password: e.target.value });
 	};
 
-	const userInfoEntered = () => {
-		setTotalUserInfo([ { email }, { password } ]);
+	const userInfoEntered = (e) => {
+		e.preventDefault();
+		auth.signInWithEmailAndPassword(info.email, info.password);
+		
 	};
+  
+	
 
-	console.log('total user info on sign in', totalUserInfo);
+
+	console.log(info, ' info passed in');
+
 	return (
 		<SignInDumb
 			userEmailEntered={userEmailEntered}
 			userPasswordEntered={userPasswordEntered}
-			password={password}
-			email={email}
+			password={info.password}
+			email={info.email}
 			userInfoEntered={userInfoEntered}
 		/>
 	);

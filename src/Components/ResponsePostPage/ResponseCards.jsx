@@ -17,7 +17,7 @@ const ResponseCards = (props) => {
 						className='default-user-image'
 					/> 
 				</div>{' '}
-				<div>{props.userHandle? props.userHandle : null}</div>
+				<div>{props.displayName? props.displayName : null}</div>
             
 				<div className='response-user-handle'>
 					{!props.responses ? (

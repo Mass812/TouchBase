@@ -11,6 +11,11 @@ import PersonalProfileEdit from './Components/PersonalProfile/PersonalProfileEdi
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop';
 
 function App() {
+
+
+
+
+
 	return (
 		<Router>
 			<ScrollToTop />
@@ -21,7 +26,10 @@ function App() {
 				<Route path='/feed' component={Feed} />
 				<Route path='/specific_post/:id' component={Response} />
 				<Route path='/personal_profile' component={PersonalProfile} />
-				<Route path='/edit_personal_profile/:id' component={PersonalProfileEdit} />
+				<Route
+					path='/edit_personal_profile'
+					component={PersonalProfileEdit}
+				/>
 			</Switch>
 		</Router>
 	);

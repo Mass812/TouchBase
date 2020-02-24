@@ -17,7 +17,7 @@ const TouchBaseCard = (props) => {
 						/>
 					</Link>
 				</div>
-				<div className='touchbase-user-handle'> {props.userHandle}</div>
+				<div className='touchbase-user-handle'> {props.displayName}</div>
 
 				{!props.post ? (
 					<div className='response-body'>

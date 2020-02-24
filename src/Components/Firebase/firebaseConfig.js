@@ -1,11 +1,12 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import "firebase/storage";
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyDHlsU9uEhKXq54jYoqUgGRRrfq_8hU8jg',
 	authDomain: 'touch-base-29dce.firebaseapp.com',
-	databaseURL: 'https://touch-base-29dce.firebaseio.com',
+	databaseURL: 'https://touchbase-29dce.firebaseio.com',
 	projectId: 'touch-base-29dce',
 	storageBucket: 'touch-base-29dce.appspot.com',
 	messagingSenderId: '882401272738',
@@ -13,7 +14,12 @@ const firebaseConfig = {
 	measurementId: 'G-GKPXH82WR5'
 };
 
+
+
 firebase.initializeApp(firebaseConfig);
-firebase.firestore();
+export const db = firebase.firestore();
+export const auth = firebase.auth();
+
+
 
 export default firebase;

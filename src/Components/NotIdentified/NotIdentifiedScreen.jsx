@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './NotIdentifiedScreen.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { auth } from '../Firebase/firebaseConfig';
 
 const NotIdentifiedScreen = () => {
+	const history = useHistory();
+
+	useEffect(() => {
+		auth.onAuthStateChanged((user) => {
+			console.log(user);
+			if (user) {
+				history.push('/feed');
+			}
+		});
+	}, []);
+
 	const logo = require('../../Assets/touchbase_logo2.png');
+
 	return (
 		<div className='not-identified-container'>
 			<div>
-				<div className='not-identified-title'><span style={{color: 'white'}}>Touch</span>Base</div>
+				<div className='not-identified-title'>
+					<span style={{ color: 'white' }}>Touch</span>Base
+				</div>
 				<span className='not-identified-subtitle'>
 					A Social Networking Platform
 				</span>

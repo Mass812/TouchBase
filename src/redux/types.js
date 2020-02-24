@@ -1,10 +1,15 @@
 //User Reducer Types
 
-
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
 export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
-export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
-export const SET_USER = 'SET_USER';
-
-
-
+export const LOADING = 'LOADING';
+export const DONE_LOADING = 'DONE_LOADING';
+export const FETCH_ERROR= 'FETCH_ERROR';
+export const CREATE_POST = 'CREATE_POST';
+export const CREATE_POST_ERROR = 'CREATE_POST_ERROR';
+export const GET_RESPONSES_ERROR = 'GET_RESPONSES_ERROR';
+export const GET_RESPONSES = 'GET_RESPONSES';
+export const CREATE_RESPONSE = 'CREATE_RESPONSE';
+export const RESPONSE_ERROR = 'RESPONSE_ERROR';
+export const GET_POSTS = 'GET_POSTS';
+export const GET_POSTS_ERROR = 'GET_POSTS_ERROR';

@@ -13,7 +13,7 @@ const PostComponentDumb = (props) => {
 					<span>
 						<span style={{ color: 'teal' }}>Touch {''}</span>
 						Base with{' '}
-						<span style={{ color: 'darkBlue' }}>{props.held.userHandle}</span>
+						<span style={{ color: 'darkBlue' }}>{props.held.displayName}</span>
 					</span>
 				</div>
 

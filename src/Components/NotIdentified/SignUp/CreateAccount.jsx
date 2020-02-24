@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import SignUp from './CreateAccountDumb';
+import { auth } from '../../Firebase/firebaseConfig';
 
 const CreateAccount = () => {
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
 	const [ verPassword, setVerPassword ] = useState('');
-	const [ totalUserInfo, setTotalUserInfo ] = useState([]);
-	const [ userHandle, setUserHandle ] = useState('');
-	const [ errorIfFail, setErrorIfFail ] = useState('');
 	const [ typed, setTyped ] = useState('');
+	const [ totalUserInfo, setTotalUserInfo ] = useState({
+		email: '',
+		password: '',
+		displayName: ''
+	});
 
 	const regexEmail = /[a-zA-Z0-9].*?com$/;
 	const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
@@ -19,10 +20,9 @@ const CreateAccount = () => {
 	const userEmailEntered = (e) => {
 		if (regexEmail.test(e.target.value)) {
 			console.log('user Email  Pass Regex', regexEmail.test(e.target.value));
-			setEmail(e.target.value);
+			setTotalUserInfo({ ...totalUserInfo, email: e.target.value });
 		}
 	};
-	console.log('password', password);
 
 	const fireOffTheseRockets = (e) => {
 		userPasswordEntered(e);
@@ -39,41 +39,32 @@ const CreateAccount = () => {
 
 	const userPasswordConfirmed = (e) => {
 		if (e.target.value === verPassword) {
-			setPassword(e.target.value);
+			setTotalUserInfo({ ...totalUserInfo, password: e.target.value });
 		}
+	};
+
+	const displayNameChose = (e) => {
+		setTotalUserInfo({ ...totalUserInfo, displayName: e.target.value });
+		//TODO add server verification handle is available
 	};
 
 	const userInfoEntered = () => {
-		if (
-			email &&
-			password &&
-			verPassword &&
-			userHandle &&
-			regexEmail.test(email) &&
-			regexPassword.test(password)
-		) {
-			setTotalUserInfo([ { email }, { password }, { userHandle } ]);
-		} else {
-			setErrorIfFail('Error Handling Action, Please Try Again');
-		}
-		console.log('total user info captured', totalUserInfo);
-	};
-
-	const userHandleChose = (e) => {
-		setUserHandle(e.target.value);
-		//add server verification handle is available
+		console.log('Total info captured', totalUserInfo);
+		auth
+			.createUserWithEmailAndPassword(totalUserInfo.email, totalUserInfo.password)
+			.catch((err) => console.error(400, err, 'error creating user'));
 	};
 
 	const getErrors = () => {
-		if (!email) {
+		if (!totalUserInfo.email) {
 			return <p>please add an email we can bind to your account</p>;
-		} else if (!password) {
+		} else if (!totalUserInfo.password) {
 			return <p>please add a password for your account</p>;
 		} else if (!verPassword) {
 			return <p>please Confirm your Password </p>;
-		} else if (!password || !verPassword || !email) {
+		} else if (!totalUserInfo.password || !verPassword || !totalUserInfo.email) {
 			return <p>please complete all fields</p>;
-		} else if (password) {
+		} else if (totalUserInfo.password) {
 			return <p>Your All Set, Just give us your username.</p>;
 		}
 	};
@@ -92,13 +83,9 @@ const CreateAccount = () => {
 		}
 	};
 
-	console.log('regex capital pass: ', regexCapital.test('Help'));
-
+	console.log(totalUserInfo);
 	const errorMessage = getErrors();
 	const helpNotification = generateMessage();
-
-	console.log('typed', typed);
-	console.log('total user Info: ', totalUserInfo);
 
 	return (
 		<SignUp
@@ -106,14 +93,13 @@ const CreateAccount = () => {
 			fireOffTheseRockets={fireOffTheseRockets}
 			userPasswordConfirmed={userPasswordConfirmed}
 			userInfoEntered={userInfoEntered}
-			userHandleChose={userHandleChose}
+			displayNameChose={displayNameChose}
 			helpNotification={helpNotification}
 			errorMessage={errorMessage}
-			errorIfFail={errorIfFail}
-			password={password}
-			email={email}
+			password={totalUserInfo.password}
+			email={totalUserInfo.email}
 			verPassword={verPassword}
-			userHandle={userHandle}
+			displayName={totalUserInfo.displayName}
 		/>
 	);
 };

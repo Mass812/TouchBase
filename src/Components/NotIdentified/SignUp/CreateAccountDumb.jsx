@@ -40,7 +40,7 @@ const Signup = (props) => {
 						className='input-field-sign'
 						placeholder='Enter your User Handle'
 						type='text'
-						onChange={props.userHandleChose}
+						onChange={props.displayNameChose}
 						autoFocus
 					/>{' '}
 				</form>
@@ -52,7 +52,7 @@ const Signup = (props) => {
 						props.password &&
 						props.email &&
 						props.verPassword &&
-						props.userHandle ? (
+						props.displayName ? (
 							{ opacity: '1' }
 						) : (
 							{ opacity: '.4' }
@@ -63,16 +63,16 @@ const Signup = (props) => {
 						props.email &&
 						props.verPassword &&
 						props.useHandle ? (
-							false
-						) : (
 							true
+						) : (
+							false
 						)
-					}>
+					}
+					>
 					Create My Account
 				</button>
 				<div className='error-message'>{props.errorMessage}</div>
 			</div>
-			<div className='error-message'>{props.errorIfFail}</div>
 		</div>
 	);
 };
