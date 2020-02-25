@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SignInDumb from './SignInDumb';
 import { auth } from '../../Firebase/firebaseConfig';
 import { useHistory } from 'react-router-dom';
-import Feed from '../../Feed/Feed';
 
 const SignIn = () => {
 	const [ info, setInfo ] = useState({ email: '', password: '' });
 
 	const history = useHistory();
+
+	useEffect(() => {
+		auth.onAuthStateChanged((user) => {
+			console.log(user);
+			if (user) {
+				history.push('/feed');
+			}
+		});
+	}, []);
 
 	const userEmailEntered = (e) => {
 		setInfo({ ...info, email: e.target.value });
@@ -19,12 +27,10 @@ const SignIn = () => {
 
 	const userInfoEntered = (e) => {
 		e.preventDefault();
-		auth.signInWithEmailAndPassword(info.email, info.password);
-		
+		auth
+			.signInWithEmailAndPassword(info.email, info.password)
+			.then(() => history.push('/feed'));
 	};
-  
-	
-
 
 	console.log(info, ' info passed in');
 

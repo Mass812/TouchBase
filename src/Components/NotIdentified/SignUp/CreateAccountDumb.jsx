@@ -16,6 +16,7 @@ const Signup = (props) => {
 				<form>
 					{' '}
 					<input
+						name='email'
 						className='input-field-sign'
 						placeholder='Enter your Email Here'
 						type='text'
@@ -30,19 +31,14 @@ const Signup = (props) => {
 						autoComplete='true'
 					/>{' '}
 					<input
+						name='password'
 						className='input-field-sign'
 						placeholder='Confirm Password Here'
 						type='password'
 						onChange={props.userPasswordConfirmed}
 						autoComplete='true'
 					/>{' '}
-					<input
-						className='input-field-sign'
-						placeholder='Enter your User Handle'
-						type='text'
-						onChange={props.displayNameChose}
-						autoFocus
-					/>{' '}
+
 				</form>
 
 				<button
@@ -51,8 +47,7 @@ const Signup = (props) => {
 					style={
 						props.password &&
 						props.email &&
-						props.verPassword &&
-						props.displayName ? (
+						props.verPassword  ? (
 							{ opacity: '1' }
 						) : (
 							{ opacity: '.4' }
@@ -61,14 +56,12 @@ const Signup = (props) => {
 					disabled={
 						props.password &&
 						props.email &&
-						props.verPassword &&
-						props.useHandle ? (
-							true
-						) : (
+						props.verPassword  ? (
 							false
+						) : (
+							true
 						)
-					}
-					>
+					}>
 					Create My Account
 				</button>
 				<div className='error-message'>{props.errorMessage}</div>

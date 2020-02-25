@@ -15,7 +15,7 @@
 		rgba(47, 88, 141, 1) 35%,
 		rgba(40, 154, 189, 1) 100%
 	);
-	grid-template-columns: 1fr 7fr;
+	grid-template-columns: 1fr 9fr;
 }
 
 .image-container {
@@ -33,10 +33,11 @@
 	display: flex;
 	align-items: flex-end;
 	justify-content: flex-end;
+	flex-wrap: wrap;
 }
 
 .nav-button {
-	margin-right: 15px;
+	margin: 15px;
 	background-color: #254576;
 	color: white;
 	border: 1px solid turquoise;

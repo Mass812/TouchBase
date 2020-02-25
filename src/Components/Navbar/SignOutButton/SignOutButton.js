@@ -1,6 +1,9 @@
 import React from 'react';
-import { auth } from '../../Components/Firebase/firebaseConfig';
+import { auth } from '../../Firebase/firebaseConfig';
 import { useHistory } from 'react-router-dom';
+import '../Navbar.scss'
+
+
 
 const SignOutButton = () => {
 	const history = useHistory();
@@ -18,7 +21,7 @@ const SignOutButton = () => {
 
 	return (
 		<div className='sign-out-button'>
-			<button onClick={signOut}>Sign Out</button>
+			<button onClick={signOut} className='nav-button'>Sign Out</button>
 		</div>
 	);
 };

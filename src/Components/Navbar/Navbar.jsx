@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.scss';
 import { Link } from 'react-router-dom';
-import SignOutButton from '../../Assets/signOutButton.js/SignOutButton';
+import SignOutButton from './SignOutButton/SignOutButton';
 
 const Navbar = () => {
 	const navIcon = require('../../Assets/nav.png');
@@ -23,7 +23,7 @@ const Navbar = () => {
 				<Link to='/edit_personal_profile'>
 					<button className='nav-button'>Settings</button>
 				</Link>
-				<SignOutButton/>
+				<SignOutButton />
 			</div>
 		</div>
 	);

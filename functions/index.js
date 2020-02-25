@@ -1,17 +1,28 @@
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
 
-// exports.createUser = functions.http.onRequest((req, res) => {
-// 	auth.createUserWithEmailAndPassword((email, password) => {}).catch(function(error) {
-// 		console.log(error.code, error.message);
-// 	});
-// });
+const db = admin.firestore();
 
-// exports.signInUser = functions.http.onRequest((email, password) => {
-// 	auth.signInWithEmailAndPassword((email, password) => {}).catch(function(error) {
-// 		console.log(error);
-// 	});
-// });
+exports.createUserDoc = functions.auth.user().onCreate((user) => {
+	//...
+	const newUser = {
+		email: user.email,
+		userId: user.uid,
+		work: '',
+		location: '',
+		hobbies: ''
+	};
 
-//   Set an authentication state observer and get user data
-//   For each of your app's pages that need information about the signed-in user, attach an observer to the global authentication object. This observer gets called whenever the user's sign-in state changes.
+	db.collection('users').doc(user.uid).set(newUser);
+});
 
-//   Attach the observer using the onAuthStateChanged method. When a user successfully signs in, you can get information about the user in the observer.
+exports.deleteUserDoc = functions.auth.user().onDelete((user) => {
+	// ...
+	db
+		.collection('users')
+		.doc(user)
+		.delete()
+		.then(() => console.log(user, ' successfully deleted'))
+		.catch((err) => console.error(err, 'error occurred'));
+});

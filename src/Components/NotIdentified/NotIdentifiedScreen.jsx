@@ -4,16 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { auth } from '../Firebase/firebaseConfig';
 
 const NotIdentifiedScreen = () => {
-	const history = useHistory();
 
-	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
-			console.log(user);
-			if (user) {
-				history.push('/feed');
-			}
-		});
-	}, []);
+
 
 	const logo = require('../../Assets/touchbase_logo2.png');
 

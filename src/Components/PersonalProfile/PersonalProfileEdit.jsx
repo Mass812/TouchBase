@@ -3,7 +3,7 @@ import './PersonalProfile.scss';
 import Navbar from '../Navbar/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import firebase, { db }  from '../Firebase/firebaseConfig';
+import firebase, { db } from '../Firebase/firebaseConfig';
 const PersonalProfileEdit = () => {
 	const defaultPic = require('../../Assets/default.png');
 	//move to initial state of editProfile Reducer
@@ -49,11 +49,13 @@ const PersonalProfileEdit = () => {
 						.then((url) => {
 							setPic({ ...pic, url: url });
 						});
-					// TODO get user id & attach this url to more user data doc
 				}
 			);
 		}
+		// TODO get user id here & attach this url to more user data doc
 	};
+
+	// TODO useEffect hook parameter pic.url to update users profile
 
 	//change to dispatch selector props
 	return (

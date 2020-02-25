@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import SignUp from './CreateAccountDumb';
 import { auth } from '../../Firebase/firebaseConfig';
+import { useHistory } from 'react-router-dom';
 
 const CreateAccount = () => {
 	const [ verPassword, setVerPassword ] = useState('');
 	const [ typed, setTyped ] = useState('');
 	const [ totalUserInfo, setTotalUserInfo ] = useState({
 		email: '',
-		password: '',
-		displayName: ''
+		password: ''
 	});
 
 	const regexEmail = /[a-zA-Z0-9].*?com$/;
@@ -16,6 +16,8 @@ const CreateAccount = () => {
 	const regexSpecial = /(.*[!@#$%^&*])/;
 	const regexCapital = /(.*[A-Z])/;
 	const regexNumber = /(.*[0-9])/;
+
+	const history = useHistory();
 
 	const userEmailEntered = (e) => {
 		if (regexEmail.test(e.target.value)) {
@@ -43,15 +45,12 @@ const CreateAccount = () => {
 		}
 	};
 
-	const displayNameChose = (e) => {
-		setTotalUserInfo({ ...totalUserInfo, displayName: e.target.value });
-		//TODO add server verification handle is available
-	};
-
+	//created with displayName
 	const userInfoEntered = () => {
 		console.log('Total info captured', totalUserInfo);
 		auth
 			.createUserWithEmailAndPassword(totalUserInfo.email, totalUserInfo.password)
+			.then(() => history.push(`sign_up_more_info`))
 			.catch((err) => console.error(400, err, 'error creating user'));
 	};
 
@@ -93,13 +92,11 @@ const CreateAccount = () => {
 			fireOffTheseRockets={fireOffTheseRockets}
 			userPasswordConfirmed={userPasswordConfirmed}
 			userInfoEntered={userInfoEntered}
-			displayNameChose={displayNameChose}
 			helpNotification={helpNotification}
 			errorMessage={errorMessage}
 			password={totalUserInfo.password}
 			email={totalUserInfo.email}
 			verPassword={verPassword}
-			displayName={totalUserInfo.displayName}
 		/>
 	);
 };
