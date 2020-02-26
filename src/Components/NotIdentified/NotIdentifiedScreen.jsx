@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './NotIdentifiedScreen.scss';
-import { Link, useHistory } from 'react-router-dom';
-import { auth } from '../Firebase/firebaseConfig';
+import { Link } from 'react-router-dom';
+//import { auth } from '../Firebase/firebaseConfig';
 
 const NotIdentifiedScreen = () => {
 

@@ -18,7 +18,7 @@ function App() {
 				<Route path='/' exact={true} component={NotIdentifiedScreen} />
 				<Route path='/sign_in' component={SignIn} />
 				<Route path='/sign_up' component={SignUp} />
-				<Route path='/sign_up_more_info' component={CreateInfo} />
+				<Route path='/sign_up_more_info/:id' component={CreateInfo} />
 				<Route path='/feed' component={Feed} />
 				<Route path='/specific_post/:id' component={Response} />
 				<Route path='/personal_profile' component={PersonalProfile} />

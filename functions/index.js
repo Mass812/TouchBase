@@ -9,9 +9,8 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
 	const newUser = {
 		email: user.email,
 		userId: user.uid,
-		work: '',
-		location: '',
-		hobbies: ''
+		url: '',
+		displayName: ''
 	};
 
 	db.collection('users').doc(user.uid).set(newUser);

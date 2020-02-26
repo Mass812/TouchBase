@@ -46,12 +46,14 @@ const CreateAccount = () => {
 	};
 
 	//created with displayName
-	const userInfoEntered = () => {
+	const userInfoEntered = async () => {
 		console.log('Total info captured', totalUserInfo);
-		auth
+
+		await auth
 			.createUserWithEmailAndPassword(totalUserInfo.email, totalUserInfo.password)
-			.then(() => history.push(`sign_up_more_info`))
 			.catch((err) => console.error(400, err, 'error creating user'));
+		const setParam = auth.currentUser.uid;
+		history.push(`/sign_up_more_info/${setParam}`);
 	};
 
 	const getErrors = () => {
