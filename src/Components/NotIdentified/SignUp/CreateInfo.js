@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../NotIdentifiedScreen.scss';
+import '../CreateAccount.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { db, auth, storage } from '../../Firebase/firebaseConfig';
@@ -74,6 +75,12 @@ const CreateInfo = () => {
 		setMoreInfo(e.target.value);
 	};
 
+	const onEnter = (e) => {
+		if (e.which === 13 || e.keyCode === 13) {
+			setMoreInfo(e.target.value);
+		}
+	};
+
 	const submit = () => {
 		history.push('/feed');
 	};
@@ -87,17 +94,25 @@ const CreateInfo = () => {
 					<div className='sign-title'>A few more details</div>
 					<form>
 						{!moreInfo ? (
-							<div>
+							<span>
 								<label>Choose a user display name / handle</label>
-								<input
-									name='displayName'
-									className='input-field-sign'
-									placeholder='Enter your User Handle'
-									type='text'
-									onBlur={displayNameChose}
-									autoFocus
-								/>{' '}
-							</div>
+								<div className='new-handle-block'>
+									<input
+										name='displayName'
+										className='input-field-sign'
+										placeholder='Enter your User Handle'
+										type='text'
+										onBlur={displayNameChose}
+										onKeyPress={onEnter}
+										autoFocus
+									/>{' '}
+									<button
+										className='submit-button-more-info'
+										onClick={displayNameChose}>
+										Next
+									</button>
+								</div>
+							</span>
 						) : (
 							<div>
 								<div>
@@ -136,19 +151,26 @@ const CreateInfo = () => {
 									<span className='image-upload-bar'>
 										{pic.name ? (
 											<span>
-												{pic.name}
-												<button type='button' onClick={uploadPic}>
+												<span style={{ padding: '4px 15px' }}>
+													{pic.name}
+												</span>
+												{/* <button type='button' onClick={uploadPic}>
 													upLoad
-												</button>
-												{/* <span style={{ paddingLeft: '15px' }}>
-												
-												<FontAwesomeIcon
-													icon={faCheckCircle}
-													size={'1x'}
-													color={'white'}
+												</button> */}
+												<span
 													onClick={uploadPic}
-												/>{' '}
-											</span> */}
+													style={{
+														paddingLeft: '15px',
+														paddingRight: '15px',
+														border: '1px solid teal'
+													}}>
+													<FontAwesomeIcon
+														icon={faCheckCircle}
+														size={'1x'}
+														color={'white'}
+													/>{' '}
+													 Upload
+												</span>
 											</span>
 										) : (
 											'Change Picture'
@@ -164,7 +186,8 @@ const CreateInfo = () => {
 						<br />
 
 						<button
-							disable={!pic.url? true : false}
+							className='submit-button-more-info'
+							disable={!pic.url ? true : false}
 							onClick={submit}
 							style={!pic.url ? { opacity: '0.1' } : { opacity: '1' }}>
 							I'm Ready

@@ -9,49 +9,44 @@ import {
 } from '../../redux/actions/responseActions';
 import { useParams } from 'react-router-dom';
 import { getFeedPosts } from '../../redux/actions/feedActions';
-import firebase from '../Firebase/firebaseConfig';
 
 const Response = () => {
-	const [ data, setData ] = useState([]);
 	const param = useParams().id;
 	const originalPost = useSelector((state) => state.feed.posts);
-	console.log(originalPost);
-	const postResponses = useSelector((state) => state.response.responses);
-	console.log(postResponses);
+	const getResponses = useSelector((state) => state.response.getResponses);
+
 	const dispatch = useDispatch();
 	const [ responsePost, setResponsePost ] = useState('');
-	const [ storedUserComment, setStoredUserComment ] = useState('');
+	const [ displayButton, setDisplayButton ] = useState(true);
 
-	useEffect(
-		() => {
-			dispatch(getFeedPosts());
-		},
-		[ dispatch ]
-	);
+	console.log('postResponses', getResponses);
+	console.log('originalPost', originalPost);
+
+	useEffect(() => {
+		dispatch(getFeedPosts());
+	}, []);
 
 	useEffect(
 		() => {
 			dispatch(getResponsePosts(param));
 		},
-		[ dispatch, param ]
-	);
-
-	useEffect(
-		() => {
-			let data = [];
-			firebase
-				.firestore()
-				.collection(`posts/${param}/responses`)
-				.get()
-				.then((snap) => {
-					data = snap.docs.map((item) => item.data());
-					setData(data);
-				});
-		},
 		[ param ]
 	);
 
-	console.log(data);
+	// useEffect(
+	// 	() => {
+	// 		let data = [];
+	// 		firebase
+	// 			.firestore()
+	// 			.collection(`posts/${param}/responses`)
+	// 			.get()
+	// 			.then((snap) => {
+	// 				data = snap.docs.map((item) => item.data());
+	// 				setData(data);
+	// 			});
+	// 	},
+	// 	[ param ]
+	// );
 
 	const typedResponse = (e) => {
 		setResponsePost(e.target.value);
@@ -59,35 +54,39 @@ const Response = () => {
 
 	const storeResponse = (e) => {
 		if (e.target.value.trim() !== '') {
-			setStoredUserComment(e.target.value);
+			// setStoredUserComment(e.target.value);
+			dispatch(createResponsePost(e.target.value, param));
 			e.target.value = '';
+			setDisplayButton(false);
 		}
 	};
 
 	const onEnter = (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
 			console.log('onEnter Fired');
-			setStoredUserComment(responsePost);
+			// setStoredUserComment(responsePost);
+			dispatch(createResponsePost(responsePost, param));
 			event.target.blur();
+			setDisplayButton(false);
 		}
 	};
 
-	(() => {
-		if (storedUserComment) {
-			dispatch(createResponsePost(storedUserComment, param));
-		}
-	})();
+	// (() => {
+	// 	if (displayButton) {
+	// 		dispatch(createResponsePost(displayButton, param));
+	// 	}
+	// })();
 
 	const displayFeed = originalPost
 		? originalPost.filter((n) => n.id === param).map((n, idx) => (
 				<div>
 					<TouchBaseCard
 						sidebar={false}
-						key={n.id}
+						key={n.id + idx}
 						post={n.post}
 						displayName={n.displayName}
 						id={n.id}
-						picture={n.picture}
+						picture={n.url}
 						to={'/personal_profile'}
 					/>
 					<div className='tb-posting-title'>
@@ -102,15 +101,15 @@ const Response = () => {
 		: null;
 
 	const displayResponses =
-		data &&
-		data.map((n, idx) => (
+		getResponses &&
+		getResponses.map((n, idx) => (
 			<TouchBaseCard
 				sidebar={false}
-				key={n.id}
+				key={n.id + idx}
 				post={n.post}
 				displayName={n.displayName}
 				id={n.id}
-				picture={n.picture}
+				picture={n.url}
 				to={'/personal_profile'}
 			/>
 		));
@@ -136,12 +135,22 @@ const Response = () => {
 								/>
 							</div>
 							<div className='post-comment-button'>
-								{storedUserComment ? (
+								{displayButton ? (
 									<span className='post-success'>
 										Posted Successfully!
 									</span>
 								) : null}
-								<button onClick={storeResponse} className='nav-button'>
+								<button
+									style={
+										displayButton ? (
+											{ opacity: '1' }
+										) : (
+											{ opacity: '.4' }
+										)
+									}
+									disabled={!displayButton}
+									onClick={storeResponse}
+									className='nav-button'>
 									Post
 								</button>
 							</div>

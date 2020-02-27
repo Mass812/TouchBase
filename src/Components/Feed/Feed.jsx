@@ -52,11 +52,11 @@ const Feed = (props) => {
 		? feedList.map((n, idx) => (
 				<TouchBaseCard
 					sidebar={true}
-					key={n.id}
+					key={n.id + idx}
 					post={n.post}
 					displayName={n.displayName}
 					id={n.id}
-					picture={n.picture}
+					picture={`${n.url}`}
 					to={'/personal_profile'}
 				/>
 			))

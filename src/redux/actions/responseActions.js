@@ -1,14 +1,18 @@
-import firebase from '../../Components/Firebase/firebaseConfig';
-import {
-	CREATE_RESPONSE,
-	LOADING,
-	DONE_LOADING,
-	FETCH_ERROR
-} from '../types';
+import firebase, { auth } from '../../Components/Firebase/firebaseConfig';
+import { CREATE_RESPONSE, LOADING, DONE_LOADING, FETCH_ERROR } from '../types';
 
 export const createResponsePost = (post, param) => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		dispatch({ type: LOADING });
+		//get user auth uid
+		const userRef = auth.currentUser.uid;
+		//get the users profile
+		const userProfile = await firebase
+			.firestore()
+			.collection('users')
+			.doc(userRef)
+			.get()
+			.then((snap) => snap.data());
 		firebase
 			.firestore()
 			.collection('posts')
@@ -16,8 +20,10 @@ export const createResponsePost = (post, param) => {
 			.collection('responses')
 			.add({
 				post,
-				displayName: 'Responder',
-				createdAt: new Date().toISOString()
+				displayName: userProfile.displayName,
+				createdAt: new Date().toISOString(),
+				userId: userRef,
+				url: userProfile.url
 			})
 			.then((docRef) =>
 				firebase
@@ -30,7 +36,7 @@ export const createResponsePost = (post, param) => {
 			)
 			.then(() => {
 				console.log('post from reducer');
-				dispatch({ type: CREATE_RESPONSE, payload: post });
+				dispatch({ type: CREATE_RESPONSE, payload: createResponsePost });
 				dispatch({ type: DONE_LOADING });
 			})
 			.catch((err) => {
@@ -40,17 +46,19 @@ export const createResponsePost = (post, param) => {
 	};
 };
 
+//TODO
 export const getResponsePosts = (param) => {
 	return (dispatch) => {
 		dispatch({ type: LOADING });
-		let data;
+		let getResponses = [];
 		firebase
 			.firestore()
 			.collection(`posts/${param}/responses`)
 			.get()
 			.then((snap) => {
-				data = snap.docs.map((item) => item.data());
-				dispatch({ type: 'GET_RESPONSES', data });
+				getResponses = snap.docs.map((item) => item.data());
+				console.log(getResponses, ' from action');
+				dispatch({ type: 'GET_RESPONSES', getResponses });
 				dispatch({ type: DONE_LOADING });
 			})
 			.catch((err) => {

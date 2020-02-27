@@ -1,16 +1,29 @@
-import firebase from '../../Components/Firebase/firebaseConfig';
+import firebase, { db, auth } from '../../Components/Firebase/firebaseConfig';
 import { CREATE_POST, LOADING, DONE_LOADING, FETCH_ERROR } from '../types';
 
 export const createFeedPost = (post) => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		dispatch({ type: LOADING });
+		//get user auth uid
+		const userRef = auth.currentUser.uid;
+		//get the users profile
+		const userProfile = await firebase
+			.firestore()
+			.collection('users')
+			.doc(userRef)
+			.get()
+			.then((snap) => snap.data());
+
+		console.log('userRef= ', userRef, 'userProfile = ', userProfile);
 		firebase
 			.firestore()
 			.collection('posts')
 			.add({
 				post,
-				displayName: 'Samson',
-				createdAt: new Date().toISOString()
+				displayName: userProfile.displayName,
+				createdAt: new Date().toISOString(),
+				userId: userRef,
+				url: userProfile.url
 			})
 			.then((docRef) =>
 				firebase
@@ -34,8 +47,7 @@ export const getFeedPosts = () => {
 	return (dispatch) => {
 		dispatch({ type: LOADING });
 		let data;
-		firebase
-			.firestore()
+		db
 			.collection('posts')
 			.limit(3)
 			.orderBy('createdAt', 'desc')

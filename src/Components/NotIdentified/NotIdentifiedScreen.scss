@@ -59,3 +59,25 @@
 		background-color: rgb(98, 112, 112);
 	}
 }
+
+
+.submit-button {
+	margin-right: 15px;
+	background-color: #254576;
+	color: white;
+	border: 1px solid turquoise;
+	border-radius: 50px;
+	width: 280px;
+	height: 40px;
+	padding: 3px;
+	align-self: center;
+
+	&:hover {
+		color: white;
+		border: 1px inset turquoise;
+		background-color: rgb(39, 214, 205);
+	}
+	&::active{
+		background-color: rgb(98, 112, 112);
+	}
+}
