@@ -33,28 +33,12 @@ const Response = () => {
 		[ param ]
 	);
 
-	// useEffect(
-	// 	() => {
-	// 		let data = [];
-	// 		firebase
-	// 			.firestore()
-	// 			.collection(`posts/${param}/responses`)
-	// 			.get()
-	// 			.then((snap) => {
-	// 				data = snap.docs.map((item) => item.data());
-	// 				setData(data);
-	// 			});
-	// 	},
-	// 	[ param ]
-	// );
-
 	const typedResponse = (e) => {
 		setResponsePost(e.target.value);
 	};
 
 	const storeResponse = (e) => {
 		if (e.target.value.trim() !== '') {
-			// setStoredUserComment(e.target.value);
 			dispatch(createResponsePost(e.target.value, param));
 			e.target.value = '';
 			setDisplayButton(false);
@@ -64,18 +48,11 @@ const Response = () => {
 	const onEnter = (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
 			console.log('onEnter Fired');
-			// setStoredUserComment(responsePost);
 			dispatch(createResponsePost(responsePost, param));
 			event.target.blur();
 			setDisplayButton(false);
 		}
 	};
-
-	// (() => {
-	// 	if (displayButton) {
-	// 		dispatch(createResponsePost(displayButton, param));
-	// 	}
-	// })();
 
 	const displayFeed = originalPost
 		? originalPost.filter((n) => n.id === param).map((n, idx) => (
