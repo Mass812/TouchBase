@@ -21,7 +21,7 @@ function App() {
 				<Route path='/sign_up_more_info/:id' component={CreateInfo} />
 				<Route path='/feed' component={Feed} />
 				<Route path='/specific_post/:id' component={Response} />
-				<Route path='/personal_profile' component={PersonalProfile} />
+				<Route path='/personal_profile/:id' component={PersonalProfile} />
 				<Route path='/edit_personal_profile' component={PersonalProfileEdit} />
 			</Switch>
 		</Router>

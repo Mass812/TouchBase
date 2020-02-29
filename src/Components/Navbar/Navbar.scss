@@ -16,20 +16,24 @@
 		rgba(40, 154, 189, 1) 100%
 	);
 	grid-template-columns: 1fr 9fr;
+	grid-template-areas: 'icon icon . . button button button button button';
 }
 
 .image-container {
+	grid-area: icon;
 	height: 10vh;
 	padding: 5px;
 }
 
 .nav-icon-image {
+	grid-area: icon;
 	height: 5vh;
 	padding: 0px;
 	margin: 15px;
 }
 
 .nav-icon-bar {
+	grid-area: button;
 	display: flex;
 	align-items: flex-end;
 	justify-content: flex-end;
@@ -37,7 +41,7 @@
 }
 
 .nav-button {
-	margin: 15px;
+	margin: 5px;
 	background-color: #254576;
 	color: white;
 	border: 1px solid turquoise;
@@ -54,8 +58,10 @@
 
 @media (orientation: landscape) and (max-height: 450px) {
 	.nav-icon-image {
+		grid-area: icon;
 		height: 33px;
 		margin-top: -2px;
 		padding: 5px;
+		float: left;
 	}
 }

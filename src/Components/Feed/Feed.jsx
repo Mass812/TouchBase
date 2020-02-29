@@ -1,51 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import './Feed.scss';
 import Navbar from '../Navbar/Navbar';
-import TouchBaseCard from './TouchBaseCard/TouchBaseCard';
+import TouchBaseCard from '../TouchBaseCard/TouchBaseCard';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { getFeedPosts, createFeedPost } from '../../redux/actions/feedActions';
 
-//TODO Refresh list after new post
+//TODO gsap annimate new post in from left
 
 const Feed = (props) => {
 	const feedList = useSelector((state) => state.feed.posts);
-	const loading = useSelector((state)=> state.loading.isLoading)
+	const loading = useSelector((state) => state.loading.isLoading);
 	const dispatch = useDispatch();
 	const [ typedPost, setTypedPost ] = useState('');
-	const [ post, setPost ] = useState('');
+	const [ submitted, setSubmitted ] = useState(false);
 
 	const onChange = (e) => {
 		setTypedPost(e.target.value);
 	};
 
-//ask kev, this seems like a really janky work around; 
-	(()=>{
-		if( !!post ){
-			dispatch(createFeedPost(post));
-			setPost(null)
-		}
-	})();
-
-	const submit = (e) => {
-		if (e.target.value.trim() !== '') {
-			setPost(typedPost);
-		}
+	const submit = async (e) => {
+		await setSubmitted(true);
+		await dispatch(createFeedPost(typedPost));
+		await setTypedPost('');
+		setTimeout(() => {
+			setSubmitted(false);
+		}, 1000);
+		
 	};
 
-	const onKeyPress = (event) => {
+	const onKeyPress = async (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
-			setPost(typedPost);
-			//	props.createPost(post);
-			event.target.blur();
+			await setSubmitted(true);
+			console.log('onKeyPress Fired');
+			await dispatch(createFeedPost(typedPost));
+			//event.target.blur();
+			await setTypedPost('');
+			setTimeout(() => {
+				setSubmitted(false);
+			}, 1000);
 		}
 	};
 
 	useEffect(
 		() => {
 			dispatch(getFeedPosts());
+			console.log('useEffect fire');
 		},
-		[dispatch]
+		[ submitted, dispatch ]
 	);
 
 	const displayFeed = feedList
@@ -62,10 +63,7 @@ const Feed = (props) => {
 			))
 		: null;
 
-		console.log(loading, 'loading value');
-
-
-
+	console.log(loading, 'loading value');
 
 	return (
 		<div className='feed-container'>
@@ -74,11 +72,12 @@ const Feed = (props) => {
 				<div className='tb-posting-title'>
 					<span>
 						<span style={{ color: 'teal' }}>Touch {''}</span>
-						Base with <span style={{ color: 'darkBlue' }}>Others</span>
+						Base <span style={{ color: 'darkBlue' }}>Feed</span>
 					</span>
 				</div>
 				<div className='feed-inner-post-block'>
 					<div className='feed-show-typed'> {typedPost} </div>
+
 					<div className='feed-input-form-block'>
 						<input
 							className='feed-input'
@@ -86,15 +85,15 @@ const Feed = (props) => {
 							type='textArea'
 							onChange={onChange}
 							onKeyPress={onKeyPress}
+							value={typedPost}
 						/>
 					</div>
+
 					<div className='feed-post-comment-button'>
-						{post ? (
-							<span className='feed-post-success'>
-								Posted Successfully!
-							</span>
+						{submitted ? (
+							<span className='post-success'>Posted Successfully!</span>
 						) : null}
-						<button disabled={!!post} onClick={submit} className='nav-button'>
+						<button onClick={submit} className='nav-button'>
 							Post
 						</button>
 					</div>
@@ -102,7 +101,6 @@ const Feed = (props) => {
 			</div>
 			<div className='db-posts'>{displayFeed}</div>
 		</div>
-	
 	);
 };
 

@@ -2,8 +2,21 @@ import React from 'react';
 import './Navbar.scss';
 import { Link } from 'react-router-dom';
 import SignOutButton from './SignOutButton/SignOutButton';
+//dispatch = useDispatch();
+//
 
-const Navbar = () => {
+
+
+
+const Navbar = (props) => {
+
+// TODO add reducer for getting user.uid
+
+
+
+
+
+
 	const navIcon = require('../../Assets/nav.png');
 	return (
 		<div className='navbar'>
@@ -20,9 +33,7 @@ const Navbar = () => {
 				<Link to='/feed'>
 					<button className='nav-button'>Feed</button>
 				</Link>
-				<Link to='/edit_personal_profile'>
-					<button className='nav-button'>Settings</button>
-				</Link>
+
 				<SignOutButton />
 			</div>
 		</div>

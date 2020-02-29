@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 const SignIn = () => {
 	const [ info, setInfo ] = useState({ email: '', password: '' });
-
+	const [signOnError, setSignOnError]=useState(false);
 	const history = useHistory();
 
 	useEffect(() => {
@@ -29,7 +29,11 @@ const SignIn = () => {
 		e.preventDefault();
 		auth
 			.signInWithEmailAndPassword(info.email, info.password)
-			.then(() => history.push('/feed'));
+			.then(() => history.push('/feed'))
+			.catch(err=>{
+				setSignOnError(true);
+				console.log(err);
+			});
 	};
 
 	console.log(info, ' info passed in');
@@ -41,6 +45,7 @@ const SignIn = () => {
 			password={info.password}
 			email={info.email}
 			userInfoEntered={userInfoEntered}
+			error={signOnError}
 		/>
 	);
 };

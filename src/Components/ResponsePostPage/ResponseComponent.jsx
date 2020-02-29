@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../Navbar/Navbar';
 import './PostingBody.scss';
-import TouchBaseCard from '../Feed/TouchBaseCard/TouchBaseCard';
+import TouchBaseCard from '../TouchBaseCard/TouchBaseCard';
 import {
 	createResponsePost,
 	getResponsePosts
@@ -10,28 +10,28 @@ import {
 import { useParams } from 'react-router-dom';
 import { getFeedPosts } from '../../redux/actions/feedActions';
 
+
 const Response = () => {
 	const param = useParams().id;
 	const originalPost = useSelector((state) => state.feed.posts);
 	const getResponses = useSelector((state) => state.response.getResponses);
-
 	const dispatch = useDispatch();
+
 	const [ responsePost, setResponsePost ] = useState('');
 	const [ displayButton, setDisplayButton ] = useState(true);
 
 	console.log('postResponses', getResponses);
 	console.log('originalPost', originalPost);
 
+
+
+
 	useEffect(() => {
 		dispatch(getFeedPosts());
-	}, []);
+		dispatch(getResponsePosts(param));
+	}, [param]);
 
-	useEffect(
-		() => {
-			dispatch(getResponsePosts(param));
-		},
-		[ param ]
-	);
+
 
 	const typedResponse = (e) => {
 		setResponsePost(e.target.value);
@@ -97,6 +97,7 @@ const Response = () => {
 			<div className='edge-case-large'>
 				<div className='original-sticky'> {displayFeed}</div>
 				<div className='tb-card-container'>
+								{displayButton ? (
 					<div className='response-input-container'>
 						<div>
 							<div className='typed-post'> {responsePost} </div>
@@ -110,13 +111,13 @@ const Response = () => {
 									onBlur={storeResponse}
 									onKeyPress={onEnter}
 								/>
-							</div>
+							</div> :
+
+
 							<div className='post-comment-button'>
-								{displayButton ? (
 									<span className='post-success'>
 										Posted Successfully!
 									</span>
-								) : null}
 								<button
 									style={
 										displayButton ? (
@@ -133,6 +134,7 @@ const Response = () => {
 							</div>
 						</div>
 					</div>
+								) : null}
 					<div className='previous-comments-block'>{displayResponses}</div>
 				</div>
 			</div>

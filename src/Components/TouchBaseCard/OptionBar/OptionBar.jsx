@@ -7,7 +7,7 @@ import {
 	faFrownOpen,
 	faHeart
 } from '@fortawesome/free-solid-svg-icons';
-import '../TouchBaseCard/TouchBaseCard.scss'
+import '../TouchBaseCard.scss'
 import {Link} from 'react-router-dom';
 
 

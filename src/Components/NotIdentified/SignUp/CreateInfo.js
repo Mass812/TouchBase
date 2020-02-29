@@ -21,16 +21,16 @@ const CreateInfo = () => {
 
 	const [ moreInfo, setMoreInfo ] = useState('');
 
-	//move to action creator
+	// TODO move to action creator
 	const fileSelector = (e) => {
 		console.log(e.target.files[0]);
 		if (e.target.files[0]) {
-			setPic({ ...pic, image: e.target.files[0], name: e.target.files[0].name });
+			setPic({ ...pic, image: e.target.files[0], name: param });
 		}
 	};
 	console.log('after first select file', pic.name);
 
-	//move to action creator
+	// TODO move to action creator
 	const uploadPic = async () => {
 		if (pic.image) {
 			console.log('upload Pic Fx fired');
@@ -169,7 +169,7 @@ const CreateInfo = () => {
 														size={'1x'}
 														color={'white'}
 													/>{' '}
-													 Upload
+													Upload
 												</span>
 											</span>
 										) : (

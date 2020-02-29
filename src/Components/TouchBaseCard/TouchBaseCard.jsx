@@ -1,10 +1,10 @@
 import React from 'react';
 import './TouchBaseCard.scss';
-import OptionBar from '../OptionBar/OptionBar';
+import OptionBar from './OptionBar/OptionBar';
 import { Link } from 'react-router-dom';
 
 const TouchBaseCard = (props) => {
-	const defaultImage = require('../../../Assets/default.png');
+	const defaultImage = require('../../Assets/default.png');
 	return (
 		<div className=' '>
 			<div className='touchbase-card'>

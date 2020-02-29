@@ -49,7 +49,7 @@ export const getFeedPosts = () => {
 		let data;
 		db
 			.collection('posts')
-			.limit(3)
+			.limit(5)
 			.orderBy('createdAt', 'desc')
 			.get()
 			.then((snap) => {

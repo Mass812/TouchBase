@@ -44,6 +44,13 @@ const SignInDumb = (props) => {
 					disabled={props.password && props.email ? false : true}>
 					Sign In
 				</button>
+				<div>
+					<h5 style={{ color: 'aquaMarine' }}>
+						{props.error ? (
+							'Either password or email are invalid. Please re-enter your information.'
+						) : null}
+					</h5>
+				</div>
 			</div>
 		</div>
 	);
