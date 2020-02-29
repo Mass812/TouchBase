@@ -3,16 +3,22 @@ import './Feed.scss';
 import Navbar from '../Navbar/Navbar';
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFeedPosts, createFeedPost } from '../../redux/actions/feedActions';
+import {
+	getFeedPosts,
+	createFeedPost,
+	getUserCardDetails
+} from '../../redux/actions/feedActions';
 
 //TODO gsap annimate new post in from left
 
 const Feed = (props) => {
 	const feedList = useSelector((state) => state.feed.posts);
 	const loading = useSelector((state) => state.loading.isLoading);
+	const userInfo = useSelector((state) => state.feed.userInfo);
 	const dispatch = useDispatch();
 	const [ typedPost, setTypedPost ] = useState('');
 	const [ submitted, setSubmitted ] = useState(false);
+	const [ tempHoldUser, setTempHoldUser ] = useState('');
 
 	const onChange = (e) => {
 		setTypedPost(e.target.value);
@@ -25,7 +31,6 @@ const Feed = (props) => {
 		setTimeout(() => {
 			setSubmitted(false);
 		}, 1000);
-		
 	};
 
 	const onKeyPress = async (event) => {
@@ -41,10 +46,16 @@ const Feed = (props) => {
 		}
 	};
 
+	//create a user profile pic
+	//reducer
+	//action
+	//implement
+
+	//TODO Cache data
+
 	useEffect(
 		() => {
 			dispatch(getFeedPosts());
-			console.log('useEffect fire');
 		},
 		[ submitted, dispatch ]
 	);
@@ -63,16 +74,33 @@ const Feed = (props) => {
 			))
 		: null;
 
-	console.log(loading, 'loading value');
+	// const userHeaderArea = (<div>
+	// 				{' '}
+	// 				{userInfo.displayName}
+	// 				<span>
+	// 					<img src={userInfo.url} alt={userInfo.displayName} />
+	// 				</span>
+	// 			</div>);
+			
 
 	return (
 		<div className='feed-container'>
 			<Navbar />
 			<div className='feed-throw-post-block'>
 				<div className='tb-posting-title'>
+					{/* <span>{userHeaderArea}</span> */}
+				
 					<span>
 						<span style={{ color: 'teal' }}>Touch {''}</span>
-						Base <span style={{ color: 'darkBlue' }}>Feed</span>
+						Base
+						<span
+							style={{
+								color: 'teal',
+								fontFamily: 'SansSerif',
+								paddingLeft: '25px'
+							}}>
+							What's on Your Mind?
+						</span>
 					</span>
 				</div>
 				<div className='feed-inner-post-block'>

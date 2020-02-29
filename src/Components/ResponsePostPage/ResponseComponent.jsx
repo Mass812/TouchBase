@@ -10,49 +10,51 @@ import {
 import { useParams } from 'react-router-dom';
 import { getFeedPosts } from '../../redux/actions/feedActions';
 
-
 const Response = () => {
 	const param = useParams().id;
 	const originalPost = useSelector((state) => state.feed.posts);
 	const getResponses = useSelector((state) => state.response.getResponses);
 	const dispatch = useDispatch();
-
-	const [ responsePost, setResponsePost ] = useState('');
-	const [ displayButton, setDisplayButton ] = useState(true);
+	const [ typedPost, setTypedPost ] = useState('');
+	const [ submitted, setSubmitted ] = useState(false);
 
 	console.log('postResponses', getResponses);
 	console.log('originalPost', originalPost);
 
-
-
-
-	useEffect(() => {
-		dispatch(getFeedPosts());
-		dispatch(getResponsePosts(param));
-	}, [param]);
-
-
-
-	const typedResponse = (e) => {
-		setResponsePost(e.target.value);
+	const onChange = (e) => {
+		setTypedPost(e.target.value);
 	};
 
-	const storeResponse = (e) => {
-		if (e.target.value.trim() !== '') {
-			dispatch(createResponsePost(e.target.value, param));
-			e.target.value = '';
-			setDisplayButton(false);
-		}
-	};
-
-	const onEnter = (event) => {
+	const onEnter = async (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
-			console.log('onEnter Fired');
-			dispatch(createResponsePost(responsePost, param));
-			event.target.blur();
-			setDisplayButton(false);
+			await setSubmitted(true);
+			await dispatch(createResponsePost(typedPost, param));
+			await setTypedPost('');
+			setTimeout(() => {
+				setSubmitted(false);
+			}, 1000);
 		}
 	};
+	const storeResponse = async (e) => {
+		if (e.target.value.trim() !== '') {
+			await setSubmitted(true);
+			console.log('onKeyPress Fired');
+
+			await dispatch(createResponsePost(typedPost, param));
+			await setTypedPost('');
+			setTimeout(() => {
+				setSubmitted(false);
+			}, 1000);
+		}
+	};
+
+	useEffect(
+		() => {
+			dispatch(getFeedPosts());
+			dispatch(getResponsePosts(param));
+		},
+		[ param, dispatch ]
+	);
 
 	const displayFeed = originalPost
 		? originalPost.filter((n) => n.id === param).map((n, idx) => (
@@ -97,44 +99,45 @@ const Response = () => {
 			<div className='edge-case-large'>
 				<div className='original-sticky'> {displayFeed}</div>
 				<div className='tb-card-container'>
-								{displayButton ? (
-					<div className='response-input-container'>
-						<div>
-							<div className='typed-post'> {responsePost} </div>
-
-							<div className='comment-on-post'>
-								<input
-									className='input-field-posts'
-									placeholder='Enter a new post here'
-									type='textArea'
-									onChange={typedResponse}
-									onBlur={storeResponse}
-									onKeyPress={onEnter}
-								/>
-							</div> :
-
-
-							<div className='post-comment-button'>
-									<span className='post-success'>
-										Posted Successfully!
-									</span>
-								<button
-									style={
-										displayButton ? (
-											{ opacity: '1' }
-										) : (
-											{ opacity: '.4' }
-										)
-									}
-									disabled={!displayButton}
-									onClick={storeResponse}
-									className='nav-button'>
-									Post
-								</button>
+					{!submitted ? (
+						<div className='response-input-container'>
+							<div>
+								<div className='typed-post'> {typedPost} </div>
+								<div className='comment-on-post'>
+									<input
+										className='input-field-posts'
+										placeholder='Enter a new post here'
+										type='textArea'
+										onChange={onChange}
+										onBlur={storeResponse}
+										onKeyPress={onEnter}
+										value={typedPost}
+									/>
+								</div>{' '}
+								:
+								<div className='post-comment-button'>
+									{submitted ? (
+										<span className='post-success'>
+											Posted Successfully!
+										</span>
+									) : null}
+									<button
+										style={
+											!submitted ? (
+												{ opacity: '1' }
+											) : (
+												{ opacity: '.4' }
+											)
+										}
+										disabled={submitted}
+										onClick={storeResponse}
+										className='nav-button'>
+										Post
+									</button>
+								</div>
 							</div>
 						</div>
-					</div>
-								) : null}
+					) : null}
 					<div className='previous-comments-block'>{displayResponses}</div>
 				</div>
 			</div>

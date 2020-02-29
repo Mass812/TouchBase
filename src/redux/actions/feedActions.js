@@ -1,5 +1,11 @@
 import firebase, { db, auth } from '../../Components/Firebase/firebaseConfig';
-import { CREATE_POST, LOADING, DONE_LOADING, FETCH_ERROR } from '../types';
+import {
+	CREATE_POST,
+	LOADING,
+	DONE_LOADING,
+	FETCH_ERROR,
+	GET_USER_HEADER_INFO
+} from '../types';
 
 export const createFeedPost = (post) => {
 	return async (dispatch) => {
@@ -57,5 +63,27 @@ export const getFeedPosts = () => {
 				dispatch({ type: 'GET_POSTS', data });
 			});
 		dispatch({ type: DONE_LOADING });
+	};
+};
+
+export const getUserCardDetails = () => {
+	return async(dispatch) => {
+		dispatch({ type: LOADING });
+		//get user auth uid
+		const userRef = auth.currentUser.uid;
+		//get the users profile
+		let data;
+		await firebase
+			.firestore()
+			.collection('users')
+			.doc(userRef)
+			.get()
+			.then(snap => {
+				data = snap.data();
+
+				dispatch({ type: GET_USER_HEADER_INFO, data });
+				console.log('userHeader Info: ', data);
+	
+			});
 	};
 };

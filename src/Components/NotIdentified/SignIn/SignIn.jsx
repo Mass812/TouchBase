@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import SignInDumb from './SignInDumb';
 import { auth } from '../../Firebase/firebaseConfig';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {getUserCardDetails} from '../../../redux/actions/feedActions';
 
 const SignIn = () => {
 	const [ info, setInfo ] = useState({ email: '', password: '' });
 	const [signOnError, setSignOnError]=useState(false);
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		auth.onAuthStateChanged((user) => {
@@ -25,10 +28,11 @@ const SignIn = () => {
 		setInfo({ ...info, password: e.target.value });
 	};
 
-	const userInfoEntered = (e) => {
+	const userInfoEntered = async (e) => {
 		e.preventDefault();
-		auth
+	await	auth
 			.signInWithEmailAndPassword(info.email, info.password)
+			.then(()=>	 dispatch(getUserCardDetails()))
 			.then(() => history.push('/feed'))
 			.catch(err=>{
 				setSignOnError(true);

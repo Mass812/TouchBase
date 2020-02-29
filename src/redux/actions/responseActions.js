@@ -54,6 +54,7 @@ export const getResponsePosts = (param) => {
 		firebase
 			.firestore()
 			.collection(`posts/${param}/responses`)
+			.orderBy('createdAt', 'desc')
 			.get()
 			.then((snap) => {
 				getResponses = snap.docs.map((item) => item.data());
