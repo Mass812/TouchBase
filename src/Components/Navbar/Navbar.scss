@@ -65,3 +65,17 @@
 		float: left;
 	}
 }
+@media all and (min-width: 950px) {
+	.nav-icon-image {
+		grid-area: icon;
+		height: 63px;
+		margin-top: 8px;
+		padding: 5px;
+		float: left;
+	
+	}
+
+	.navbar{
+		width: 98vw;
+	}
+}

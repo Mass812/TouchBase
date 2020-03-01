@@ -1,7 +1,7 @@
 $font: 'Comfortaa', cursive;
 $font_size: 16px;
 $iconSize: 16px;
-$color: rgb(0, 196, 196);
+$color: rgb(3, 131, 131);
 $comm_boldness: 900;
 $inBodyColor: white;
 $gradient: linear-gradient(
@@ -11,12 +11,20 @@ $gradient: linear-gradient(
 	rgba(41, 147, 184, 1) 100%
 );
 $background: rgb(2, 0, 36);
+$inBodyColor2: white;
+$gradient2: linear-gradient(
+	90deg,
+	rgba(179, 177, 202, 0.76) 22%,
+	rgba(138, 149, 165, 0.747) 43%,
+	rgba(110, 157, 173, 0.623) 60%
+);
+$background2: rgb(2, 0, 36);
 
 .touchbase-card {
 	font-size: $font_size;
 	font-family: $font;
 	font-weight: $comm_boldness;
-	background-color: $inBodyColor;
+	background: white;
 	text-align: left;
 	justify-content: space-evenly;
 	padding: 10px;
@@ -31,6 +39,7 @@ $background: rgb(2, 0, 36);
 		" originalPosting originalPosting originalPosting originalPosting originalPosting"
 		"likeSpan likeSpan likeSpan likeSpan .";
 	box-shadow: 2px 2px 4px black;
+
 }
 .response-post-component-container{
 	background-color: white;
@@ -51,14 +60,13 @@ $background: rgb(2, 0, 36);
 	border-radius: 50%;
 	background: $background;
 	background: $gradient;
-
 	padding: 1px;
 }
 .default-user-image {
 	align-self: center;
 	justify-self: center;
-	height: 75px;
-	width: 75px;
+	height: 85px;
+	width: 85px;
 	overflow: hidden;
 	border-radius: 50%;
 	object-fit: cover;
@@ -66,7 +74,7 @@ $background: rgb(2, 0, 36);
 }
 .touchbase-user-handle {
 	grid-area: postersName;
-	font-weight: 900;
+	font-weight: 500;
 	justify-self: left;
 	align-self: center;
 	font-family: $font;
@@ -79,17 +87,17 @@ $background: rgb(2, 0, 36);
 	border-top: 2px solid rgb(10, 146, 224);
 	border-bottom: 2px solid rgb(10, 146, 224);
 	grid-area: originalPosting;
-	margin: 25px 0px;;
+	margin: 25px 30px;;
 	padding-top: 1px;
 	font-family: $font;
 	font-size: $font_size;
 	font-weight: $comm_boldness;
-	text-align: end;
+	text-align: center;
 }
 
 .body-paragraph{
 	margin: 10px;
-	font-weight: 900;
+	font-weight: 500;
 }
 .side-panel {
 	grid-area: likeSpan;
@@ -120,8 +128,8 @@ $background: rgb(2, 0, 36);
 }
 
 #angry {
-	border-width: 5px;
-	color: $color;
+
+	color: #111E48;
 	grid-area: angry;
 	font-size: $iconSize;
 }
@@ -131,17 +139,23 @@ $background: rgb(2, 0, 36);
 	font-size: $iconSize;
 }
 #like {
-	color: $color;
+	color: #298EB4;
 	grid-area: like;
 	font-size: $iconSize;
+	
+	
+
+	&:active {
+		color: yellow;
+	}
 }
 #comment {
-	color: $color;
 	font-size: $iconSize;
 	grid-area: comment;
 }
 #love {
-	color: $color;
+	color: #2E5D91;
+
 	font-size: $iconSize;
 	grid-area: love;
 }

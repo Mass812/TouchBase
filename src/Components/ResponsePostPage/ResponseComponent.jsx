@@ -53,7 +53,7 @@ const Response = () => {
 			dispatch(getFeedPosts());
 			dispatch(getResponsePosts(param));
 		},
-		[ param, dispatch ]
+		[ param, dispatch, submitted ]
 	);
 
 	const displayFeed = originalPost
@@ -114,7 +114,6 @@ const Response = () => {
 										value={typedPost}
 									/>
 								</div>{' '}
-								:
 								<div className='post-comment-button'>
 									{submitted ? (
 										<span className='post-success'>

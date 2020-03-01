@@ -3,10 +3,10 @@
 
 }
 
-/* html {
+ /* html {
 	width: 100vw;
 	height: 100vh;
-} */
+}  */
 
 body {
 	background: rgba(41, 147, 184, 1);
@@ -15,6 +15,9 @@ body {
 		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
 }
 
 code {

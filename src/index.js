@@ -13,8 +13,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 
 const persistConfig = {
 	key: 'root',
-	storage,
-	whitelist: [ 'feedReducer' ]
+	storage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -25,13 +24,14 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
 	persistedReducer,
-	/* preloadedState, */ composeEnhancers(applyMiddleware(...middlewares))
+	undefined,
+	composeEnhancers(applyMiddleware(...middlewares))
 );
-const persistor = persistStore(store);
+const persistedStore = persistStore(store);
 
 ReactDOM.render(
 	<Provider store={store}>
-		<PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+		<PersistGate loading={<div>Loading...</div>} persistor={persistedStore}>
 			<App />
 		</PersistGate>
 	</Provider>,

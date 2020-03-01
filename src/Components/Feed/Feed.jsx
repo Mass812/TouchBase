@@ -6,19 +6,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 	getFeedPosts,
 	createFeedPost,
-	getUserCardDetails
 } from '../../redux/actions/feedActions';
+import { LOADING } from '../../redux/types';
 
 //TODO gsap annimate new post in from left
 
 const Feed = (props) => {
 	const feedList = useSelector((state) => state.feed.posts);
-	const loading = useSelector((state) => state.loading.isLoading);
 	const userInfo = useSelector((state) => state.feed.userInfo);
 	const dispatch = useDispatch();
 	const [ typedPost, setTypedPost ] = useState('');
 	const [ submitted, setSubmitted ] = useState(false);
-	const [ tempHoldUser, setTempHoldUser ] = useState('');
 
 	const onChange = (e) => {
 		setTypedPost(e.target.value);
@@ -26,6 +24,7 @@ const Feed = (props) => {
 
 	const submit = async (e) => {
 		await setSubmitted(true);
+		dispatch({type: LOADING})
 		await dispatch(createFeedPost(typedPost));
 		await setTypedPost('');
 		setTimeout(() => {
@@ -69,37 +68,40 @@ const Feed = (props) => {
 					displayName={n.displayName}
 					id={n.id}
 					picture={`${n.url}`}
-					to={'/personal_profile'}
+					comment={'/personal_profile'}
+					
 				/>
 			))
 		: null;
 
-	// const userHeaderArea = (<div>
-	// 				{' '}
-	// 				{userInfo.displayName}
-	// 				<span>
-	// 					<img src={userInfo.url} alt={userInfo.displayName} />
-	// 				</span>
-	// 			</div>);
+	const userHeaderArea =(<div>
+								<div>
+									<img className='default-user-image' src={userInfo.url} alt={userInfo.displayName} />
+								</div>
+										{userInfo.displayName}
+								</div>);
 			
+									console.log(userInfo.displayName);
 
-	return (
-		<div className='feed-container'>
+
+
+			return (
+				<div className='feed-container-component'>
 			<Navbar />
 			<div className='feed-throw-post-block'>
 				<div className='tb-posting-title'>
-					{/* <span>{userHeaderArea}</span> */}
 				
-					<span>
+					<span style={{fontSize: '24px'}}>
 						<span style={{ color: 'teal' }}>Touch {''}</span>
 						Base
+				{userHeaderArea}
 						<span
 							style={{
 								color: 'teal',
 								fontFamily: 'SansSerif',
-								paddingLeft: '25px'
+								
 							}}>
-							What's on Your Mind?
+						
 						</span>
 					</span>
 				</div>
@@ -115,8 +117,6 @@ const Feed = (props) => {
 							onKeyPress={onKeyPress}
 							value={typedPost}
 						/>
-					</div>
-
 					<div className='feed-post-comment-button'>
 						{submitted ? (
 							<span className='post-success'>Posted Successfully!</span>
@@ -125,6 +125,8 @@ const Feed = (props) => {
 							Post
 						</button>
 					</div>
+					</div>
+
 				</div>
 			</div>
 			<div className='db-posts'>{displayFeed}</div>
