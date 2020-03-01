@@ -1,19 +1,16 @@
 import React from 'react';
 import { auth } from '../../Firebase/firebaseConfig';
 import { useHistory } from 'react-router-dom';
-import '../Navbar.scss'
-
-
+import '../Navbar.scss';
 
 const SignOutButton = () => {
 	const history = useHistory();
 
 	const signOut = async () => {
-        console.log('currentUser', auth.currentUser);
+		console.log('currentUser', auth.currentUser);
 		try {
-			await auth.signOut();
 			console.log('signed out user', auth.currentUser);
-			history.push('/');
+			await auth.signOut().then(() => history.push('/'));
 		} catch (error) {
 			console.log(error);
 		}
@@ -21,7 +18,9 @@ const SignOutButton = () => {
 
 	return (
 		<div className='sign-out-button'>
-			<button onClick={signOut} className='nav-button'>Sign Out</button>
+			<button onClick={signOut} className='nav-button'>
+				Sign Out
+			</button>
 		</div>
 	);
 };

@@ -6,17 +6,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 	getFeedPosts,
 	createFeedPost,
+	getUserCardDetails
 } from '../../redux/actions/feedActions';
 import { LOADING } from '../../redux/types';
 
 //TODO gsap annimate new post in from left
 
 const Feed = (props) => {
+	
 	const feedList = useSelector((state) => state.feed.posts);
 	const userInfo = useSelector((state) => state.feed.userInfo);
 	const dispatch = useDispatch();
 	const [ typedPost, setTypedPost ] = useState('');
 	const [ submitted, setSubmitted ] = useState(false);
+	const defaultPic = require('../../Assets/default.png');
 
 	const onChange = (e) => {
 		setTypedPost(e.target.value);
@@ -24,7 +27,7 @@ const Feed = (props) => {
 
 	const submit = async (e) => {
 		await setSubmitted(true);
-		dispatch({type: LOADING})
+		dispatch({ type: LOADING });
 		await dispatch(createFeedPost(typedPost));
 		await setTypedPost('');
 		setTimeout(() => {
@@ -54,11 +57,33 @@ const Feed = (props) => {
 
 	useEffect(
 		() => {
+			dispatch(getUserCardDetails())
 			dispatch(getFeedPosts());
 		},
 		[ submitted, dispatch ]
 	);
 
+	//TODO count area, update with actions and reducers
+
+	const [ likeCount, setLikeCount ] = useState(0);
+	const [ commentedCount, setCommentedCount ] = useState(0);
+	const [ angeredCount, setAngeredCount ] = useState(0);
+	const [ heartedCount, setHeartedCount ] = useState(0);
+
+	const liked = (e, idx) => {
+		setLikeCount((prev) => prev + 1);
+	};
+	const commentCount = () => {
+		setCommentedCount((prev) => prev + 1);
+	};
+	const angryCount = () => {
+		setAngeredCount((prev) => prev + 1);
+	};
+	const heartCount = () => {
+		setHeartedCount((prev) => prev + 1);
+	};
+
+	//
 	const displayFeed = feedList
 		? feedList.map((n, idx) => (
 				<TouchBaseCard
@@ -69,41 +94,47 @@ const Feed = (props) => {
 					id={n.id}
 					picture={`${n.url}`}
 					comment={'/personal_profile'}
-					
+					//from comp
+					liked={liked}
+					//to comp
+					likeCount={likeCount}
+					commentCount={commentCount}
+					commentedCount={commentedCount}
+			
 				/>
 			))
 		: null;
 
-	const userHeaderArea =(<div>
-								<div>
-									<img className='default-user-image' src={userInfo.url} alt={userInfo.displayName} />
-								</div>
-										{userInfo.displayName}
-								</div>);
-			
-									console.log(userInfo.displayName);
+	const userHeaderArea = (
+		<div>
+			<div>
+				<img
+					className='default-user-image'
+					src={userInfo.url ? userInfo.url : defaultPic}
+					alt={userInfo.displayName}
+				/>
+			</div>
+			{userInfo.displayName}
+		</div>
+	);
 
 
-
-			return (
-				<div className='feed-container-component'>
+	return (
+		<div className='feed-container-component'>
 			<Navbar />
 			<div className='feed-throw-post-block'>
 				<div className='tb-posting-title'>
-				
-					<span style={{fontSize: '24px'}}>
+					<span style={{ fontSize: '24px' }}>
 						<span style={{ color: 'teal' }}>Touch {''}</span>
 						Base
-				{userHeaderArea}
 						<span
 							style={{
 								color: 'teal',
-								fontFamily: 'SansSerif',
-								
-							}}>
-						
-						</span>
+								fontFamily: 'SansSerif'
+							}}
+						/>
 					</span>
+					{userHeaderArea}
 				</div>
 				<div className='feed-inner-post-block'>
 					<div className='feed-show-typed'> {typedPost} </div>
@@ -117,16 +148,15 @@ const Feed = (props) => {
 							onKeyPress={onKeyPress}
 							value={typedPost}
 						/>
-					<div className='feed-post-comment-button'>
-						{submitted ? (
-							<span className='post-success'>Posted Successfully!</span>
-						) : null}
-						<button onClick={submit} className='nav-button'>
-							Post
-						</button>
+						<div className='feed-post-comment-button'>
+							{submitted ? (
+								<span className='post-success'>Posted Successfully!</span>
+							) : null}
+							<button onClick={submit} className='nav-button'>
+								Post
+							</button>
+						</div>
 					</div>
-					</div>
-
 				</div>
 			</div>
 			<div className='db-posts'>{displayFeed}</div>

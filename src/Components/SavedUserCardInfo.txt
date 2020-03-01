@@ -1,0 +1,19 @@
+
+
+
+	const userHeaderArea = (
+		<div>
+			<div>
+				<img
+					className='default-user-image'
+					src={userInfo.url ? userInfo.url : defaultPic}
+					alt={userInfo.displayName}
+				/>
+			</div>
+			{userInfo.displayName}
+		</div>
+    );
+    
+
+
+    {userHeaderArea}

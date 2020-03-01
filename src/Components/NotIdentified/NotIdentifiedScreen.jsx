@@ -1,11 +1,29 @@
 import React from 'react';
 import './NotIdentifiedScreen.scss';
-import { Link } from 'react-router-dom';
-//import { auth } from '../Firebase/firebaseConfig';
+import { Link, useHistory } from 'react-router-dom';
+import { auth } from '../Firebase/firebaseConfig';
+import {getUserCardDetails} from '../../redux/actions/feedActions';
+import {useDispatch} from 'react-redux';
 
-const NotIdentifiedScreen = () => {
 
+const NotIdentifiedScreen = (e) => {
+const history = useHistory();
+const dispatch = useDispatch();
 
+	const signInAsGuest =async(e)=>{
+		//TODO set up reducer and action later
+		e.preventDefault();
+		let userRef=[];
+			await	auth
+			.signInWithEmailAndPassword('test@test.com', 'Test123!')
+
+			.then(()=>	 dispatch(getUserCardDetails()))
+			.then(() => history.push('/feed'))
+			.catch(err=>{
+				
+				console.log(err);
+			});
+	}
 
 	const logo = require('../../Assets/touchbase_logo2.png');
 
@@ -32,9 +50,9 @@ const NotIdentifiedScreen = () => {
 					<button className='not-identifiable-screen-button'>New User</button>
 				</Link>
 			</div>
-			<Link to='/feed'>
+			<div onClick={signInAsGuest}>
 				<p style={{ color: 'white' }}>Skip Login</p>
-			</Link>
+			</div>
 		</div>
 	);
 };

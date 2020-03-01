@@ -1,6 +1,6 @@
 import React from 'react';
 //import './TouchBaseCard.scss';
-import '../ResponsePostPage/PostingBody.scss'
+import '../ResponsePostPage/PostingBody.scss';
 import OptionBar from './OptionBar/OptionBar';
 import { Link } from 'react-router-dom';
 
@@ -34,8 +34,19 @@ const TouchBaseCard = (props) => {
 						<div className='body-paragraph'>{props.post}</div>
 					</div>
 				)}
-					<span>{props.createdAt ? props.createdAt : null} </span>
-				{props.sidebar ? <OptionBar comment={`specific_post/${props.id}`} /> : null}
+				<span>{props.createdAt ? props.createdAt : null} </span>
+				{props.sidebar ? (
+					<OptionBar
+						comment={`specific_post/${props.id}`}
+						love={props.love}
+						like={props.liked}
+						angry={props.angry}
+						likeCount={props.likeCount}
+						commentCount={props.commentCount}
+						angryCount={props.angryCount}
+						heartCount={props.heartCount}
+					/>
+				) : null}
 			</div>
 		</div>
 	);

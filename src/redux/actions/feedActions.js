@@ -70,20 +70,36 @@ export const getUserCardDetails = () => {
 	return async(dispatch) => {
 		dispatch({ type: LOADING });
 		//get user auth uid
-		const userRef = auth.currentUser.uid;
-		//get the users profile
-		let data;
-		await firebase
-			.firestore()
-			.collection('users')
-			.doc(userRef)
-			.get()
-			.then(snap => {
-				data = snap.data();
 
-				dispatch({ type: GET_USER_HEADER_INFO, data });
-				console.log('userHeader Info: ', data);
+		firebase.auth().onAuthStateChanged(async user=>{
+			if(user) {
+				//user is signed in
+				const userRef = auth.currentUser.uid;
+				let data;
+				await firebase
+					.firestore()
+					.collection('users')
+					.doc(userRef)
+					.get()
+					.then(snap => {
+						data = snap.data();
+		
+						dispatch({ type: GET_USER_HEADER_INFO, data });
+						console.log('userHeader Info: ', data);
+			
+					}).catch(err=> console.log(err));
+			}
+
+		})
 	
-			});
+		
+
+
+
+
+
+
+		//get the users profile
+	
 	};
 };

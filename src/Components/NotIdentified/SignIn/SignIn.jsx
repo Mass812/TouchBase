@@ -15,10 +15,10 @@ const SignIn = () => {
 		auth.onAuthStateChanged((user) => {
 			console.log(user);
 			if (user) {
-				history.push('/feed');
+				history.push(`/feed`);
 			}
 		});
-	}, []);
+	}, [history]);
 
 	const userEmailEntered = (e) => {
 		setInfo({ ...info, email: e.target.value });
@@ -30,8 +30,10 @@ const SignIn = () => {
 
 	const userInfoEntered = async (e) => {
 		e.preventDefault();
-	await	auth
+		let userRef=[];
+			await	auth
 			.signInWithEmailAndPassword(info.email, info.password)
+		
 			.then(()=>	 dispatch(getUserCardDetails()))
 			.then(() => history.push('/feed'))
 			.catch(err=>{
