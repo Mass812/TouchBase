@@ -1,14 +1,14 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
 	faAngry,
 	faComment,
 	faThumbsUp,
 	faFrownOpen,
 	faHeart
-} from '@fortawesome/free-solid-svg-icons';
-import '../TouchBaseCard.scss';
-import { Link } from 'react-router-dom';
+} from '@fortawesome/free-solid-svg-icons'
+import '../TouchBaseCard.scss'
+import { Link } from 'react-router-dom'
 
 const OptionBar = (props) => {
 	return (
@@ -24,19 +24,20 @@ const OptionBar = (props) => {
 			</span>
 			<span id='comment'>
 				<Link
-					to={props.comment}
-					style={{ textDecoration: 'none', color: '#2993B9' }}>
-					<FontAwesomeIcon icon={faComment} /> 
-					
+					to={props.toPost}
+					style={{
+						textDecoration: 'none',
+						color: '#2993B9'
+					}}>
+					<FontAwesomeIcon icon={faComment} />
+
 					{props.commentCount}
-					
 				</Link>
 			</span>
-			<span id='like' onClick={props.like} >
-				<FontAwesomeIcon icon={faThumbsUp} />{' '}
-				{props.likeCount}
+			<span id='like' onClick={props.like}>
+				<FontAwesomeIcon icon={faThumbsUp} /> {props.likeCount}
 			</span>
 		</div>
-	);
-};
-export default OptionBar;
+	)
+}
+export default OptionBar

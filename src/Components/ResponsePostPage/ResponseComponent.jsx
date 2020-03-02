@@ -1,59 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Navbar from '../Navbar/Navbar';
-import './PostingBody.scss';
-import TouchBaseCard from '../TouchBaseCard/TouchBaseCard';
-import {
-	createResponsePost,
-	getResponsePosts
-} from '../../redux/actions/responseActions';
-import { useParams } from 'react-router-dom';
-import { getFeedPosts } from '../../redux/actions/feedActions';
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import Navbar from '../Navbar/Navbar'
+import './PostingBody.scss'
+import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
+import { createResponsePost, getResponsePosts } from '../../redux/actions/responseActions'
+import { useParams } from 'react-router-dom'
+import { getFeedPosts } from '../../redux/actions/feedActions'
 
 const Response = () => {
-	const param = useParams().id;
-	const originalPost = useSelector((state) => state.feed.posts);
-	const getResponses = useSelector((state) => state.response.getResponses);
-	const dispatch = useDispatch();
-	const [ typedPost, setTypedPost ] = useState('');
-	const [ submitted, setSubmitted ] = useState(false);
+	const param = useParams().id
+	console.log(param, 'param')
+	const originalPost = useSelector((state) => state.feed.posts)
+	const getResponses = useSelector((state) => state.response.getResponses)
+	const dispatch = useDispatch()
+	const [
+		typedPost,
+		setTypedPost
+	] = useState('')
+	const [
+		submitted,
+		setSubmitted
+	] = useState(false)
 
-	console.log('postResponses', getResponses);
-	console.log('originalPost', originalPost);
+	console.log('postResponses', getResponses)
+	console.log('originalPost', originalPost)
 
 	const onChange = (e) => {
-		setTypedPost(e.target.value);
+		setTypedPost(e.target.value)
 	};
 
 	const onEnter = async (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
-			await setSubmitted(true);
-			await dispatch(createResponsePost(typedPost, param));
-			await setTypedPost('');
+			await setSubmitted(true)
+			await dispatch(createResponsePost(typedPost, param))
+			await setTypedPost('')
 			setTimeout(() => {
-				setSubmitted(false);
-			}, 1000);
+				setSubmitted(false)
+			}, 1000)
 		}
 	};
 	const storeResponse = async (e) => {
 		if (e.target.value.trim() !== '') {
-			await setSubmitted(true);
-			console.log('onKeyPress Fired');
+			await setSubmitted(true)
+			console.log('onKeyPress Fired')
 
-			await dispatch(createResponsePost(typedPost, param));
-			await setTypedPost('');
+			await dispatch(createResponsePost(typedPost, param))
+			await setTypedPost('')
 			setTimeout(() => {
-				setSubmitted(false);
-			}, 1000);
+				setSubmitted(false)
+			}, 1000)
 		}
 	};
 
 	useEffect(
 		() => {
-			dispatch(getFeedPosts());
-			dispatch(getResponsePosts(param));
+			dispatch(getFeedPosts())
+			dispatch(getResponsePosts(param))
 		},
-		[ param, dispatch, submitted ]
+		[
+			param,
+			dispatch,
+			submitted
+		]
 	);
 
 	const displayFeed = originalPost
@@ -61,7 +69,7 @@ const Response = () => {
 				<div>
 					<TouchBaseCard
 						sidebar={false}
-						key={n.id + idx}
+						key={n.id}
 						post={n.post}
 						displayName={n.displayName}
 						id={n.id}
@@ -70,21 +78,33 @@ const Response = () => {
 					/>
 					<div className='tb-posting-title'>
 						<span>
-							<span style={{ color: 'teal' }}>Touch {''}</span>
+							<span
+								style={{
+									color: 'teal'
+								}}>
+								Touch {''}
+							</span>
 							Base with{' '}
-							<span style={{ color: 'darkBlue' }}>{n.displayName}</span>
+							<span
+								style={{
+									color: 'darkBlue'
+								}}>
+								{n.displayName}
+							</span>
 						</span>
 					</div>
 				</div>
-			))
-		: null;
+			)
+			
+			)
+			: null;
 
 	const displayResponses =
 		getResponses &&
 		getResponses.map((n, idx) => (
 			<TouchBaseCard
 				sidebar={false}
-				key={n.id + idx}
+				key={n.id}
 				post={n.post}
 				displayName={n.displayName}
 				id={n.id}
@@ -116,16 +136,18 @@ const Response = () => {
 								</div>{' '}
 								<div className='post-comment-button'>
 									{submitted ? (
-										<span className='post-success'>
-											Posted Successfully!
-										</span>
+										<span className='post-success'>Posted Successfully!</span>
 									) : null}
 									<button
 										style={
 											!submitted ? (
-												{ opacity: '1' }
+												{
+													opacity: '1'
+												}
 											) : (
-												{ opacity: '.4' }
+												{
+													opacity: '.4'
+												}
 											)
 										}
 										disabled={submitted}
@@ -140,8 +162,7 @@ const Response = () => {
 					<div className='previous-comments-block'>{displayResponses}</div>
 				</div>
 			</div>
-			);
 		</div>
-	);
-};
-export default Response;
+	)
+}
+export default Response
