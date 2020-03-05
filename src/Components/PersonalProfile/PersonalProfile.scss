@@ -26,6 +26,15 @@ $backgroundColor: transparent;
 	padding-bottom: 20px;
 }
 
+.profile-edit-detail-value-font{
+	font-size: 12px;
+	font-weight: 100;
+	color: white;
+	padding: 10px 0px;
+	margin: 10px;
+
+}
+
 .profile-container {
 	background-color: transparent;
 	margin: 1px;
@@ -40,8 +49,11 @@ $backgroundColor: transparent;
 }
 
 .profile-image {
-	height: 180px;
-	padding-top: 20px;
+	height: 200px;
+	width: 200px;
+	object-fit: cover;
+	margin-top: 20px;
+	border-radius: 10px;
 }
 
 .image-upload-bar {

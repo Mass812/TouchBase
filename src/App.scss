@@ -1,0 +1,35 @@
+.submit-button {
+	margin-right: 15px;
+	background-color: #254576;
+	color: white;
+	border: 1px solid turquoise;
+	border-radius: 50px;
+	width: auto;
+	height: 20px;
+	padding: 2px 20px;
+	align-self: center;
+
+	&:hover {
+		color: white;
+		border: 1px inset turquoise;
+		background-color: rgb(39, 214, 205);
+	}
+	&::active {
+		background-color: rgb(98, 112, 112);
+	}
+}
+
+.input-field {
+	color: rgb(25, 168, 137);
+	font-size: 14px;
+	margin: 5px;
+	letter-spacing: 1px;
+	padding: 5px;
+	padding-left: 25px;
+	margin: 15px;
+	border: none;
+	border-bottom: 1px solid rgb(56, 105, 56);
+	border-radius: 7px;
+	max-width: 300px;
+	min-width: 175px;
+}

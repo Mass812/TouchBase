@@ -27,7 +27,7 @@ const Response = () => {
 
 	const onChange = (e) => {
 		setTypedPost(e.target.value)
-	};
+	}
 
 	const onEnter = async (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
@@ -38,7 +38,7 @@ const Response = () => {
 				setSubmitted(false)
 			}, 1000)
 		}
-	};
+	}
 	const storeResponse = async (e) => {
 		if (e.target.value.trim() !== '') {
 			await setSubmitted(true)
@@ -50,7 +50,7 @@ const Response = () => {
 				setSubmitted(false)
 			}, 1000)
 		}
-	};
+	}
 
 	useEffect(
 		() => {
@@ -62,7 +62,7 @@ const Response = () => {
 			dispatch,
 			submitted
 		]
-	);
+	)
 
 	const displayFeed = originalPost
 		? originalPost.filter((n) => n.id === param).map((n, idx) => (
@@ -74,7 +74,7 @@ const Response = () => {
 						displayName={n.displayName}
 						id={n.id}
 						picture={n.url}
-						to={'/personal_profile'}
+						to={`/personal_profile/${n.id}`}
 					/>
 					<div className='tb-posting-title'>
 						<span>
@@ -94,10 +94,8 @@ const Response = () => {
 						</span>
 					</div>
 				</div>
-			)
-			
-			)
-			: null;
+			))
+		: null
 
 	const displayResponses =
 		getResponses &&
@@ -111,7 +109,7 @@ const Response = () => {
 				picture={n.url}
 				to={'/personal_profile'}
 			/>
-		));
+		))
 
 	return (
 		<div>

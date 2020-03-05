@@ -56,7 +56,7 @@ function App() {
 					}
 				/>
 				<Route
-					path='/edit_personal_profile'
+					path='/edit_personal_profile/:id'
 					component={
 						PersonalProfileEdit
 					}

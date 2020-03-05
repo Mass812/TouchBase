@@ -1,11 +1,9 @@
 import React from 'react'
 import './NotIdentifiedScreen.scss'
-import {
-	Link,
-	useHistory
-} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { auth } from '../Firebase/firebaseConfig'
 import { getUserCardDetails } from '../../redux/actions/feedActions'
+import {} from '../../redux/actions/profileActions';
 import { useDispatch } from 'react-redux'
 
 const NotIdentifiedScreen = (e) => {
@@ -17,15 +15,8 @@ const NotIdentifiedScreen = (e) => {
 		e.preventDefault()
 
 		await auth
-			.signInWithEmailAndPassword(
-				'guest@guest.com',
-				'Test123!'
-			)
-			.then(() =>
-				dispatch(
-					getUserCardDetails()
-				)
-			)
+			.signInWithEmailAndPassword('guest@guest.com', 'Test123!')
+			.then(() => dispatch(getUserCardDetails()))
 			.then(() => {
 				history.push(`/feed`)
 			})
@@ -42,48 +33,30 @@ const NotIdentifiedScreen = (e) => {
 				<div className='not-identified-title'>
 					<span
 						style={{
-							color:
-								'white'
+							color: 'white'
 						}}>
 						Touch
 					</span>Base
 				</div>
-				<span className='not-identified-subtitle'>
-					A Social Networking
-					Platform
-				</span>
+				<span className='not-identified-subtitle'>A Social Networking Platform</span>
 			</div>
 
 			<div className='sign-options-logo'>
-				<img
-					src={logo}
-					alt={
-						'TouchBase Logo'
-					}
-					className='home-logo'
-				/>
+				<img src={logo} alt={'TouchBase Logo'} className='home-logo' />
 			</div>
 
 			<div className='options-button-splay'>
 				<Link to='/sign_in'>
-					<button className='not-identifiable-screen-button'>
-						Sign In
-					</button>
+					<button className='not-identifiable-screen-button'>Sign In</button>
 				</Link>
 				<Link to='/sign_up'>
-					<button className='not-identifiable-screen-button'>
-						New User
-					</button>
+					<button className='not-identifiable-screen-button'>New User</button>
 				</Link>
 			</div>
-			<div
-				onClick={signInAsGuest}>
-				<p
-					style={{
-						color: 'white'
-					}}>
-					Use Site as Guest
-				</p>
+			<div>
+				<button onClick={signInAsGuest} className='nav-button'>
+					Site Guest
+				</button>
 			</div>
 		</div>
 	)

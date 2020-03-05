@@ -11,6 +11,8 @@ import { LOADING } from '../../redux/types'
 const Feed = (props) => {
 	const feedList = useSelector((state) => state.feed.posts)
 	const userInfo = useSelector((state) => state.feed.userInfo)
+
+	
 	const dispatch = useDispatch()
 	const [
 		typedPost,
