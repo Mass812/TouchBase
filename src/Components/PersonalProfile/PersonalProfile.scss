@@ -48,6 +48,14 @@ $backgroundColor: transparent;
 	font-size: $fontSize;
 }
 
+.profile-user-display-name{
+	font-family: 'Comfortaa', cursive;
+	padding-top: 30px;
+	color: white;
+	font-weight: 100;
+	font-size: 22px;
+}
+
 .profile-image {
 	height: 200px;
 	width: 200px;
@@ -60,10 +68,11 @@ $backgroundColor: transparent;
 	max-width: 180px;
 	padding: 4px;
 	font-weight: 700;
+	font-size: 16px;
 }
 
 .under-icon-pair-group {
-	display: inline-table;
+	
 	margin: 7px;
 }
 

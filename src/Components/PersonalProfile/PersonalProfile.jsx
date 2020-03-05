@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './PersonalProfile.scss'
 import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,7 +6,10 @@ import { faMapMarkerAlt, faBriefcase } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { auth, db } from '../Firebase/firebaseConfig'
-import { getUserDetails, createUserProfile } from '../../redux/actions/profileActions'
+import {
+	getUserDetailsFromPostId,
+	createUserProfileAutomatically
+} from '../../redux/actions/profileActions'
 import { useHistory } from 'react-router-dom'
 
 const PersonalProfile = () => {
@@ -14,15 +17,16 @@ const PersonalProfile = () => {
 	const param = useParams().id
 	const userInfo = useSelector((state) => state.profile.data)
 	const userProfile = useSelector((state) => state.profile.profile)
-
+	const [disableButton, setDisableButton] =useState(true);
 	const dispatch = useDispatch()
 	const history = useHistory()
 
 	useEffect(
 		() => {
 			async function lookForProfileOrCreateOne() {
-				await dispatch(getUserDetails(param))
-				await dispatch(createUserProfile(userInfo))
+				await dispatch(getUserDetailsFromPostId(param))
+				await dispatch(createUserProfileAutomatically(userInfo))
+						
 			}
 			// Execute the created function directly
 			lookForProfileOrCreateOne()
@@ -33,29 +37,26 @@ const PersonalProfile = () => {
 		]
 	)
 
-	console.log('userInfo in PersProf Component: ', userInfo)
-	console.log('userProfile in PersProf Component: ', userProfile)
+	console.log('displayButton Value', disableButton);
+	
+	
+	console.log('displayButton Value', disableButton);
 
 	return (
 		<div>
 			<Navbar />
 			<div className='edge-case-large'>
 				<section className='profile-container'>
-					<button
-						onClick={() => history.push(`/edit_personal_profile/${userInfo.userId}`)}>
-						Edit Profile
-					</button>
-
 					<div>
 						<div>
-							<div className='user-display-name'>
-								{userInfo ? userInfo.displayName : null}
-							</div>
 							<img
 								className='profile-image'
 								src={userInfo ? userInfo.url : defaultPic}
 								alt={'default'}
 							/>
+						</div>
+						<div className='profile-user-display-name'>
+							{userInfo ? userInfo.displayName : null}
 						</div>
 						<div className='under-icon-pair-group'>
 							<FontAwesomeIcon icon={faBriefcase} size={'sm'} color={'white'} />{' '}
@@ -90,6 +91,16 @@ const PersonalProfile = () => {
 							</div>
 						</div>
 					</div>
+					<button 
+						disabled={disableButton}
+						hidden={disableButton}
+						className='submit-button'
+						onClick={() =>
+							auth.currentUser.uid === userInfo.userId
+								? history.push(`/edit_personal_profile/${userInfo.userId}`)
+								: null}>
+						Edit Profile
+					</button>
 				</section>
 			</div>
 		</div>
