@@ -1,39 +1,38 @@
 import firebase from '../../Components/Firebase/firebaseConfig'
 import { db, auth } from '../../Components/Firebase/firebaseConfig'
-import { LOADING } from '../types'
+import { LOADING, DONE_LOADING } from '../types'
 import { GET_USER_INFO } from '../types'
+import { useHistory } from 'react-router-dom'
 
-export const getUserDetails = (param) => {
+export const getUserDetailsFromPostId = (param) => {
 	return async (dispatch) => {
 		dispatch({ type: LOADING })
-		console.log('in action Param=> ', param)
-		let usersInfo, data
+		let userId, data
 		await firebase
 			.firestore()
 			.collection('posts')
 			.doc(param)
 			.get()
 			.then((snap) => {
-				console.log('snap in action', snap)
-				usersInfo = snap.data().userId
-				console.log('data after snap', usersInfo)
+				userId = snap.data().userId
 			})
 			.then(async () => {
 				await firebase
 					.firestore()
 					.collection('users')
-					.doc(usersInfo)
+					.doc(userId)
 					.get()
 					.then((res) => (data = res.data()))
 				dispatch({ type: GET_USER_INFO, data })
-				console.log('data From getUSerDetails: ', data)
+				dispatch({ type: DONE_LOADING })
 			})
 			.catch((err) => console.log(err))
 	}
 }
 
-export const createUserProfile = (userInfo) => {
+export const createUserProfileAutomatically = (userInfo) => {
 	return async (dispatch) => {
+		dispatch({ type: LOADING })
 		let userDetails = {
 			userId: userInfo.userId,
 			displayName: userInfo.displayName,
@@ -52,15 +51,16 @@ export const createUserProfile = (userInfo) => {
 		checkForUserProfile.get().then((doc) => {
 			if (doc.exists) {
 				profile = doc.data()
-				console.log('ACTION Profile Exists as: ', profile)
-				dispatch({ type: 'STORED_USER_PROFILE',  profile })
+				console.log('Profile already auto created as: ', profile)
+				dispatch({ type: 'STORED_USER_PROFILE', profile })
 			} else {
 				checkForUserProfile
 					.set(userDetails)
 					.then((doc) => {
 						profile = doc.data()
-						console.log('ACTION Profile Exists after creation: ', profile)
-						dispatch({ type: 'STORED_USER_PROFILE',  profile })
+						console.log('Profile automatic creation: ', profile)
+						dispatch({ type: 'STORED_USER_PROFILE', profile })
+						dispatch({ type: DONE_LOADING })
 					})
 					.catch((err) => console.log('error creating profile', err))
 			}
@@ -68,13 +68,40 @@ export const createUserProfile = (userInfo) => {
 	}
 }
 
+export const updateUserProfile = (userInfo, newProfileData) => {
+	return (dispatch) => {
+		const { work, bio, location, hobbies } = newProfileData
+		//see inner values
+		dispatch({ type: LOADING })
+		let updatedProfile
+		if (auth.currentUser.uid === userInfo.id) {
+			const refUserAndUpdatedInfo = firebase
+				.firestore()
+				.collection('userProfile')
+				.doc(userInfo.userId)
 
-	const updateUserProfile =(userInfo)=>{
-		return (dispatch)=>{
-			
+			refUserAndUpdatedInfo.update({
+				work: work,
+				location: location,
+				bio: bio,
+				hobbies: hobbies
+			})
 
+			firebase
+				.firestore()
+				.collection('userProfile')
+				.doc(userInfo.userId)
+				.get()
+				.then((doc) => {
+					updatedProfile = doc.data()
+					console.log('updatedUserProfile Action Value', updatedProfile)
+					dispatch({ type: 'GET_NEW_USER_PROFILE_DATA', updatedProfile })
+					dispatch({ type: DONE_LOADING })
+				})
+		} else {
+			return
 		}
-
 	}
+}
 
 //editButton

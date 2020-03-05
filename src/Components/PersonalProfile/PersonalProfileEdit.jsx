@@ -4,22 +4,22 @@ import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import firebase, { db } from '../Firebase/firebaseConfig'
-import { checkForUserProfile, getUserDetails } from '../../redux/actions/profileActions'
+import {
+	checkForUserProfile,
+	getUserDetailsFromId,
+	updateUserProfile
+} from '../../redux/actions/profileActions'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../App.scss'
 import { useParams, useHistory } from 'react-router-dom'
 
-
-
-
-
-//TODOS not refeshing after load --maybe redux will 
+//TODOS not refeshing after load --maybe redux will
 
 const PersonalProfileEdit = () => {
 	const defaultPic = require('../../Assets/default.png')
 	const dispatch = useDispatch()
 	const param = useParams()
-	const history = useHistory();
+	const history = useHistory()
 	console.log('params in Edit Component: ', param)
 	//move to initial state of editProfile Reducer
 
@@ -27,7 +27,7 @@ const PersonalProfileEdit = () => {
 	const userProfileInfo = useSelector((state) => state.profile.profile)
 	console.log('userProfileInfo', userProfileInfo)
 
-	const usersDataForThisUser = useSelector((state) => state.profile.data)
+	const userInfo = useSelector((state) => state.profile.data)
 	console.log('userProfileInfo', userProfileInfo)
 
 	const [
@@ -39,22 +39,23 @@ const PersonalProfileEdit = () => {
 		bio: userProfileInfo.bio,
 		hobbies: userProfileInfo.hobbies
 	})
+
 	const [
 		updatedProfile,
 		setUpdatedProfile
 	] = useState('')
 
-	const handleProfileUpdate = () => {
-		setUpdatedProfile(newProfileData)
+	const handleProfileUpdate = async () => {
+		await setUpdatedProfile(newProfileData)
+		await dispatch(updateUserProfile(userInfo, newProfileData))
 		//use reducer action pair
 		console.log(updatedProfile, 'consoled updatedProfile data')
 	}
 	console.log(newProfileData, 'New Profile Data')
 	useEffect(
 		() => {
-		
-				console.log('refresh by state', updatedProfile)
-			
+			console.log('refresh by state', updatedProfile)
+
 			// Execute the created function directly
 		},
 		[
@@ -63,7 +64,7 @@ const PersonalProfileEdit = () => {
 	)
 
 	const handleWork = (e) => {
-		setNewProfileData({ ...newProfileData, work: e.target.value })
+		setNewProfileData({...newProfileData,  work: e.target.value })
 	}
 	const handleLocation = (e) => {
 		setNewProfileData({ ...newProfileData, location: e.target.value })
@@ -79,36 +80,36 @@ const PersonalProfileEdit = () => {
 		pic,
 		setPic
 	] = useState({
-		image: null,
-		url: usersDataForThisUser.url,
+		newImage: null,
+		url: userInfo.url,
 		progress: 0,
-		name: usersDataForThisUser.displayName
+		name: userInfo.displayName
 	})
 
 	//move to action creator
 	const fileSelector = (e) => {
 		console.log(e.target.files[0])
 		if (e.target.files[0]) {
-			setPic({ ...pic, image: e.target.files[0], name: usersDataForThisUser.userId })
+			setPic({ ...pic, newImage: e.target.files[0], name: userInfo.userId })
 		}
 	}
 	console.log('after first select file', pic.name)
 
 	//move to action creator
 	const updatePic = () => {
-		if (pic.image) {
+		if (pic.newImage) {
+			//args file
 			console.log('upload Pic Fx fired')
 			const storageRef = firebase.storage()
 			const uploadImage = storageRef
-				.ref(`images/${usersDataForThisUser.userId}`)
-				.put(pic.image)
+				.ref(`images/${userInfo.userId}`) //state.profile.data
+				.put(pic.newImage)
 			uploadImage.on(
 				'state_changed',
 				(snapshot) => {
 					const progressBar = Math.round(
 						snapshot.bytesTransferred / snapshot.totalBytes * 100
 					)
-					console.log(pic.progress)
 					setPic({ ...pic, progress: progressBar })
 				},
 				(error) => {
@@ -116,19 +117,20 @@ const PersonalProfileEdit = () => {
 				},
 				() => {
 					storageRef.ref('images').child(pic.name).getDownloadURL().then((url) => {
+						//reducer dispatch set_url
 						setPic({ ...pic, url })
 
 						let hold = []
 						firebase
 							.firestore()
 							.collection('users')
-							.doc(usersDataForThisUser.userId)
+							.doc(userInfo.userId)
 							.update({ url: url })
 
 						firebase
 							.firestore()
 							.collection('posts')
-							.where('userId', '==', usersDataForThisUser.userId)
+							.where('userId', '==', userInfo.userId)
 							.get()
 							.then((n) => {
 								n.forEach((n) => hold.push(n.data().id))
@@ -142,8 +144,8 @@ const PersonalProfileEdit = () => {
 										.collection('posts')
 										.doc(arrValue)
 										.update({ url: url })
-										)
-										history.push('/feed')
+								)
+								history.push('/feed')
 							})
 					})
 				}
@@ -165,17 +167,19 @@ const PersonalProfileEdit = () => {
 							<img
 								className='profile-image'
 								src={
-									`${usersDataForThisUser.url}`? (
-										`${usersDataForThisUser.url}`
-									) : (
+									`${userInfo.url}` ? (
+										`${userInfo.url}`
+									) : `${pic.url}` ? (
 										`${pic.url}`
-									) ? `${pic.url}` : {defaultPic}
+									) : (
+										{ defaultPic }
+									)
 								}
 								alt={'default'}
 							/>
 						</div>
 						<div className='under-icon-pair-group'>
-							{!pic.image ? (
+							{!pic.newImage ? (
 								<span>
 									<label htmlFor='changePic'>
 										<FontAwesomeIcon
@@ -201,7 +205,7 @@ const PersonalProfileEdit = () => {
 								</div>
 							) : null}
 							<span className='image-upload-bar'>
-								{pic.image ? (
+								{pic.newImage ? (
 									<span>
 										{pic.name}
 										<span style={{ paddingLeft: '15px' }}>
@@ -280,7 +284,7 @@ const PersonalProfileEdit = () => {
 									/>
 								</div>
 							</div>
-							<button className='submit-button' onSubmit={handleProfileUpdate}>
+							<button className='submit-button' onClick={handleProfileUpdate}>
 								Submit
 							</button>
 						</div>

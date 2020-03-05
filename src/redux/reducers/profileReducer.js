@@ -1,4 +1,13 @@
-const authReducer = (state = {}, action) => {
+
+
+const initialState = {
+	work: '',
+	location: '',
+	bio: '',
+	hobbies: ''
+}
+
+const authReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'GET_USER_INFO':
 			return { ...state, data: action.data }
@@ -6,8 +15,10 @@ const authReducer = (state = {}, action) => {
 			return state
 		case 'STORED_USER_PROFILE':
 			return { ...state, profile: action.profile }
-		case 'NEW_USER_PROFILE': 
-			return {...state, newProfile: action.newProfile}
+		case 'GET_NEW_USER_PROFILE_DATA':
+			return { ...state, value: action.updatedProfile }
+		case 'NEW_USER_PROFILE':
+			return { ...state, newProfile: action.newProfile }
 		case 'UPDATE_USER_PROFILE':
 			return state
 		default:
