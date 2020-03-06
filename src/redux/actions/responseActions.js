@@ -36,7 +36,7 @@ export const createResponsePost = (post, param) => {
 			)
 			.then(() => {
 				console.log('post from reducer');
-				dispatch({ type: CREATE_RESPONSE, payload: createResponsePost });
+				dispatch({ type: CREATE_RESPONSE, createResponsePost });
 				dispatch({ type: DONE_LOADING });
 			})
 			.catch((err) => {

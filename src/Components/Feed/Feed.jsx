@@ -5,14 +5,17 @@ import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { useSelector, useDispatch } from 'react-redux'
 import { getFeedPosts, createFeedPost, getUserCardDetails } from '../../redux/actions/feedActions'
 import { LOADING } from '../../redux/types'
+import {useHistory} from 'react-router-dom';
 
 //TODO gsap annimate new post in from left
 
 const Feed = (props) => {
+	const history=useHistory();
+	const signedInUser = useSelector((state) => state.auth.signedInUser)
 	const feedList = useSelector((state) => state.feed.posts)
 	const userInfo = useSelector((state) => state.feed.userInfo)
 
-	
+
 	const dispatch = useDispatch()
 	const [
 		typedPost,
@@ -65,7 +68,6 @@ const Feed = (props) => {
 		},
 		[
 			submitted,
-			dispatch
 		]
 	)
 
@@ -130,7 +132,7 @@ const Feed = (props) => {
 	const userHeaderArea = (
 		<div>
 			<div>
-				<img
+				<img onClick={()=> history.push(`/personal_profile/${signedInUser}`)}
 					className='default-user-image'
 					src={userInfo.url ? userInfo.url : defaultPic}
 					alt={userInfo.displayName}

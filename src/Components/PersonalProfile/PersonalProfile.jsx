@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './PersonalProfile.scss'
 import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,7 +17,6 @@ const PersonalProfile = () => {
 	const param = useParams().id
 	const userInfo = useSelector((state) => state.profile.data)
 	const userProfile = useSelector((state) => state.profile.profile)
-	const [disableButton, setDisableButton] =useState(true);
 	const dispatch = useDispatch()
 	const history = useHistory()
 
@@ -37,10 +36,17 @@ const PersonalProfile = () => {
 		]
 	)
 
-	console.log('displayButton Value', disableButton);
-	
-	
-	console.log('displayButton Value', disableButton);
+	const EditProfileButton = userInfo.userId === auth.currentUser.uid ? (<button 
+		
+		className='submit-button'
+		onClick={() =>
+			auth.currentUser.uid === userInfo.userId
+				? history.push(`/edit_personal_profile/${userInfo.userId}`)
+				: null}>
+		Edit Profile
+	</button>) : null
+
+
 
 	return (
 		<div>
@@ -91,16 +97,8 @@ const PersonalProfile = () => {
 							</div>
 						</div>
 					</div>
-					<button 
-						disabled={disableButton}
-						hidden={disableButton}
-						className='submit-button'
-						onClick={() =>
-							auth.currentUser.uid === userInfo.userId
-								? history.push(`/edit_personal_profile/${userInfo.userId}`)
-								: null}>
-						Edit Profile
-					</button>
+					{EditProfileButton}
+					
 				</section>
 			</div>
 		</div>

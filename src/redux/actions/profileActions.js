@@ -70,11 +70,12 @@ export const createUserProfileAutomatically = (userInfo) => {
 
 export const updateUserProfile = (userInfo, newProfileData) => {
 	return (dispatch) => {
+		const history = useHistory()
 		const { work, bio, location, hobbies } = newProfileData
 		//see inner values
 		dispatch({ type: LOADING })
 		let updatedProfile
-		if (auth.currentUser.uid === userInfo.id) {
+		if (auth.currentUser.uid === userInfo.userId) {
 			const refUserAndUpdatedInfo = firebase
 				.firestore()
 				.collection('userProfile')
@@ -97,6 +98,7 @@ export const updateUserProfile = (userInfo, newProfileData) => {
 					console.log('updatedUserProfile Action Value', updatedProfile)
 					dispatch({ type: 'GET_NEW_USER_PROFILE_DATA', updatedProfile })
 					dispatch({ type: DONE_LOADING })
+					history.push('/feed')
 				})
 		} else {
 			return

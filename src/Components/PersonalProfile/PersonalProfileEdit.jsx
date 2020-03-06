@@ -20,7 +20,6 @@ const PersonalProfileEdit = () => {
 	const dispatch = useDispatch()
 	const param = useParams()
 	const history = useHistory()
-	console.log('params in Edit Component: ', param)
 	//move to initial state of editProfile Reducer
 
 	//userProfile data from page user
@@ -49,7 +48,7 @@ const PersonalProfileEdit = () => {
 		await setUpdatedProfile(newProfileData)
 		await dispatch(updateUserProfile(userInfo, newProfileData))
 		//use reducer action pair
-		console.log(updatedProfile, 'consoled updatedProfile data')
+		console.log(userInfo, ' signedInUser ')
 	}
 	console.log(newProfileData, 'New Profile Data')
 	useEffect(
@@ -228,7 +227,7 @@ const PersonalProfileEdit = () => {
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Work </span>
 								<div className='profile-edit-detail-value-font'>
-									<div> current: {userProfileInfo.work} </div>
+									<div>{userProfileInfo.work} </div>
 									<br />
 									<input
 										className='input-field'
@@ -242,7 +241,7 @@ const PersonalProfileEdit = () => {
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Location </span>
 								<div className='profile-edit-detail-value-font'>
-									<div> current: {userProfileInfo.location} </div>
+									<div> {userProfileInfo.location} </div>
 									<br />
 
 									<input
@@ -258,7 +257,7 @@ const PersonalProfileEdit = () => {
 								<span className='profile-detail-key-font'>Bio: </span>
 
 								<div className='profile-edit-detail-value-font'>
-									<div> current: {userProfileInfo.bio} </div>
+									<div> {userProfileInfo.bio} </div>
 									<br />
 									<input
 										className='input-field'
@@ -273,7 +272,7 @@ const PersonalProfileEdit = () => {
 								<span className='profile-detail-key-font'>Hobbies:</span>
 
 								<div className='profile-edit-detail-value-font'>
-									<div> current: {userProfileInfo.work} </div>
+									<div> {userProfileInfo.hobbies} </div>
 									<br />
 									<input
 										className='input-field'

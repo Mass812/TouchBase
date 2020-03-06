@@ -11,7 +11,7 @@ const responseReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case CREATE_RESPONSE:
 			console.log('created response successfully', action.createResponse);
-			return { ...state, payload: action.storedUserComment };
+			return { ...state, storedUserComment: action.storedUserComment };
 		case RESPONSE_ERROR:
 			console.log('Post Failed:  error: ');
 			return { ...state, response: action.data };

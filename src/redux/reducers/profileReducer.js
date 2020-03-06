@@ -1,13 +1,8 @@
 
 
-const initialState = {
-	work: '',
-	location: '',
-	bio: '',
-	hobbies: ''
-}
 
-const authReducer = (state = initialState, action) => {
+
+const profileReducer = (state ={}, action) => {
 	switch (action.type) {
 		case 'GET_USER_INFO':
 			return { ...state, data: action.data }
@@ -26,4 +21,5 @@ const authReducer = (state = initialState, action) => {
 	}
 }
 
-export default authReducer
+
+export default profileReducer
