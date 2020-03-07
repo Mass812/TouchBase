@@ -1,23 +1,31 @@
 import React from 'react';
 import './Navbar.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SignOutButton from './SignOutButton/SignOutButton';
+import {useSelector} from 'react-redux'
+import {auth, db} from '../Firebase/firebaseConfig'
+
 //dispatch = useDispatch();
 //
 
 
 
-
-const Navbar = (props) => {
-
-// TODO add reducer for getting user.uid
-
-
-
-
-
-
+const Navbar = () => {
+	
+	// TODO add reducer for getting user.uid
+	const history = useHistory();
 	const navIcon = require('../../Assets/nav.png');
+
+
+const pushToProfile=(e)=>{
+	e.preventDefault();
+	console.log(auth.currentUser.uid);
+	history.push(`/edit_personal_profile/${auth.currentUser.uid}`)
+}
+
+
+
+
 	return (
 		<div className='navbar'>
 			<div className='image-container'>
@@ -27,9 +35,9 @@ const Navbar = (props) => {
 			</div>
 
 			<div className='nav-icon-bar'>
-				<Link to='/personal_profile'>
-					<button className='nav-button'>Profile</button>
-				</Link>
+				{/* <Link to= `/edit_personal_profile/signedInUserId`> */}
+					<button className='nav-button' onClick={pushToProfile}>Profile</button>
+				{/* </Link> */}
 				<Link to='/feed'>
 					<button className='nav-button'>Feed</button>
 				</Link>

@@ -1,91 +1,105 @@
-import React, { useState } from 'react';
-import '../NotIdentifiedScreen.scss';
-import '../CreateAccount.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { db, auth, storage } from '../../Firebase/firebaseConfig';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useState } from 'react'
+import '../NotIdentifiedScreen.scss'
+import '../CreateAccount.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { db, auth, storage } from '../../Firebase/firebaseConfig'
+import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import {getBasicUserDetails} from '../../../redux/actions/profileActions'
 
 const CreateInfo = () => {
-	const defaultPic = require('../../../Assets/default.png');
-	const param = useParams().id;
-	const history = useHistory();
+	const defaultPic = require('../../../Assets/default.png')
+	const [
+		finished,
+		setFinished
+	] = useState(false)
+	const signedInUser = useSelector((state) => state.auth.signedInUser)
+	const dispatch = useDispatch();
+	const history = useHistory()
 
 	//move to initial state of editProfile Reducer
-	const [ pic, setPic ] = useState({
+	const [
+		pic,
+		setPic
+	] = useState({
 		image: null,
 		url: '',
 		progress: 0,
 		name: ''
-	});
+	})
 
-	const [ moreInfo, setMoreInfo ] = useState('');
+	const [
+		moreInfo,
+		setMoreInfo
+	] = useState('')
 
 	// TODO move to action creator
 	const fileSelector = (e) => {
-		console.log(e.target.files[0]);
+		console.log(e.target.files[0])
 		if (e.target.files[0]) {
-			setPic({ ...pic, image: e.target.files[0], name: param });
+			setPic({ ...pic, image: e.target.files[0], name: signedInUser })
 		}
-	};
-	console.log('after first select file', pic.name);
+	}
+	console.log('after first select file', pic.name)
 
 	// TODO move to action creator
 	const uploadPic = async () => {
 		if (pic.image) {
-			console.log('upload Pic Fx fired');
-			const uploadImage = storage.ref(`images/${pic.name}`).put(pic.image);
+			const uploadImage = storage.ref(`images/${pic.name}`).put(pic.image)
 			uploadImage.on(
 				'state_changed',
 				(snapshot) => {
 					const progressBar = Math.round(
 						snapshot.bytesTransferred / snapshot.totalBytes * 100
-					);
-					console.log(pic.progress);
-					setPic({ ...pic, progress: progressBar });
+					)
+					setPic({ ...pic, progress: progressBar })
 				},
 				(error) => {
-					console.log('Error uploading photo', error);
+					console.log('Error uploading photo', error)
 				},
 				async () => {
 					await storage
 						.ref('images')
 						.child(pic.name)
 						.getDownloadURL()
-						.then((url) => {
-							console.log('url to file', url);
-							setPic({ ...pic, url: url });
-							db.collection('users').doc(param).update({
+						.then(async (url) => {
+							console.log('url to file', url)
+							setPic({ ...pic, url: url })
+							await db.collection('users').doc(signedInUser).update({
 								url: url,
 								displayName: moreInfo
-							});
+							})
 						})
-						.then(() => {
-							'sent successfully';
+						.then(async() => {
+							await dispatch(getBasicUserDetails())
+							setFinished(true)
 						})
-						.catch((err) => console.log(err));
+						.catch((err) => console.log(err))
 				}
-			);
+			)
 		}
-	};
+	}
 
 	// TODO get user id here & attach this url to more user data doc
 
 	const displayNameChose = (e) => {
-		setMoreInfo(e.target.value);
-	};
+		setMoreInfo(e.target.value)
+	}
 
 	const onEnter = (e) => {
 		if (e.which === 13 || e.keyCode === 13) {
-			setMoreInfo(e.target.value);
+			setMoreInfo(e.target.value)
 		}
-	};
+	}
 
-	const submit = () => {
-		history.push('/feed');
-	};
-
-	console.log('param: ', param, 'url: ', pic.url, 'displayName: ', moreInfo);
+	const submit = async () => {
+		setInterval(() => {
+			if (finished) {
+				history.push('/feed')
+			}
+		}, 100)
+	}
 
 	return (
 		<div className='create-account-module'>
@@ -196,6 +210,6 @@ const CreateInfo = () => {
 				</div>
 			</div>
 		</div>
-	);
-};
-export default CreateInfo;
+	)
+}
+export default CreateInfo

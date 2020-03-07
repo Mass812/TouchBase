@@ -1,21 +1,18 @@
-import { CREATE_POST, GET_POSTS, GET_USER_HEADER_INFO } from '../types';
+import { CREATE_POST, GET_FEED_POSTS, GET_BASIC_USER_INFO } from '../types'
 
-const initialState = {};
+const initialState = {}
 
 const feedReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case CREATE_POST:
-			return { ...state, posted: action.post };
+			return { ...state, createPost: action.typedPost }
 
-		case GET_POSTS:
-			return { ...state, posts: action.data };
-
-		case GET_USER_HEADER_INFO:
-			return { ...state, userInfo: action.data };
+		case GET_FEED_POSTS:
+			return { ...state, getFeedPosts: action.getFeedPosts }
 
 		default:
-			return state;
+			return state
 	}
-};
+}
 
-export default feedReducer;
+export default feedReducer

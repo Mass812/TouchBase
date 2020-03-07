@@ -14,7 +14,7 @@ const responseReducer = (state = initialState, action) => {
 			return { ...state, storedUserComment: action.storedUserComment };
 		case RESPONSE_ERROR:
 			console.log('Post Failed:  error: ');
-			return { ...state, response: action.data };
+			return { ...state, responseError: action.data };
 		case GET_RESPONSES:
 			console.log('Posting response reducer fired');
 			return { ...state, getResponses: action.getResponses };

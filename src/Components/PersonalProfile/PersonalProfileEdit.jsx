@@ -3,12 +3,8 @@ import './PersonalProfile.scss'
 import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
-import firebase, { db } from '../Firebase/firebaseConfig'
-import {
-	checkForUserProfile,
-	getUserDetailsFromId,
-	updateUserProfile
-} from '../../redux/actions/profileActions'
+import firebase, { auth, db } from '../Firebase/firebaseConfig'
+import { updateAndReturnUserProfile, getBasicUserDetails } from '../../redux/actions/profileActions'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../App.scss'
 import { useParams, useHistory } from 'react-router-dom'
@@ -21,49 +17,34 @@ const PersonalProfileEdit = () => {
 	const param = useParams()
 	const history = useHistory()
 	//move to initial state of editProfile Reducer
-
+useEffect(() => {
+	dispatch(getBasicUserDetails())
+	
+}, [])
 	//userProfile data from page user
-	const userProfileInfo = useSelector((state) => state.profile.profile)
-	console.log('userProfileInfo', userProfileInfo)
+	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 
-	const userInfo = useSelector((state) => state.profile.data)
-	console.log('userProfileInfo', userProfileInfo)
 
 	const [
 		newProfileData,
 		setNewProfileData
 	] = useState({
-		work: userProfileInfo.work,
-		location: userProfileInfo.location,
-		bio: userProfileInfo.bio,
-		hobbies: userProfileInfo.hobbies
+		work: basicUserInfo.work,
+		location: basicUserInfo.location,
+		bio: basicUserInfo.bio,
+		hobbies: basicUserInfo.hobbies
 	})
 
-	const [
-		updatedProfile,
-		setUpdatedProfile
-	] = useState('')
-
 	const handleProfileUpdate = async () => {
-		await setUpdatedProfile(newProfileData)
-		await dispatch(updateUserProfile(userInfo, newProfileData))
+		await dispatch(updateAndReturnUserProfile(auth.currentUser.uid, newProfileData))
 		//use reducer action pair
-		console.log(userInfo, ' signedInUser ')
+		await updatePic()
+		history.push('/feed')
+		console.log(basicUserInfo, ' basicUserInfo ')
 	}
-	console.log(newProfileData, 'New Profile Data')
-	useEffect(
-		() => {
-			console.log('refresh by state', updatedProfile)
-
-			// Execute the created function directly
-		},
-		[
-			updatedProfile
-		]
-	)
 
 	const handleWork = (e) => {
-		setNewProfileData({...newProfileData,  work: e.target.value })
+		setNewProfileData({ ...newProfileData, work: e.target.value })
 	}
 	const handleLocation = (e) => {
 		setNewProfileData({ ...newProfileData, location: e.target.value })
@@ -79,29 +60,28 @@ const PersonalProfileEdit = () => {
 		pic,
 		setPic
 	] = useState({
-		newImage: null,
-		url: userInfo.url,
+		newImage: '',
+		url: basicUserInfo.url,
 		progress: 0,
-		name: userInfo.displayName
+		name: basicUserInfo.displayName
 	})
 
 	//move to action creator
 	const fileSelector = (e) => {
 		console.log(e.target.files[0])
 		if (e.target.files[0]) {
-			setPic({ ...pic, newImage: e.target.files[0], name: userInfo.userId })
+			setPic({ ...pic, newImage: e.target.files[0], name: basicUserInfo.userId })
 		}
 	}
-	console.log('after first select file', pic.name)
 
 	//move to action creator
 	const updatePic = () => {
 		if (pic.newImage) {
 			//args file
-			console.log('upload Pic Fx fired')
+			
 			const storageRef = firebase.storage()
 			const uploadImage = storageRef
-				.ref(`images/${userInfo.userId}`) //state.profile.data
+				.ref(`images/${basicUserInfo.userId}`) //state.profile.data
 				.put(pic.newImage)
 			uploadImage.on(
 				'state_changed',
@@ -118,34 +98,31 @@ const PersonalProfileEdit = () => {
 					storageRef.ref('images').child(pic.name).getDownloadURL().then((url) => {
 						//reducer dispatch set_url
 						setPic({ ...pic, url })
-
-						let hold = []
+						//update users file
 						firebase
 							.firestore()
 							.collection('users')
-							.doc(userInfo.userId)
+							.doc(basicUserInfo.userId)
 							.update({ url: url })
+							.then(dispatch(getBasicUserDetails()))
 
-						firebase
-							.firestore()
-							.collection('posts')
-							.where('userId', '==', userInfo.userId)
-							.get()
-							.then((n) => {
-								n.forEach((n) => hold.push(n.data().id))
-								console.log(hold, 'hold bvalue')
+						firebase.firestore().collection('posts').get().then(snapshot => {
+							snapshot.forEach((doc) => {
+								var specificPostsWithUserId = db.collection('posts').doc(doc.id)
+								
+								 specificPostsWithUserId.update({
+									url: url
+								})
+							
+								
 							})
-							.then(() => {
-								console.log(hold)
-								hold.map((arrValue) =>
-									firebase
-										.firestore()
-										.collection('posts')
-										.doc(arrValue)
-										.update({ url: url })
-								)
-								history.push('/feed')
-							})
+						})
+											
+						
+						
+						
+						// .update({ url: url })
+						// .then(dispatch( getBasicUserDetails()))
 					})
 				}
 			)
@@ -156,6 +133,10 @@ const PersonalProfileEdit = () => {
 	// TODO useEffect hook parameter pic.url to update users profile
 
 	//change to dispatch selector props
+
+
+
+
 	return (
 		<div>
 			<Navbar />
@@ -166,13 +147,7 @@ const PersonalProfileEdit = () => {
 							<img
 								className='profile-image'
 								src={
-									`${userInfo.url}` ? (
-										`${userInfo.url}`
-									) : `${pic.url}` ? (
-										`${pic.url}`
-									) : (
-										{ defaultPic }
-									)
+									`${basicUserInfo.url}`
 								}
 								alt={'default'}
 							/>
@@ -185,10 +160,12 @@ const PersonalProfileEdit = () => {
 											icon={faCloudUploadAlt}
 											size={'1x'}
 											color={'white'}
+											onClick={updatePic}
 										/>{' '}
 									</label>
 
 									<input
+										className='input-field'
 										id='changePic'
 										style={{ display: 'none' }}
 										type='file'
@@ -198,7 +175,7 @@ const PersonalProfileEdit = () => {
 							) : pic.progress > 0 ? (
 								<div>
 									<progress min='1' max='100'>
-										{' '}
+									
 										{pic.progress}
 									</progress>
 								</div>
@@ -206,15 +183,21 @@ const PersonalProfileEdit = () => {
 							<span className='image-upload-bar'>
 								{pic.newImage ? (
 									<span>
-										{pic.name}
 										<span style={{ paddingLeft: '15px' }}>
 											<FontAwesomeIcon
 												icon={faCheckCircle}
 												size={'1x'}
 												color={'white'}
-												onClick={updatePic}
+												
+												
 											/>{' '}
+									<button onClick={updatePic} className='submit-button'>Preview Selected File</button>
+										
 										</span>
+										<div>
+
+										
+										</div>
 									</span>
 								) : (
 									'Change Picture'
@@ -224,15 +207,16 @@ const PersonalProfileEdit = () => {
 					</div>
 					<div className='details-block'>
 						<div className='profile-details'>
+<form>
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Work </span>
 								<div className='profile-edit-detail-value-font'>
-									<div>{userProfileInfo.work} </div>
+									<div>{basicUserInfo.work} </div>
 									<br />
 									<input
 										className='input-field'
 										onChange={handleWork}
-										type='textArea'
+										type='text'
 										name='work'
 										placeholder='update work here'
 									/>
@@ -241,7 +225,7 @@ const PersonalProfileEdit = () => {
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Location </span>
 								<div className='profile-edit-detail-value-font'>
-									<div> {userProfileInfo.location} </div>
+									<div> {basicUserInfo.location} </div>
 									<br />
 
 									<input
@@ -257,12 +241,12 @@ const PersonalProfileEdit = () => {
 								<span className='profile-detail-key-font'>Bio: </span>
 
 								<div className='profile-edit-detail-value-font'>
-									<div> {userProfileInfo.bio} </div>
+									<div> {basicUserInfo.bio} </div>
 									<br />
 									<input
 										className='input-field'
 										onChange={handleBio}
-										type='textArea'
+										type='text'
 										name='bio'
 										placeholder='update bio here'
 									/>
@@ -272,17 +256,20 @@ const PersonalProfileEdit = () => {
 								<span className='profile-detail-key-font'>Hobbies:</span>
 
 								<div className='profile-edit-detail-value-font'>
-									<div> {userProfileInfo.hobbies} </div>
+									<div> {basicUserInfo.hobbies} </div>
 									<br />
 									<input
 										className='input-field'
 										onChange={handleHobbies}
-										type='textArea'
+										type='text'
 										name='hobbies'
 										placeholder='update hobbies here'
 									/>
 								</div>
 							</div>
+</form>
+
+
 							<button className='submit-button' onClick={handleProfileUpdate}>
 								Submit
 							</button>

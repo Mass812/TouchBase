@@ -1,12 +1,9 @@
-import React, {
-	useState,
-	useEffect
-} from 'react'
+import React, { useState, useEffect } from 'react'
 import SignInDumb from './SignInDumb'
 import { auth } from '../../Firebase/firebaseConfig'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getUserCardDetails } from '../../../redux/actions/feedActions'
+import { getBasicUserDetails } from '../../../redux/actions/profileActions'
 
 const SignIn = () => {
 	const [
@@ -25,19 +22,15 @@ const SignIn = () => {
 
 	useEffect(
 		() => {
-			auth.onAuthStateChanged(
-				(user) => {
-					console.log('on auth change use effect => ',user)
-					if (user) {
-						let signedInUser =auth.currentUser.uid;
-						console.log(signedInUser);
-						dispatch({type: 'SIGNED_IN_USER', signedInUser})
-						history.push(
-							`/feed`
-						)
-					}
+			auth.onAuthStateChanged((user) => {
+				console.log('on auth change use effect => ', user)
+				if (user) {
+					let signedInUser = auth.currentUser.uid
+					console.log(signedInUser)
+					dispatch({ type: 'SIGNED_IN_USER', signedInUser })
+					history.push(`/feed`)
 				}
-			)
+			})
 		},
 		[
 			history
@@ -58,21 +51,12 @@ const SignIn = () => {
 		})
 	}
 
-	const userInfoEntered = async (
-		e
-	) => {
+	const userInfoEntered = async (e) => {
 		e.preventDefault()
 
 		await auth
-			.signInWithEmailAndPassword(
-				info.email,
-				info.password
-			)
-			.then(() =>
-				dispatch(
-					getUserCardDetails()
-				)
-			)
+			.signInWithEmailAndPassword(info.email, info.password)
+			.then(() => dispatch(getBasicUserDetails()))
 			.then(() => {
 				history.push(`/feed`)
 			})
@@ -86,17 +70,11 @@ const SignIn = () => {
 
 	return (
 		<SignInDumb
-			userEmailEntered={
-				userEmailEntered
-			}
-			userPasswordEntered={
-				userPasswordEntered
-			}
+			userEmailEntered={userEmailEntered}
+			userPasswordEntered={userPasswordEntered}
 			password={info.password}
 			email={info.email}
-			userInfoEntered={
-				userInfoEntered
-			}
+			userInfoEntered={userInfoEntered}
 			error={signOnError}
 		/>
 	)

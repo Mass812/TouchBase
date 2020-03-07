@@ -2,8 +2,8 @@ import React from 'react'
 import './NotIdentifiedScreen.scss'
 import { Link, useHistory } from 'react-router-dom'
 import { auth } from '../Firebase/firebaseConfig'
-import { getUserCardDetails } from '../../redux/actions/feedActions'
-import {} from '../../redux/actions/profileActions';
+import { getBasicUserDetails } from '../../redux/actions/profileActions'
+import {} from '../../redux/actions/profileActions'
 import { useDispatch } from 'react-redux'
 
 const NotIdentifiedScreen = (e) => {
@@ -16,7 +16,7 @@ const NotIdentifiedScreen = (e) => {
 
 		await auth
 			.signInWithEmailAndPassword('guest@guest.com', 'Test123!')
-			.then(() => dispatch(getUserCardDetails()))
+			.then(() => dispatch(getBasicUserDetails()))
 			.then(() => {
 				history.push(`/feed`)
 			})
@@ -56,6 +56,9 @@ const NotIdentifiedScreen = (e) => {
 			<div>
 				<button onClick={signInAsGuest} className='nav-button'>
 					Site Guest
+				</button>
+				<button onClick={()=>auth.currentUser.signOut} className='nav-button'>
+					Sign Out
 				</button>
 			</div>
 		</div>

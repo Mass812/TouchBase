@@ -20,7 +20,7 @@
 }
 
 .input-field {
-	color: rgb(25, 168, 137);
+	color: rgb(11, 76, 105);
 	font-size: 14px;
 	margin: 5px;
 	letter-spacing: 1px;
@@ -29,7 +29,28 @@
 	margin: 15px;
 	border: none;
 	border-bottom: 1px solid rgb(56, 105, 56);
-	border-radius: 7px;
+	border-radius: 10px;
 	max-width: 300px;
 	min-width: 175px;
 }
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	border-top: 1px solid rgb(56, 105, 56);
+	border-bottom: 1px solid rgb(56, 105, 56);
+	padding: 10px;
+	align-items: center;
+	margin: 5px 20px;
+
+	input[type=text]:focus {
+		background-color: rgb(39, 214, 205);
+		color: black;
+	  }
+	input[type=password]:focus {
+		background-color: rgb(39, 214, 205);
+		color: black;
+	  }
+}
+
+

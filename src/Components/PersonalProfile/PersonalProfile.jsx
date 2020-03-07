@@ -8,15 +8,13 @@ import { useParams } from 'react-router-dom'
 import { auth, db } from '../Firebase/firebaseConfig'
 import {
 	getUserDetailsFromPostId,
-	createUserProfileAutomatically
 } from '../../redux/actions/profileActions'
 import { useHistory } from 'react-router-dom'
 
 const PersonalProfile = () => {
 	const defaultPic = require('../../Assets/default.png')
 	const param = useParams().id
-	const userInfo = useSelector((state) => state.profile.data)
-	const userProfile = useSelector((state) => state.profile.profile)
+	const getProfile = useSelector((state) => state.profile.usersDocFromPic)
 	const dispatch = useDispatch()
 	const history = useHistory()
 
@@ -24,8 +22,7 @@ const PersonalProfile = () => {
 		() => {
 			async function lookForProfileOrCreateOne() {
 				await dispatch(getUserDetailsFromPostId(param))
-				await dispatch(createUserProfileAutomatically(userInfo))
-						
+				
 			}
 			// Execute the created function directly
 			lookForProfileOrCreateOne()
@@ -36,17 +33,17 @@ const PersonalProfile = () => {
 		]
 	)
 
-	const EditProfileButton = userInfo.userId === auth.currentUser.uid ? (<button 
-		
-		className='submit-button'
-		onClick={() =>
-			auth.currentUser.uid === userInfo.userId
-				? history.push(`/edit_personal_profile/${userInfo.userId}`)
-				: null}>
-		Edit Profile
-	</button>) : null
-
-
+	// const EditProfileButton =
+	// 	getProfile.userId === auth.currentUser.uid ? (
+	// 		<button
+	// 			className='submit-button'
+	// 			onClick={() =>
+	// 				auth.currentUser.uid === getProfile.userId
+	// 					? history.push(`/edit_personal_profile/${getProfile.userId}`)
+	// 					: null}>
+	// 			Edit Profile
+	// 		</button>
+	// 	) : null
 
 	return (
 		<div>
@@ -57,17 +54,17 @@ const PersonalProfile = () => {
 						<div>
 							<img
 								className='profile-image'
-								src={userInfo ? userInfo.url : defaultPic}
+								src={getProfile ? getProfile.url : defaultPic}
 								alt={'default'}
 							/>
 						</div>
 						<div className='profile-user-display-name'>
-							{userInfo ? userInfo.displayName : null}
+							{getProfile ? getProfile.displayName : null}
 						</div>
 						<div className='under-icon-pair-group'>
 							<FontAwesomeIcon icon={faBriefcase} size={'sm'} color={'white'} />{' '}
 							<span className='image-upload-bar'>
-								{userProfile ? userProfile.work : 'Work'}
+								{getProfile ? getProfile.work : 'Work'}
 							</span>
 						</div>
 						<div className='under-icon-pair-group'>
@@ -77,7 +74,7 @@ const PersonalProfile = () => {
 								color={'white'}
 							/>{' '}
 							<span className='image-upload-bar'>
-								{userProfile ? userProfile.location : 'location'}
+								{getProfile ? getProfile.location : 'location'}
 							</span>
 						</div>
 					</div>
@@ -86,19 +83,18 @@ const PersonalProfile = () => {
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Bio: </span>
 								<blockquote className='profile-detail-value-font'>
-									{userProfile ? userProfile.bio : 'Bio Details'}
+									{getProfile ? getProfile.bio : 'Bio Details'}
 								</blockquote>
 							</div>
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Hobbies:</span>
 								<blockquote className='profile-detail-value-font'>
-									{userProfile ? userProfile.hobbies : 'edit hobbies'}
+									{getProfile ? getProfile.hobbies : 'edit hobbies'}
 								</blockquote>
 							</div>
 						</div>
 					</div>
-					{EditProfileButton}
-					
+					{/* //button */}
 				</section>
 			</div>
 		</div>

@@ -10,7 +10,7 @@ import { getFeedPosts } from '../../redux/actions/feedActions'
 const Response = () => {
 	const param = useParams().id
 	console.log(param, 'param')
-	const originalPost = useSelector((state) => state.feed.posts)
+	const originalPost = useSelector((state) => state.feed.getFeedPosts)
 	const getResponses = useSelector((state) => state.response.getResponses)
 	const dispatch = useDispatch()
 	const [
@@ -65,16 +65,18 @@ const Response = () => {
 	)
 
 	const displayFeed = originalPost
-		? originalPost.filter((n) => n.id === param).map((n, idx) => (
+		? originalPost.filter((f) => {
+			console.log('f ==>', f);
+			return f.postId === param && f.relatedId === f.postId}).map((n, idx) => (
 				<div>
 					<TouchBaseCard
 						sidebar={false}
-						key={n.id}
+						key={n.id+ idx}
 						post={n.post}
 						displayName={n.displayName}
-						id={n.id}
-						picture={n.url}
-						to={`/personal_profile/${n.id}`}
+						id={n.postId}
+						picture={`${n.url}`}
+						to={`/personal_profile/${n.userId}`}
 					/>
 					<div className='tb-posting-title'>
 						<span>
@@ -99,15 +101,17 @@ const Response = () => {
 
 	const displayResponses =
 		getResponses &&
-		getResponses.map((n, idx) => (
+		getResponses.filter(f=>{
+			return	param === f.relatedId && f.relatedId !== f.postId
+		   }).map((n, idx) => (
 			<TouchBaseCard
 				sidebar={false}
-				key={n.id}
+				key={n.postId+idx}
 				post={n.post}
 				displayName={n.displayName}
-				id={n.id}
+				id={n.postId}
 				picture={n.url}
-				to={'/personal_profile'}
+				
 			/>
 		))
 

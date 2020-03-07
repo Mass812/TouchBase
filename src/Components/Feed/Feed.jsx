@@ -3,28 +3,39 @@ import './Feed.scss'
 import Navbar from '../Navbar/Navbar'
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { useSelector, useDispatch } from 'react-redux'
-import { getFeedPosts, createFeedPost, getUserCardDetails } from '../../redux/actions/feedActions'
+import { getFeedPosts, createFeedPost } from '../../redux/actions/feedActions'
+import { getBasicUserDetails } from '../../redux/actions/profileActions'
 import { LOADING } from '../../redux/types'
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom'
 
 //TODO gsap annimate new post in from left
 
 const Feed = (props) => {
-	const history=useHistory();
-	const signedInUser = useSelector((state) => state.auth.signedInUser)
-	const feedList = useSelector((state) => state.feed.posts)
-	const userInfo = useSelector((state) => state.feed.userInfo)
-
+	const history = useHistory()
+	const feedList = useSelector((state) => state.feed.getFeedPosts)
+	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
+	console.log('basic info on feed: ', basicUserInfo)
 
 	const dispatch = useDispatch()
 	const [
 		typedPost,
 		setTypedPost
 	] = useState('')
+
 	const [
 		submitted,
 		setSubmitted
 	] = useState(false)
+
+	useEffect(
+		() => {
+			dispatch(getBasicUserDetails())
+			dispatch(getFeedPosts())
+		},
+		[
+			submitted
+		]
+	)
 	const defaultPic = require('../../Assets/default.png')
 
 	const onChange = (e) => {
@@ -60,16 +71,6 @@ const Feed = (props) => {
 	//implement
 
 	//TODO Cache data
-
-	useEffect(
-		() => {
-			dispatch(getUserCardDetails())
-			dispatch(getFeedPosts())
-		},
-		[
-			submitted,
-		]
-	)
 
 	//TODO count area, update with actions and reducers
 
@@ -114,33 +115,24 @@ const Feed = (props) => {
 	// )
 	// //
 	const displayFeed = feedList
-		? feedList.map((n, idx) => (
+		? feedList.filter(f=>{
+		 return	f.postId === f.relatedId
+		}).map((n, idx) => (
 				<TouchBaseCard
 					sidebar={true}
-					key={n.id + idx}
+					key={n.postId + idx}
 					post={n.post}
 					displayName={n.displayName}
 					id={n.id}
 					picture={`${n.url}`}
-					toPost={`/specific_post/${n.id}`}
-					to={`/personal_profile/${n.id}`}
+					toPost={`/specific_post/${n.postId}`}
+					to={`/personal_profile/${n.postId}`}
 					//from comp
 				/>
 			))
 		: null
 
-	const userHeaderArea = (
-		<div>
-			<div>
-				<img onClick={()=> history.push(`/personal_profile/${signedInUser}`)}
-					className='default-user-image'
-					src={userInfo.url ? userInfo.url : defaultPic}
-					alt={userInfo.displayName}
-				/>
-			</div>
-			{userInfo.displayName}
-		</div>
-	)
+
 
 	return (
 		<div className='feed-container-component'>
@@ -165,7 +157,17 @@ const Feed = (props) => {
 							}}
 						/>
 					</span>
-					{userHeaderArea}
+					<div>
+			<div>
+				<img
+					onClick={() => history.push(`/edit_personal_profile/${basicUserInfo.userId}`)}
+					className='default-user-image'
+					src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
+					alt={basicUserInfo.displayName}
+				/>
+			</div>
+			{basicUserInfo.displayName}
+		</div>
 				</div>
 				<div className='feed-inner-post-block'>
 					<div className='feed-show-typed'> {typedPost} </div>

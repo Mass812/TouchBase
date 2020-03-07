@@ -1,85 +1,85 @@
 import firebase from '../../Components/Firebase/firebaseConfig'
 import { db, auth } from '../../Components/Firebase/firebaseConfig'
 import { LOADING, DONE_LOADING } from '../types'
-import { GET_USER_INFO } from '../types'
+import { GET_USER_INFO_OFF_POST_BY_USER_ID, GET_BASIC_USER_INFO } from '../types'
 import { useHistory } from 'react-router-dom'
+
+export const getBasicUserDetails = () => {
+	return async (dispatch) => {
+		dispatch({ type: LOADING })
+		//get user auth uid
+
+		firebase.auth().onAuthStateChanged(async (user) => {
+			if (user) {
+				//user is signed in
+				const userRef = auth.currentUser.uid
+				let basicUserInfo
+				await firebase
+					.firestore()
+					.collection('users')
+					.doc(userRef)
+					.get()
+					.then((snap) => {
+						basicUserInfo = snap.data()
+
+						dispatch({ type: GET_BASIC_USER_INFO, basicUserInfo })
+						console.log('Basic User Info: ', basicUserInfo)
+					})
+					.catch((err) => console.log(err))
+			}
+		})
+
+		//get the users profile
+	}
+}
 
 export const getUserDetailsFromPostId = (param) => {
 	return async (dispatch) => {
 		dispatch({ type: LOADING })
-		let userId, data
-		await firebase
+		let userId, usersDocFromPic
+
+
+		  await firebase
 			.firestore()
 			.collection('posts')
 			.doc(param)
-			.get()
-			.then((snap) => {
-				userId = snap.data().userId
+			.get().then(snap => {
+				userId = snap.data().userId;
+				console.log(snap.data().userId);
+				
 			})
+
+			
 			.then(async () => {
 				await firebase
 					.firestore()
 					.collection('users')
 					.doc(userId)
 					.get()
-					.then((res) => (data = res.data()))
-				dispatch({ type: GET_USER_INFO, data })
-				dispatch({ type: DONE_LOADING })
+					.then(res=> {
+						usersDocFromPic = res.data()
+						console.log('userDocsFromPic Value', usersDocFromPic);
+						dispatch({ type: GET_USER_INFO_OFF_POST_BY_USER_ID, usersDocFromPic })
+						dispatch({ type: DONE_LOADING })
+					
+					})
 			})
 			.catch((err) => console.log(err))
 	}
 }
 
-export const createUserProfileAutomatically = (userInfo) => {
-	return async (dispatch) => {
-		dispatch({ type: LOADING })
-		let userDetails = {
-			userId: userInfo.userId,
-			displayName: userInfo.displayName,
-			work: 'Edit Work',
-			location: 'Edit Location',
-			hobbies: 'Edit Hobbies',
-			bio: 'Edit Bio.'
-		}
-
-		let profile
-
-		const checkForUserProfile = firebase
-			.firestore()
-			.collection('userProfile')
-			.doc(userInfo.userId)
-		checkForUserProfile.get().then((doc) => {
-			if (doc.exists) {
-				profile = doc.data()
-				console.log('Profile already auto created as: ', profile)
-				dispatch({ type: 'STORED_USER_PROFILE', profile })
-			} else {
-				checkForUserProfile
-					.set(userDetails)
-					.then((doc) => {
-						profile = doc.data()
-						console.log('Profile automatic creation: ', profile)
-						dispatch({ type: 'STORED_USER_PROFILE', profile })
-						dispatch({ type: DONE_LOADING })
-					})
-					.catch((err) => console.log('error creating profile', err))
-			}
-		})
-	}
-}
-
-export const updateUserProfile = (userInfo, newProfileData) => {
+export const updateAndReturnUserProfile = (id, newProfileData) => {
 	return (dispatch) => {
-		const history = useHistory()
+	
 		const { work, bio, location, hobbies } = newProfileData
 		//see inner values
 		dispatch({ type: LOADING })
-		let updatedProfile
-		if (auth.currentUser.uid === userInfo.userId) {
+		let getProfile;
+		if (auth.currentUser.uid === id) {
 			const refUserAndUpdatedInfo = firebase
 				.firestore()
-				.collection('userProfile')
-				.doc(userInfo.userId)
+				.collection('users')
+				.doc(id)
 
 			refUserAndUpdatedInfo.update({
 				work: work,
@@ -88,18 +88,13 @@ export const updateUserProfile = (userInfo, newProfileData) => {
 				hobbies: hobbies
 			})
 
-			firebase
-				.firestore()
-				.collection('userProfile')
-				.doc(userInfo.userId)
-				.get()
-				.then((doc) => {
-					updatedProfile = doc.data()
-					console.log('updatedUserProfile Action Value', updatedProfile)
-					dispatch({ type: 'GET_NEW_USER_PROFILE_DATA', updatedProfile })
-					dispatch({ type: DONE_LOADING })
-					history.push('/feed')
-				})
+			firebase.firestore().collection('users').doc(id).get().then((doc) => {
+				getProfile = doc.data()
+				console.log('updatedUserProfile Action Value', getProfile)
+				dispatch({ type: 'GET_PROFILE_DATA', getProfile })
+				dispatch({ type: DONE_LOADING })
+				
+			})
 		} else {
 			return
 		}
