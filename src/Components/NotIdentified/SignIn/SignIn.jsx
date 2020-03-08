@@ -20,22 +20,22 @@ const SignIn = () => {
 	const history = useHistory()
 	const dispatch = useDispatch()
 
-	useEffect(
-		() => {
-			auth.onAuthStateChanged((user) => {
-				console.log('on auth change use effect => ', user)
-				if (user) {
-					let signedInUser = auth.currentUser.uid
-					console.log(signedInUser)
-					dispatch({ type: 'SIGNED_IN_USER', signedInUser })
-					history.push(`/feed`)
-				}
-			})
-		},
-		[
-			history
-		]
-	)
+	// useEffect(
+	// 	() => {
+	// 		auth.onAuthStateChanged((user) => {
+	// 			console.log('on auth change use effect => ', user)
+	// 			if (user) {
+	// 				let signedInUser = auth.currentUser.uid
+	// 				console.log(signedInUser)
+	// 				dispatch({ type: 'SIGNED_IN_USER', signedInUser })
+	// 				history.push(`/feed`)
+	// 			}
+	// 		})
+	// 	},
+	// 	[
+	// 		history
+	// 	]
+	// )
 
 	const userEmailEntered = (e) => {
 		setInfo({
@@ -56,7 +56,7 @@ const SignIn = () => {
 
 		await auth
 			.signInWithEmailAndPassword(info.email, info.password)
-			.then(() => dispatch(getBasicUserDetails()))
+			.then(() =>  dispatch(getBasicUserDetails()))
 			.then(() => {
 				history.push(`/feed`)
 			})

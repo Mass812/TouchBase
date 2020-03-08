@@ -3,8 +3,8 @@
 
 const authReducer = (state = {}, action) => {
 	switch (action.type) {
-		case 'SIGNED_IN_USER':
-			return { ...state, signedInUser: action.signedInUser }
+		case 'GET_SIGNED_IN_USER_ID':
+			return { ...state, getCurrentSignedInUserId: action.getCurrentSignedInUserId }
 		default:
 			 return state
 	}

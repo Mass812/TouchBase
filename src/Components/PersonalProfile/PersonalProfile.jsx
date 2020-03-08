@@ -92,9 +92,12 @@ const PersonalProfile = () => {
 									{getProfile ? getProfile.hobbies : 'edit hobbies'}
 								</blockquote>
 							</div>
+					<button onClick={()=>history.push('/feed')} className='nav-button'>
+					Back
+				</button>
 						</div>
 					</div>
-					{/* //button */}
+
 				</section>
 			</div>
 		</div>

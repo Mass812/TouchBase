@@ -7,8 +7,6 @@ const db = admin.firestore()
 exports.createUserDoc = functions.auth.user().onCreate((user) => {
 	//...
 
-
-	
 	const newUser = {
 		email: user.email,
 		userId: user.uid,
@@ -20,8 +18,7 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
 		bio: 'Edit Bio.'
 	}
 
-	db.collection('users').doc(user.uid).set(newUser).then(	res
-		.json({ message: `document ${user} created successfully` })
+	db.collection('users').doc(user.uid).set(newUser)
 })
 
 exports.deleteUserDoc = functions.auth.user().onDelete((user) => {

@@ -15,7 +15,7 @@ const NotIdentifiedScreen = (e) => {
 		e.preventDefault()
 
 		await auth
-			.signInWithEmailAndPassword('guest@guest.com', 'Test123!')
+			.signInWithEmailAndPassword('guest@guest.com', 'Guest123!')
 			.then(() => dispatch(getBasicUserDetails()))
 			.then(() => {
 				history.push(`/feed`)
@@ -57,9 +57,7 @@ const NotIdentifiedScreen = (e) => {
 				<button onClick={signInAsGuest} className='nav-button'>
 					Site Guest
 				</button>
-				<button onClick={()=>auth.currentUser.signOut} className='nav-button'>
-					Sign Out
-				</button>
+			
 			</div>
 		</div>
 	)

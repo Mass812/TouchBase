@@ -10,7 +10,9 @@ const SignOutButton = () => {
 		console.log('currentUser', auth.currentUser);
 		try {
 			console.log('signed out user', auth.currentUser);
-			await auth.signOut().then(() => history.push('/'));
+			await auth.signOut().then(() =>{
+				localStorage.clear();
+				history.push('/')});
 		} catch (error) {
 			console.log(error);
 		}

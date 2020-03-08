@@ -6,7 +6,8 @@ import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-ico
 import { db, auth, storage } from '../../Firebase/firebaseConfig'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import {getBasicUserDetails} from '../../../redux/actions/profileActions'
+import { getBasicUserDetails } from '../../../redux/actions/profileActions'
+import { getCurrentUserByAuth } from '../../../redux/actions/authActions'
 
 const CreateInfo = () => {
 	const defaultPic = require('../../../Assets/default.png')
@@ -14,8 +15,8 @@ const CreateInfo = () => {
 		finished,
 		setFinished
 	] = useState(false)
-	const signedInUser = useSelector((state) => state.auth.signedInUser)
-	const dispatch = useDispatch();
+	const basicUserDetails = useSelector((state) => state.profile.basicUserDetails)
+	const dispatch = useDispatch()
 	const history = useHistory()
 
 	//move to initial state of editProfile Reducer
@@ -36,12 +37,12 @@ const CreateInfo = () => {
 
 	// TODO move to action creator
 	const fileSelector = (e) => {
+		dispatch(getBasicUserDetails());
 		console.log(e.target.files[0])
 		if (e.target.files[0]) {
-			setPic({ ...pic, image: e.target.files[0], name: signedInUser })
+			setPic({ ...pic, image: e.target.files[0], name: auth.currentUser.uid })
 		}
 	}
-	console.log('after first select file', pic.name)
 
 	// TODO move to action creator
 	const uploadPic = async () => {
@@ -66,13 +67,13 @@ const CreateInfo = () => {
 						.then(async (url) => {
 							console.log('url to file', url)
 							setPic({ ...pic, url: url })
-							await db.collection('users').doc(signedInUser).update({
+							await db.collection('users').doc(auth.currentUser.uid ).update({
 								url: url,
 								displayName: moreInfo
 							})
 						})
-						.then(async() => {
-							await dispatch(getBasicUserDetails())
+						.then(() => {
+							dispatch(getBasicUserDetails())
 							setFinished(true)
 						})
 						.catch((err) => console.log(err))
@@ -90,15 +91,12 @@ const CreateInfo = () => {
 	const onEnter = (e) => {
 		if (e.which === 13 || e.keyCode === 13) {
 			setMoreInfo(e.target.value)
+			dispatch(getCurrentUserByAuth())
 		}
 	}
 
-	const submit = async () => {
-		setInterval(() => {
-			if (finished) {
-				history.push('/feed')
-			}
-		}, 100)
+	const submit = () => {
+		history.push('/feed')
 	}
 
 	return (
@@ -201,7 +199,7 @@ const CreateInfo = () => {
 
 						<button
 							className='submit-button-more-info'
-							disable={!pic.url ? true : false}
+						// disable={!pic.url ? true : false}
 							onClick={submit}
 							style={!pic.url ? { opacity: '0.1' } : { opacity: '1' }}>
 							I'm Ready

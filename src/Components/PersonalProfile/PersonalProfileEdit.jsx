@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import firebase, { auth, db } from '../Firebase/firebaseConfig'
 import { updateAndReturnUserProfile, getBasicUserDetails } from '../../redux/actions/profileActions'
+import { getCurrentUserByAuth } from '../../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../App.scss'
 import { useParams, useHistory } from 'react-router-dom'
@@ -17,14 +18,14 @@ const PersonalProfileEdit = () => {
 	const param = useParams()
 	const history = useHistory()
 	//move to initial state of editProfile Reducer
-useEffect(() => {
-	dispatch(getBasicUserDetails())
-	
-}, [])
+	useEffect(() => {
+		dispatch(getCurrentUserByAuth())
+		dispatch(getBasicUserDetails())
+	}, [])
 	//userProfile data from page user
+	const getCurrentSignedInUserId = useSelector((state) => state.auth.getCurrentSignedInUserId)
 	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
-
-
+	console.log('getCurrentSignedInUserId', getCurrentSignedInUserId);
 	const [
 		newProfileData,
 		setNewProfileData
@@ -78,7 +79,7 @@ useEffect(() => {
 	const updatePic = () => {
 		if (pic.newImage) {
 			//args file
-			
+
 			const storageRef = firebase.storage()
 			const uploadImage = storageRef
 				.ref(`images/${basicUserInfo.userId}`) //state.profile.data
@@ -102,25 +103,27 @@ useEffect(() => {
 						firebase
 							.firestore()
 							.collection('users')
-							.doc(basicUserInfo.userId)
+							.doc(auth.currentUser.uid)
 							.update({ url: url })
-							.then(dispatch(getBasicUserDetails()))
+							.then(() => {
+								dispatch(getBasicUserDetails())
+							}).then(firebase
+								.firestore()
+								.collection('posts')
+								.where('userId', '==', auth.currentUser.uid)
+								.get()
+								.then((snap) => {
+									snap.forEach((doc) => {
+										var specificPostsWithUserId = db.collection('posts').doc(doc.id)
+	
+										specificPostsWithUserId.update({
+											url: url
+										})
+									})
+								}) )
 
-						firebase.firestore().collection('posts').get().then(snapshot => {
-							snapshot.forEach((doc) => {
-								var specificPostsWithUserId = db.collection('posts').doc(doc.id)
-								
-								 specificPostsWithUserId.update({
-									url: url
-								})
-							
-								
-							})
-						})
-											
 						
-						
-						
+
 						// .update({ url: url })
 						// .then(dispatch( getBasicUserDetails()))
 					})
@@ -134,9 +137,6 @@ useEffect(() => {
 
 	//change to dispatch selector props
 
-
-
-
 	return (
 		<div>
 			<Navbar />
@@ -146,9 +146,7 @@ useEffect(() => {
 						<div>
 							<img
 								className='profile-image'
-								src={
-									`${basicUserInfo.url}`
-								}
+								src={`${basicUserInfo.url}`}
 								alt={'default'}
 							/>
 						</div>
@@ -175,7 +173,6 @@ useEffect(() => {
 							) : pic.progress > 0 ? (
 								<div>
 									<progress min='1' max='100'>
-									
 										{pic.progress}
 									</progress>
 								</div>
@@ -188,16 +185,12 @@ useEffect(() => {
 												icon={faCheckCircle}
 												size={'1x'}
 												color={'white'}
-												
-												
 											/>{' '}
-									<button onClick={updatePic} className='submit-button'>Preview Selected File</button>
-										
+											<button onClick={updatePic} className='submit-button'>
+												Preview Selected File
+											</button>
 										</span>
-										<div>
-
-										
-										</div>
+										<div />
 									</span>
 								) : (
 									'Change Picture'
@@ -207,68 +200,70 @@ useEffect(() => {
 					</div>
 					<div className='details-block'>
 						<div className='profile-details'>
-<form>
-							<div className='profile-detail-item'>
-								<span className='profile-detail-key-font'>Work </span>
-								<div className='profile-edit-detail-value-font'>
-									<div>{basicUserInfo.work} </div>
-									<br />
-									<input
-										className='input-field'
-										onChange={handleWork}
-										type='text'
-										name='work'
-										placeholder='update work here'
-									/>
+							<form>
+								<div className='profile-detail-item'>
+									<span className='profile-detail-key-font'>Work </span>
+									<div className='profile-edit-detail-value-font'>
+										<div>{basicUserInfo.work} </div>
+										<br />
+										<input
+											className='input-field'
+											onChange={handleWork}
+											type='text'
+											name='work'
+											placeholder='update work here'
+										/>
+									</div>
 								</div>
-							</div>
-							<div className='profile-detail-item'>
-								<span className='profile-detail-key-font'>Location </span>
-								<div className='profile-edit-detail-value-font'>
-									<div> {basicUserInfo.location} </div>
-									<br />
+								<div className='profile-detail-item'>
+									<span className='profile-detail-key-font'>Location </span>
+									<div className='profile-edit-detail-value-font'>
+										<div> {basicUserInfo.location} </div>
+										<br />
 
-									<input
-										className='input-field'
-										onChange={handleLocation}
-										type='text'
-										name='location'
-										placeholder='update location here'
-									/>
+										<input
+											className='input-field'
+											onChange={handleLocation}
+											type='text'
+											name='location'
+											placeholder='update location here'
+										/>
+									</div>
 								</div>
-							</div>
-							<div className='profile-detail-item'>
-								<span className='profile-detail-key-font'>Bio: </span>
+								<div className='profile-detail-item'>
+									<span className='profile-detail-key-font'>Bio: </span>
 
-								<div className='profile-edit-detail-value-font'>
-									<div> {basicUserInfo.bio} </div>
-									<br />
-									<input
-										className='input-field'
-										onChange={handleBio}
-										type='text'
-										name='bio'
-										placeholder='update bio here'
-									/>
+									<div className='profile-edit-detail-value-font'>
+										<div> {basicUserInfo.bio} </div>
+										<br />
+										<input
+											className='input-field'
+											onChange={handleBio}
+											type='text'
+											name='bio'
+											placeholder='update bio here'
+										/>
+									</div>
 								</div>
-							</div>
-							<div className='profile-detail-item'>
-								<span className='profile-detail-key-font'>Hobbies:</span>
+								<div className='profile-detail-item'>
+									<span className='profile-detail-key-font'>Hobbies:</span>
 
-								<div className='profile-edit-detail-value-font'>
-									<div> {basicUserInfo.hobbies} </div>
-									<br />
-									<input
-										className='input-field'
-										onChange={handleHobbies}
-										type='text'
-										name='hobbies'
-										placeholder='update hobbies here'
-									/>
+									<div className='profile-edit-detail-value-font'>
+										<div> {basicUserInfo.hobbies} </div>
+										<br />
+										<input
+											className='input-field'
+											onChange={handleHobbies}
+											type='text'
+											name='hobbies'
+											placeholder='update hobbies here'
+										/>
+									</div>
 								</div>
-							</div>
-</form>
-
+							</form>
+							<button onClick={()=>history.push('/feed')} className='submit-button'>
+					Back
+				</button>
 
 							<button className='submit-button' onClick={handleProfileUpdate}>
 								Submit

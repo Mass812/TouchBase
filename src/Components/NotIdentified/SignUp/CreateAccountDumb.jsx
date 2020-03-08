@@ -1,7 +1,9 @@
 import React from 'react';
 import '../CreateAccount.scss';
+import {useHistory} from 'react-router-dom'
 
 const Signup = (props) => {
+	const history = useHistory();
 	return (
 		<div className='create-account-module'>
 			<div className='inner-account-parent'>
@@ -66,6 +68,10 @@ const Signup = (props) => {
 				</button>
 				<div className='error-message'>{props.errorMessage}</div>
 			</div>
+			<button onClick={()=>history.push('/')} className='nav-button'>
+					Back
+				</button>
+
 		</div>
 	);
 };

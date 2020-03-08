@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Feed.scss'
+import '../../App.scss'
 import Navbar from '../Navbar/Navbar'
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { useSelector, useDispatch } from 'react-redux'
@@ -115,24 +116,24 @@ const Feed = (props) => {
 	// )
 	// //
 	const displayFeed = feedList
-		? feedList.filter(f=>{
-		 return	f.postId === f.relatedId
-		}).map((n, idx) => (
-				<TouchBaseCard
-					sidebar={true}
-					key={n.postId + idx}
-					post={n.post}
-					displayName={n.displayName}
-					id={n.id}
-					picture={`${n.url}`}
-					toPost={`/specific_post/${n.postId}`}
-					to={`/personal_profile/${n.postId}`}
-					//from comp
-				/>
-			))
+		? feedList
+				.filter((f) => {
+					return f.postId === f.relatedId
+				})
+				.map((n, idx) => (
+					<TouchBaseCard
+						sidebar={true}
+						key={n.postId + idx}
+						post={n.post}
+						displayName={n.displayName}
+						id={n.id}
+						picture={`${n.url}`}
+						toPost={`/specific_post/${n.postId}`}
+						to={`/personal_profile/${n.postId}`}
+						//from comp
+					/>
+				))
 		: null
-
-
 
 	return (
 		<div className='feed-container-component'>
@@ -158,21 +159,23 @@ const Feed = (props) => {
 						/>
 					</span>
 					<div>
-			<div>
-				<img
-					onClick={() => history.push(`/edit_personal_profile/${basicUserInfo.userId}`)}
-					className='default-user-image'
-					src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
-					alt={basicUserInfo.displayName}
-				/>
-			</div>
-			{basicUserInfo.displayName}
-		</div>
+						<div>
+							<img
+								onClick={() =>
+									history.push(`/edit_personal_profile/${basicUserInfo.userId}`)}
+								className='default-user-image'
+								src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
+								alt={basicUserInfo.displayName}
+							/>
+						</div>
+						{basicUserInfo.displayName}
+					</div>
 				</div>
 				<div className='feed-inner-post-block'>
 					<div className='feed-show-typed'> {typedPost} </div>
 
 					<div className='feed-input-form-block'>
+
 						<input
 							className='feed-input'
 							placeholder='Enter a new post here'
@@ -181,6 +184,8 @@ const Feed = (props) => {
 							onKeyPress={onKeyPress}
 							value={typedPost}
 						/>
+
+
 						<div className='feed-post-comment-button'>
 							{submitted ? (
 								<span className='post-success'>Posted Successfully!</span>

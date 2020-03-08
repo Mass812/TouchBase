@@ -8,72 +8,65 @@ $gradient: linear-gradient(
 );
 $background: rgb(2, 0, 36);
 
-.feed-container{
-    
-    background-color: rgb(41,147,184);
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
+.feed-container {
+	background-color: rgb(41, 147, 184);
+	display: flex;
+	flex-direction: column;
+	height: fit-content;
 }
 
-.feed-throw-post-block{
-    margin: 2px;
-   padding: 3px;
-   width: inherit;
-   background-color: white;
-   justify-content: center;
-   align-items: center;
-   border-radius: 10px;
-   border: 2px solid black;
+.feed-throw-post-block {
+	margin: 2px;
+	padding: 3px;
+	width: inherit;
+	background-color: white;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	border: 2px solid black;
 }
 
-.feed-inner-post-block{
-width: 100%;
+.feed-inner-post-block {
+	width: 100%;
 }
-.feed-show-typed{
-  min-height: 20px;
- // word-break: break-all;
-  color: black;
-  font-family: "Comfortaa", cursive;
-  font-size: 18px;
-  font-weight: 500;
-
+.feed-show-typed {
+	min-height: 20px;
+	// word-break: break-all;
+	color: rgb(10, 173, 173);
+	font-family: "Comfortaa", cursive;
+	font-size: 18px;
+	font-weight: 500;
 }
-.feed-input-form-block{
-
-margin: 10px 0px;
-padding:  15px 0px;
+.feed-input-form-block {
+	margin: 10px 0px;
+	padding: 15px 0px;
 }
-.feed-input{
-    border-radius: 5px;
-    width: 95%;
-    font-size: 18px;
-    height: 24px;
-    padding: 5px;
+.feed-input {
+	border-radius: 5px;
+	width: 95%;
+	font-size: 18px;
+	height: 24px;
+	padding: 5px;
 }
-.feed-post-comment-button{
- float: right;
-} 
-.feed-post-success{
-color: rgb(24, 179, 10);
-font-size: 12px;
-font-family: 'Comfortaa';
-padding-right: 100px;
-font-weight: 700;
-
-
-
+.feed-post-comment-button {
+	float: right;
+}
+.feed-post-success {
+	color: rgb(24, 179, 10);
+	font-size: 12px;
+	font-family: 'Comfortaa';
+	padding-right: 100px;
+	font-weight: 700;
 }
 
-.db-posts{
-    width: 98vw;
+.db-posts {
+	width: 98vw;
 }
 
-.tb-posting-title{
-
-border: none;
-font-weight: 100;
-align-content: flex-start;
+.tb-posting-title {
+	border: none;
+	font-weight: 100;
+	align-content: flex-start;
 }
 
 .posting-picture {
@@ -82,8 +75,8 @@ align-content: flex-start;
 	align-content: center;
 	align-items: center;
 	display: flex;
-	height: 55px;
-	width: 55px;
+	height: 75px;
+	width: 75px;
 	border-radius: 50%;
 	background: $background;
 	background: $gradient;
@@ -98,13 +91,10 @@ align-content: flex-start;
 	overflow: hidden;
 	border-radius: 50%;
 	object-fit: cover;
-	
 }
 
- @media all and (min-width: 1200px){
-    .feed-container-component{
-       width: 98vw;
-;
-    }
-
-    }    
+@media all and (min-width: 1200px) {
+	.feed-container-component {
+		width: 98vw;
+	}
+}

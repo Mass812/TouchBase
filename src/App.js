@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './index.css'
 import {
 	Route,
@@ -14,7 +14,30 @@ import PersonalProfile from './Components/PersonalProfile/PersonalProfile'
 import PersonalProfileEdit from './Components/PersonalProfile/PersonalProfileEdit'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import CreateInfo from './Components/NotIdentified/SignUp/CreateInfo'
+import {auth} from './Components/Firebase/firebaseConfig'
 function App() {
+
+
+
+	useEffect(
+			() => {
+				auth.onAuthStateChanged((user) => {
+					console.log('on auth change use effect => ', user)
+					if (user) {
+					return
+					
+					} else {
+						auth.signOut()
+						localStorage.clear()
+					}
+				})
+			},
+			[
+				
+			]
+		)
+
+
 	return (
 		<Router>
 			<ScrollToTop />
