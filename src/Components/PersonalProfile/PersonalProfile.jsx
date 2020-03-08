@@ -2,52 +2,43 @@ import React, { useEffect } from 'react'
 import './PersonalProfile.scss'
 import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt, faBriefcase } from '@fortawesome/free-solid-svg-icons'
+import { faMapMarkerAlt, faBriefcase, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { auth, db } from '../Firebase/firebaseConfig'
-import {
-	getUserDetailsFromPostId,
-} from '../../redux/actions/profileActions'
+import { getUserDetailsFromPostId, getBasicUserDetails } from '../../redux/actions/profileActions'
 import { useHistory } from 'react-router-dom'
+import Spinner from '../Spinner/Spinner'
 
 const PersonalProfile = () => {
 	const defaultPic = require('../../Assets/default.png')
 	const param = useParams().id
 	const getProfile = useSelector((state) => state.profile.usersDocFromPic)
+	const basicUserDetails = useSelector((state) => state.profile.basicUserDetails)
+	const isLoading = useSelector((state) => state.loading.isLoading)
 	const dispatch = useDispatch()
 	const history = useHistory()
 
 	useEffect(
 		() => {
-			async function lookForProfileOrCreateOne() {
-				await dispatch(getUserDetailsFromPostId(param))
-				
+		
+			function lookForProfileOrCreateOne() {
+			dispatch(getUserDetailsFromPostId(param))
 			}
 			// Execute the created function directly
 			lookForProfileOrCreateOne()
 		},
 		[
 			dispatch,
-			param
+			param,
+			
 		]
 	)
-
-	// const EditProfileButton =
-	// 	getProfile.userId === auth.currentUser.uid ? (
-	// 		<button
-	// 			className='submit-button'
-	// 			onClick={() =>
-	// 				auth.currentUser.uid === getProfile.userId
-	// 					? history.push(`/edit_personal_profile/${getProfile.userId}`)
-	// 					: null}>
-	// 			Edit Profile
-	// 		</button>
-	// 	) : null
 
 	return (
 		<div>
 			<Navbar />
+		{!isLoading ? (
 			<div className='edge-case-large'>
 				<section className='profile-container'>
 					<div>
@@ -92,14 +83,13 @@ const PersonalProfile = () => {
 									{getProfile ? getProfile.hobbies : 'edit hobbies'}
 								</blockquote>
 							</div>
-					<button onClick={()=>history.push('/feed')} className='nav-button'>
-					Back
-				</button>
+							<button onClick={() => history.push('/feed')} className='nav-button'>
+								Back
+							</button>
 						</div>
 					</div>
-
 				</section>
-			</div>
+			</div>) : (<Spinner/>)}
 		</div>
 	)
 }

@@ -1,9 +1,9 @@
 import firebase, { db, auth } from '../../Components/Firebase/firebaseConfig'
-import { CREATE_POST, LOADING, DONE_LOADING, FETCH_ERROR } from '../types'
+import { CREATE_POST, LOADING } from '../types'
 
 export const createFeedPost = (typedPost) => {
 	return async (dispatch) => {
-		dispatch({ type: LOADING })
+		dispatch({ type: LOADING, isLoading: true })
 
 		const userRef = auth.currentUser.uid
 		let addThisData
@@ -37,10 +37,12 @@ export const createFeedPost = (typedPost) => {
 					)
 					.then(() => {
 						dispatch({ type: CREATE_POST, posted: typedPost })
+						dispatch({ type: LOADING, isLoading: false })
+
 					})
 					.catch((err) => {
 						console.log('error from action creator', err)
-						dispatch({ type: FETCH_ERROR })
+						
 					})
 			})
 	}
@@ -48,12 +50,13 @@ export const createFeedPost = (typedPost) => {
 
 export const getFeedPosts = () => {
 	return (dispatch) => {
-		dispatch({ type: LOADING })
+		dispatch({ type: LOADING, isLoading: true })
 		let getFeedPosts
 		db.collection('posts').limit(10).orderBy('createdAt', 'desc').get().then((snap) => {
 			getFeedPosts = snap.docs.map((item) => item.data())
 			dispatch({ type: 'GET_FEED_POSTS', getFeedPosts })
+			dispatch({ type: LOADING, isLoading: false })
 		})
-		dispatch({ type: DONE_LOADING })
+
 	}
 }

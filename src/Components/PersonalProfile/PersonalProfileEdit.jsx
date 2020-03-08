@@ -17,15 +17,23 @@ const PersonalProfileEdit = () => {
 	const dispatch = useDispatch()
 	const param = useParams()
 	const history = useHistory()
+
+	const [
+		completed,
+		setCompleted
+	] = useState(false)
 	//move to initial state of editProfile Reducer
 	useEffect(() => {
 		dispatch(getCurrentUserByAuth())
 		dispatch(getBasicUserDetails())
 	}, [])
+
 	//userProfile data from page user
+
 	const getCurrentSignedInUserId = useSelector((state) => state.auth.getCurrentSignedInUserId)
 	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
-	console.log('getCurrentSignedInUserId', getCurrentSignedInUserId);
+	console.log('getCurrentSignedInUserId', getCurrentSignedInUserId)
+
 	const [
 		newProfileData,
 		setNewProfileData
@@ -35,14 +43,6 @@ const PersonalProfileEdit = () => {
 		bio: basicUserInfo.bio,
 		hobbies: basicUserInfo.hobbies
 	})
-
-	const handleProfileUpdate = async () => {
-		await dispatch(updateAndReturnUserProfile(auth.currentUser.uid, newProfileData))
-		//use reducer action pair
-		await updatePic()
-		history.push('/feed')
-		console.log(basicUserInfo, ' basicUserInfo ')
-	}
 
 	const handleWork = (e) => {
 		setNewProfileData({ ...newProfileData, work: e.target.value })
@@ -107,25 +107,26 @@ const PersonalProfileEdit = () => {
 							.update({ url: url })
 							.then(() => {
 								dispatch(getBasicUserDetails())
-							}).then(firebase
-								.firestore()
-								.collection('posts')
-								.where('userId', '==', auth.currentUser.uid)
-								.get()
-								.then((snap) => {
-									snap.forEach((doc) => {
-										var specificPostsWithUserId = db.collection('posts').doc(doc.id)
-	
-										specificPostsWithUserId.update({
-											url: url
+							})
+							.then(
+								firebase
+									.firestore()
+									.collection('posts')
+									.where('userId', '==', auth.currentUser.uid)
+									.get()
+									.then((snap) => {
+										snap.forEach((doc) => {
+											var specificPostsWithUserId = db
+												.collection('posts')
+												.doc(doc.id)
+
+											specificPostsWithUserId.update({
+												url: url
+											})
 										})
+										setCompleted(true)
 									})
-								}) )
-
-						
-
-						// .update({ url: url })
-						// .then(dispatch( getBasicUserDetails()))
+							)
 					})
 				}
 			)
@@ -136,6 +137,17 @@ const PersonalProfileEdit = () => {
 	// TODO useEffect hook parameter pic.url to update users profile
 
 	//change to dispatch selector props
+
+	const handleProfileUpdate = async () => {
+		dispatch({ type: 'LOADING', isLoading: true })
+		dispatch(updateAndReturnUserProfile(auth.currentUser.uid, newProfileData))
+		//use reducer action pair
+		updatePic()
+		dispatch({ type: 'LOADING', isLoading: false })
+		setTimeout(() => {
+			history.push('/feed')
+		}, 500)
+	}
 
 	return (
 		<div>
@@ -261,9 +273,9 @@ const PersonalProfileEdit = () => {
 									</div>
 								</div>
 							</form>
-							<button onClick={()=>history.push('/feed')} className='submit-button'>
-					Back
-				</button>
+							<button onClick={() => history.push('/feed')} className='submit-button'>
+								Back
+							</button>
 
 							<button className='submit-button' onClick={handleProfileUpdate}>
 								Submit

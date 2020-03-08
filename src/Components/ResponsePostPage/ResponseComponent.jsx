@@ -6,12 +6,14 @@ import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { createResponsePost, getResponsePosts } from '../../redux/actions/responseActions'
 import { useParams } from 'react-router-dom'
 import { getFeedPosts } from '../../redux/actions/feedActions'
+import Spinner from '../Spinner/Spinner'
 
 const Response = () => {
 	const param = useParams().id
 	console.log(param, 'param')
 	const originalPost = useSelector((state) => state.feed.getFeedPosts)
 	const getResponses = useSelector((state) => state.response.getResponses)
+	const isLoading = useSelector(state=> state.loading.isLoading)
 	const dispatch = useDispatch()
 	const [
 		typedPost,
@@ -29,23 +31,23 @@ const Response = () => {
 		setTypedPost(e.target.value)
 	}
 
-	const onEnter = async (event) => {
+	const onEnter =  (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
-			await setSubmitted(true)
-			await dispatch(createResponsePost(typedPost, param))
-			await setTypedPost('')
+			 setSubmitted(true)
+			 dispatch(createResponsePost(typedPost, param))
+			 setTypedPost('')
 			setTimeout(() => {
 				setSubmitted(false)
 			}, 1000)
 		}
 	}
-	const storeResponse = async (e) => {
+	const storeResponse = (e) => {
 		if (e.target.value.trim() !== '') {
-			await setSubmitted(true)
+			 setSubmitted(true)
 			console.log('onKeyPress Fired')
 
-			await dispatch(createResponsePost(typedPost, param))
-			await setTypedPost('')
+			 dispatch(createResponsePost(typedPost, param))
+			 setTypedPost('')
 			setTimeout(() => {
 				setSubmitted(false)
 			}, 1000)
@@ -118,6 +120,8 @@ const Response = () => {
 	return (
 		<div>
 			<Navbar />
+			{!isLoading ? 
+			(
 			<div className='edge-case-large'>
 				<div className='original-sticky'> {displayFeed}</div>
 				<div className='tb-card-container'>
@@ -164,6 +168,12 @@ const Response = () => {
 					<div className='previous-comments-block'>{displayResponses}</div>
 				</div>
 			</div>
+
+			) :
+			(
+				<Spinner/>
+			)
+			}
 		</div>
 	)
 }

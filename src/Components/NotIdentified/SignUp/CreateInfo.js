@@ -11,10 +11,7 @@ import { getCurrentUserByAuth } from '../../../redux/actions/authActions'
 
 const CreateInfo = () => {
 	const defaultPic = require('../../../Assets/default.png')
-	const [
-		finished,
-		setFinished
-	] = useState(false)
+
 	const basicUserDetails = useSelector((state) => state.profile.basicUserDetails)
 	const dispatch = useDispatch()
 	const history = useHistory()
@@ -37,7 +34,7 @@ const CreateInfo = () => {
 
 	// TODO move to action creator
 	const fileSelector = (e) => {
-		dispatch(getBasicUserDetails());
+		dispatch(getBasicUserDetails())
 		console.log(e.target.files[0])
 		if (e.target.files[0]) {
 			setPic({ ...pic, image: e.target.files[0], name: auth.currentUser.uid })
@@ -47,6 +44,7 @@ const CreateInfo = () => {
 	// TODO move to action creator
 	const uploadPic = async () => {
 		if (pic.image) {
+			dispatch({ type: 'LOADING', isLoading: true })
 			const uploadImage = storage.ref(`images/${pic.name}`).put(pic.image)
 			uploadImage.on(
 				'state_changed',
@@ -67,14 +65,15 @@ const CreateInfo = () => {
 						.then(async (url) => {
 							console.log('url to file', url)
 							setPic({ ...pic, url: url })
-							await db.collection('users').doc(auth.currentUser.uid ).update({
+							await db.collection('users').doc(auth.currentUser.uid).update({
 								url: url,
 								displayName: moreInfo
 							})
 						})
 						.then(() => {
 							dispatch(getBasicUserDetails())
-							setFinished(true)
+
+							dispatch({ type: 'LOADING', isLoading: false })
 						})
 						.catch((err) => console.log(err))
 				}
@@ -96,6 +95,14 @@ const CreateInfo = () => {
 	}
 
 	const submit = () => {
+		if (!basicUserDetails) {
+			dispatch({ type: 'LOADING', isLoading: true })
+			setTimeout(() => {
+				history.push('/feed')
+				dispatch({ type: 'LOADING', isLoading: false })
+			}, 300)
+		}
+		dispatch({ type: 'LOADING', isLoading: false })
 		history.push('/feed')
 	}
 
@@ -199,7 +206,7 @@ const CreateInfo = () => {
 
 						<button
 							className='submit-button-more-info'
-						// disable={!pic.url ? true : false}
+							// disable={!pic.url ? true : false}
 							onClick={submit}
 							style={!pic.url ? { opacity: '0.1' } : { opacity: '1' }}>
 							I'm Ready

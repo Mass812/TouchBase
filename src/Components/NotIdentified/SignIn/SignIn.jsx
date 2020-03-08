@@ -53,11 +53,12 @@ const SignIn = () => {
 
 	const userInfoEntered = async (e) => {
 		e.preventDefault()
-
+		dispatch({type: 'LOADING', isLoading: true})
 		await auth
 			.signInWithEmailAndPassword(info.email, info.password)
 			.then(() =>  dispatch(getBasicUserDetails()))
 			.then(() => {
+				dispatch({type: 'LOADING', isLoading: false})
 				history.push(`/feed`)
 			})
 			.catch((err) => {

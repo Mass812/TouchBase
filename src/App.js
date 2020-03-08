@@ -15,30 +15,41 @@ import PersonalProfileEdit from './Components/PersonalProfile/PersonalProfileEdi
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import CreateInfo from './Components/NotIdentified/SignUp/CreateInfo'
 import {auth} from './Components/Firebase/firebaseConfig'
+import {getBasicUserDetails} from './redux/actions/profileActions'
+import { useDispatch } from 'react-redux'
+
 function App() {
 
 
+const dispatch = useDispatch();
 
-	useEffect(
-			() => {
-				auth.onAuthStateChanged((user) => {
-					console.log('on auth change use effect => ', user)
-					if (user) {
-					return
+	// useEffect(
+	// 		() => {
+	// 			auth.onAuthStateChanged((user) => {
+	// 				console.log('on auth change use effect => ', user)
+	// 				if (user) {
+	// 				return
 					
-					} else {
-						auth.signOut()
-						localStorage.clear()
-					}
-				})
-			},
-			[
+	// 				} else {
+	// 					auth.signOut()
+	// 					localStorage.clear()
+	// 				}
+	// 			})
+	// 		},
+	// 		[
 				
-			]
-		)
+	// 		]
+	// 	)
+	
+
+	useEffect(() => {
+		dispatch(getBasicUserDetails());
+	
+	}, [])
 
 
 	return (
+	
 		<Router>
 			<ScrollToTop />
 			<Switch>
