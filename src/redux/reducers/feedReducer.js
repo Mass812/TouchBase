@@ -9,6 +9,8 @@ const feedReducer = (state = initialState, action) => {
 
 		case GET_FEED_POSTS:
 			return { ...state, getFeedPosts: action.getFeedPosts }
+		case 'EDIT_POST':
+			return { ...state}
 
 		default:
 			return state

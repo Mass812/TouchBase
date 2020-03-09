@@ -7,20 +7,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
 	getFeedPosts,
 	createFeedPost,
-	deletePostAndAllResponses
+	deletePostAndAllResponses,
+	editPostAction
 } from '../../redux/actions/feedActions'
 import { getBasicUserDetails } from '../../redux/actions/profileActions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-	faTrash,
-	faComment,
-	faBriefcase,
-	faEdit,
-	faMapMarkedAlt
-} from '@fortawesome/free-solid-svg-icons'
+import UserNotificationGem from './UserNotificationGem.jsx/UserNotificationGem'
 import { LOADING } from '../../redux/types'
 import { useHistory } from 'react-router-dom'
-import Spinner from '../Spinner/Spinner'
+
+import FeedDumb from './FeedDumb'
 
 //TODO gsap animate new post in from left
 
@@ -37,9 +32,23 @@ const Feed = (props) => {
 	] = useState('')
 
 	const [
+		isEditExpandedValue,
+		setIsEditExpandedValue
+	] = useState(false)
+	const [
+		editKeyedIn,
+		setEditKeyedIn
+	] = useState({post: ''})
+	const [
+		editSubmitted,
+		setEditSubmitted
+	] = useState(false)
+	const [
 		submitted,
 		setSubmitted
 	] = useState(false)
+
+	const [holdPostId, setHoldPostId] = useState({postDoc: '', userText: ''})
 
 	useEffect(
 		() => {
@@ -50,9 +59,9 @@ const Feed = (props) => {
 			submitted
 		]
 	)
-	const defaultPic = require('../../Assets/default.png')
 
 	const onChange = (e) => {
+		console.log(e.target.value)
 		setTypedPost(e.target.value)
 	}
 
@@ -86,12 +95,31 @@ const Feed = (props) => {
 		)
 	}
 
-	const isEditHandler = (postId, userId) => {
-		const authThisIf = feedList.filter((n) => n.userId === basicUserInfo.userId && n.postId === postId)
-		return(
-			console.log('authThisIf', authThisIf)
-		)
+
+	
+	const isEditBox = (post, user) => {
+		setIsEditExpandedValue((prev) => setIsEditExpandedValue(!prev));
+		let authThisIf = feedList.filter(
+			(n) => n.userId === basicUserInfo.userId && n.postId === post
+			)
+			setHoldPostId({...holdPostId, postDoc: authThisIf[0]})
+
 	}
+	const handleEditChange = (e) => {
+		setHoldPostId({...holdPostId, userText: e.target.value})
+		console.log(holdPostId);
+	}
+
+	
+	const submitEdit = () => {
+		setEditSubmitted(true)
+		dispatch(editPostAction(holdPostId.postDoc, holdPostId.userText))
+		setInterval(() => {
+			setEditSubmitted(true)
+		}, 300)
+		
+	}
+
 
 	const displayFeed = feedList
 		? feedList
@@ -110,8 +138,13 @@ const Feed = (props) => {
 						to={`/personal_profile/${n.postId}`}
 						delete={() => handleDelete(n.postId, n.userId)}
 						authed={basicUserInfo.userId === n.userId}
-						edit={()=>isEditHandler(n.postId, n.userId)}
 
+
+						edit={() => isEditBox(n.postId, n.userId)}
+						editBoxValue={isEditExpandedValue}
+						submitEdit={submitEdit}
+						editKeyedIn={editKeyedIn}
+						handleEditChange={handleEditChange}
 						//from comp
 					/>
 				))
@@ -120,70 +153,17 @@ const Feed = (props) => {
 	return (
 		<div className='feed-container-component'>
 			<Navbar />
-			{!isLoading ? (
-				<div className='feed-large-screen-block'>
-					<div className='feed-throw-post-block'>
-						<div className='tb-posting-title'>
-							<span
-								style={{
-									fontSize: '24px'
-								}}>
-								<span
-									style={{
-										color: 'teal'
-									}}>
-									Touch {''}
-								</span>
-								Base
-								<span
-									style={{
-										color: 'teal',
-										fontFamily: 'SansSerif'
-									}}
-								/>
-							</span>
-							<div>
-								<div>
-									<img
-										className='header-user-image'
-										src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
-										alt={basicUserInfo.displayName}
-									/>
-								</div>
-								<div className='header-user-name'>{basicUserInfo.displayName}</div>
-							
-							</div>
-						</div>
-						<div className='feed-inner-post-block'>
-							<div className='feed-show-typed'> {typedPost} </div>
-
-							<div className='feed-input-form-block'>
-								<input
-									className='feed-input'
-									placeholder='Enter a new post here'
-									type='textArea'
-									onChange={onChange}
-									onKeyPress={onKeyPress}
-									value={typedPost}
-								/>
-
-								<div className='feed-post-comment-button'>
-									{submitted ? (
-										<span className='post-success'>Posted Successfully!</span>
-									) : null}
-									<button onClick={submit} className='nav-button'>
-										Post
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div className='db-posts'>{displayFeed}</div>
-				</div>
-			) : (
-				<Spinner />
-			)}
+			<UserNotificationGem />
+			<FeedDumb
+				isLoading={isLoading}
+				typedPost={typedPost}
+				onChange={onChange}
+				onKeyPress={onKeyPress}
+				value={typedPost}
+				submitted={submitted}
+				onClick={submit}
+				displayFeed={displayFeed}
+			/>
 		</div>
 	)
 }

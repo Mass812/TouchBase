@@ -72,12 +72,12 @@ const Response = () => {
 					<div>
 						<TouchBaseCard
 							sidebar={false}
-							key={n.id + idx}
+							key={n.postId + idx}
 							post={n.post}
 							displayName={n.displayName}
 							id={n.postId}
 							picture={`${n.url}`}
-							to={`/personal_profile/${n.userId}`}
+							to={`${param}`}
 						/>
 						<div className='tb-posting-title'>
 							<span>
@@ -114,6 +114,8 @@ const Response = () => {
 					displayName={n.displayName}
 					id={n.postId}
 					picture={n.url}
+					to={`${param}`}
+
 				/>
 			))
 
@@ -137,6 +139,7 @@ const Response = () => {
 											onBlur={storeResponse}
 											onKeyPress={onEnter}
 											value={typedPost}
+											autoFocus
 										/>
 									</div>{' '}
 									<div className='post-comment-button'>

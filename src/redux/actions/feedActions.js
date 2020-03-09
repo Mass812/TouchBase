@@ -82,15 +82,18 @@ export const deletePostAndAllResponses = (postId) => {
 }
 
 //LASTWORK
-export const editPost = (postId, userId) => {
+export const editPostAction = (passed, typed) => {
 	return async (dispatch) => {
+		console.log('passed', passed)
+		console.log('In Action', typed)
 		await firebase
 			.firestore()
 			.collection('posts')
-			.doc(postId)
-			.update({ updated: 'updated' })
+			.doc(passed.postId)
+			.update({ post: typed })
 			.then(() => {
 				dispatch({ type: 'EDIT_POST' })
+				dispatch(getFeedPosts())
 			})
 			.then((err) => console.log('error in updating database', err))
 	}

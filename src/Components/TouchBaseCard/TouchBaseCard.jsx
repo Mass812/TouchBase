@@ -38,28 +38,42 @@ const TouchBaseCard = (props) => {
 				{props.sidebar ? (
 					<OptionBar
 						toPost={props.toPost}
-						// edit={
-						// 	props.edit
-						// }
-						// like={
-						// 	props.liked
-						// }
 						delete={props.delete}
 						authed={props.authed}
 						edit={props.edit}
-						// likeCount={
-						// 	props.likeCount
-						// }
-						// commentCount={
-						// 	props.commentCount
-						// }
-						// trashCount={
-						// 	props.trashCount
-						// }
-						// heartCount={
-						// 	props.heartCount
-						// }
 					/>
+				) : null}
+			</div>
+			<div>
+				{props.authed && props.editBoxValue ? (
+					<div className='feed-throw-post-block'>
+						<div className='feed-inner-post-block'>
+							<div className='feed-show-typed' style={{ padding: '7px' }}>
+								{' '}
+								{props.editKeyedIn.post}{' '}
+							</div>
+
+							<div className='feed-input-form-block'>
+								<input
+									className='feed-input'
+									placeholder='Enter a new post here'
+									type='textArea'
+									onChange={props.handleEditChange}
+									onKeyPress={props.onKeyPress}
+									value={props.value}
+								/>
+
+								<div className='feed-post-comment-button'>
+									{props.editSubmitted ? (
+										<span className='post-success'>Updated Successfully!</span>
+									) : null}
+									<button onClick={props.submitEdit} className='nav-button'>
+										Update
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				) : null}
 			</div>
 		</div>
