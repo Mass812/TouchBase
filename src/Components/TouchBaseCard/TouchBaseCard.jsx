@@ -38,23 +38,23 @@ const TouchBaseCard = (props) => {
 				{props.sidebar ? (
 					<OptionBar
 						toPost={props.toPost}
-						// love={
-						// 	props.love
+						// edit={
+						// 	props.edit
 						// }
 						// like={
 						// 	props.liked
 						// }
-						// angry={
-						// 	props.angry
-						// }
+						delete={props.delete}
+						authed={props.authed}
+						edit={props.edit}
 						// likeCount={
 						// 	props.likeCount
 						// }
 						// commentCount={
 						// 	props.commentCount
 						// }
-						// angryCount={
-						// 	props.angryCount
+						// trashCount={
+						// 	props.trashCount
 						// }
 						// heartCount={
 						// 	props.heartCount

@@ -4,20 +4,31 @@ import '../../App.scss'
 import Navbar from '../Navbar/Navbar'
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { useSelector, useDispatch } from 'react-redux'
-import { getFeedPosts, createFeedPost } from '../../redux/actions/feedActions'
+import {
+	getFeedPosts,
+	createFeedPost,
+	deletePostAndAllResponses
+} from '../../redux/actions/feedActions'
 import { getBasicUserDetails } from '../../redux/actions/profileActions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+	faTrash,
+	faComment,
+	faBriefcase,
+	faEdit,
+	faMapMarkedAlt
+} from '@fortawesome/free-solid-svg-icons'
 import { LOADING } from '../../redux/types'
 import { useHistory } from 'react-router-dom'
 import Spinner from '../Spinner/Spinner'
 
-//TODO gsap annimate new post in from left
+//TODO gsap animate new post in from left
 
 const Feed = (props) => {
 	const history = useHistory()
 	const feedList = useSelector((state) => state.feed.getFeedPosts)
 	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
-	const isLoading = useSelector(state=>state.loading.isLoading)
-	console.log('basic info on feed: ', basicUserInfo)
+	const isLoading = useSelector((state) => state.loading.isLoading)
 
 	const dispatch = useDispatch()
 	const [
@@ -59,7 +70,6 @@ const Feed = (props) => {
 	const onKeyPress = (event) => {
 		if (event.which === 13 || event.keyCode === 13) {
 			setSubmitted(true)
-			console.log('onKeyPress Fired')
 			dispatch(createFeedPost(typedPost))
 			//event.target.blur();
 			setTypedPost('')
@@ -69,55 +79,20 @@ const Feed = (props) => {
 		}
 	}
 
-	//create a user profile pic
-	//reducer
-	//action
-	//implement
+	const handleDelete = (postId) => {
+		const deleteThisOne = feedList.filter((n) => n.postId === postId)
+		return (
+			dispatch(deletePostAndAllResponses(deleteThisOne[0].postId)), dispatch(getFeedPosts())
+		)
+	}
 
-	//TODO Cache data
+	const isEditHandler = (postId, userId) => {
+		const authThisIf = feedList.filter((n) => n.userId === basicUserInfo.userId && n.postId === postId)
+		return(
+			console.log('authThisIf', authThisIf)
+		)
+	}
 
-	//TODO count area, update with actions and reducers
-
-	// const [
-	// 	likeCount,
-	// 	setLikeCount
-	// ] = useState(0)
-	// const [
-	// 	commentedCount,
-	// 	setCommentedCount
-	// ] = useState(0)
-	// const [
-	// 	angeredCount,
-	// 	setAngeredCount
-	// ] = useState(0)
-	// const [
-	// 	heartedCount,
-	// 	setHeartedCount
-	// ] = useState(0)
-
-	// const liked = (e, idx) => {
-	// 	setLikeCount((prev) => prev + 1)
-	// }
-	// const commentCount = () => {
-	// 	setCommentedCount(
-	// 		(prev) => prev + 1
-	// 	)
-	// }
-	// const angryCount = () => {
-	// 	setAngeredCount(
-	// 		(prev) => prev + 1
-	// 	)
-	// }
-	// const heartCount = () => {
-	// 	setHeartedCount(
-	// 		(prev) => prev + 1
-	// 	)
-	// }
-	// console.log(
-	// 	'feedlist ids ',
-	// 	feedList.map((n, idx) => n)
-	// )
-	// //
 	const displayFeed = feedList
 		? feedList
 				.filter((f) => {
@@ -129,10 +104,14 @@ const Feed = (props) => {
 						key={n.postId + idx}
 						post={n.post}
 						displayName={n.displayName}
-						id={n.id}
+						id={n.postId}
 						picture={`${n.url}`}
 						toPost={`/specific_post/${n.postId}`}
 						to={`/personal_profile/${n.postId}`}
+						delete={() => handleDelete(n.postId, n.userId)}
+						authed={basicUserInfo.userId === n.userId}
+						edit={()=>isEditHandler(n.postId, n.userId)}
+
 						//from comp
 					/>
 				))
@@ -142,7 +121,7 @@ const Feed = (props) => {
 		<div className='feed-container-component'>
 			<Navbar />
 			{!isLoading ? (
-				<div>
+				<div className='feed-large-screen-block'>
 					<div className='feed-throw-post-block'>
 						<div className='tb-posting-title'>
 							<span
@@ -166,12 +145,13 @@ const Feed = (props) => {
 							<div>
 								<div>
 									<img
-										className='default-user-image'
+										className='header-user-image'
 										src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
 										alt={basicUserInfo.displayName}
 									/>
 								</div>
-								{basicUserInfo.displayName}
+								<div className='header-user-name'>{basicUserInfo.displayName}</div>
+							
 							</div>
 						</div>
 						<div className='feed-inner-post-block'>

@@ -1,11 +1,11 @@
-'use strict';
+
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
 // Keeps track of the length of the 'likes' child list in a separate property.
-exports.countLikeChange = functions.database.ref('/posts/{postid}/likes/{likeid}').onWrite(
+exports.countLikeChange = functions.database.ref('/posts/{postId}/likes/{likeId}').onWrite(
     async (change) => {
       const collectionRef = change.after.ref.parent;
       const countRef = collectionRef.parent.child('likes_count');
@@ -29,7 +29,7 @@ exports.countLikeChange = functions.database.ref('/posts/{postid}/likes/{likeid}
     });
 
 // If the number of likes gets deleted, recount the number of likes
-exports.recountLikes = functions.database.ref('/posts/{postid}/likes_count').onDelete(async (snap) => {
+exports.recountLikes = functions.database.ref('/posts/{postId}/likes_count').onDelete(async (snap) => {
   const counterRef = snap.ref;
   const collectionRef = counterRef.parent.child('likes');
 

@@ -9,7 +9,7 @@ const SignOutButton = () => {
 	const signOut = async () => {
 		console.log('currentUser', auth.currentUser);
 		try {
-			console.log('signed out user', auth.currentUser);
+			console.log('signed in user', auth.currentUser);
 			await auth.signOut().then(() =>{
 				localStorage.clear();
 				history.push('/')});

@@ -10,12 +10,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import '../../App.scss'
 import { useParams, useHistory } from 'react-router-dom'
 
-//TODOS not refeshing after load --maybe redux will
 
 const PersonalProfileEdit = () => {
-	const defaultPic = require('../../Assets/default.png')
+
 	const dispatch = useDispatch()
-	const param = useParams()
+
 	const history = useHistory()
 
 	const [
@@ -30,9 +29,7 @@ const PersonalProfileEdit = () => {
 
 	//userProfile data from page user
 
-	const getCurrentSignedInUserId = useSelector((state) => state.auth.getCurrentSignedInUserId)
 	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
-	console.log('getCurrentSignedInUserId', getCurrentSignedInUserId)
 
 	const [
 		newProfileData,

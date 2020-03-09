@@ -38,11 +38,9 @@ export const createFeedPost = (typedPost) => {
 					.then(() => {
 						dispatch({ type: CREATE_POST, posted: typedPost })
 						dispatch({ type: LOADING, isLoading: false })
-
 					})
 					.catch((err) => {
 						console.log('error from action creator', err)
-						
 					})
 			})
 	}
@@ -57,6 +55,43 @@ export const getFeedPosts = () => {
 			dispatch({ type: 'GET_FEED_POSTS', getFeedPosts })
 			dispatch({ type: LOADING, isLoading: false })
 		})
+	}
+}
 
+export const deletePostAndAllResponses = (postId) => {
+	return async (dispatch) => {
+		//delete original Post
+		dispatch({ type: 'LOADING', isLoading: true })
+
+		await firebase.firestore().collection('posts').doc(postId).delete()
+
+		//authUser.delete()
+
+		const relatedPosts = await firebase
+			.firestore()
+			.collection('posts')
+			.where('relatedId', '==', postId)
+
+		await relatedPosts.get().then((dataPool) => {
+			dataPool.forEach((doc) => {
+				doc.ref.delete()
+				dispatch({ type: 'LOADING', isLoading: false })
+			})
+		})
+	}
+}
+
+//LASTWORK
+export const editPost = (postId, userId) => {
+	return async (dispatch) => {
+		await firebase
+			.firestore()
+			.collection('posts')
+			.doc(postId)
+			.update({ updated: 'updated' })
+			.then(() => {
+				dispatch({ type: 'EDIT_POST' })
+			})
+			.then((err) => console.log('error in updating database', err))
 	}
 }

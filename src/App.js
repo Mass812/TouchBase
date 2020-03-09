@@ -14,7 +14,6 @@ import PersonalProfile from './Components/PersonalProfile/PersonalProfile'
 import PersonalProfileEdit from './Components/PersonalProfile/PersonalProfileEdit'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import CreateInfo from './Components/NotIdentified/SignUp/CreateInfo'
-import {auth} from './Components/Firebase/firebaseConfig'
 import {getBasicUserDetails} from './redux/actions/profileActions'
 import { useDispatch } from 'react-redux'
 
@@ -23,23 +22,6 @@ function App() {
 
 const dispatch = useDispatch();
 
-	// useEffect(
-	// 		() => {
-	// 			auth.onAuthStateChanged((user) => {
-	// 				console.log('on auth change use effect => ', user)
-	// 				if (user) {
-	// 				return
-					
-	// 				} else {
-	// 					auth.signOut()
-	// 					localStorage.clear()
-	// 				}
-	// 			})
-	// 		},
-	// 		[
-				
-	// 		]
-	// 	)
 	
 
 	useEffect(() => {

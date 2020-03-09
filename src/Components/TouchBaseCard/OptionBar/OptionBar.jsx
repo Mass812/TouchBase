@@ -1,11 +1,10 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-	faAngry,
+	faTrash,
 	faComment,
 	faThumbsUp,
-	faFrownOpen,
-	faHeart
+	faEdit
 } from '@fortawesome/free-solid-svg-icons'
 import '../TouchBaseCard.scss'
 import { Link } from 'react-router-dom'
@@ -13,15 +12,19 @@ import { Link } from 'react-router-dom'
 const OptionBar = (props) => {
 	return (
 		<div className='side-panel'>
-			<span id='angry'>
-				<FontAwesomeIcon icon={faAngry} onClick={props.angry} />
-				{props.angryCount}
-			</span>
+			{props.authed ? (
 
-			<span id='love'>
-				<FontAwesomeIcon icon={faHeart} onClick={props.love} />
-				{props.heartCount}
-			</span>
+				<>
+				<div id='trash' onClick={props.delete}>
+					<FontAwesomeIcon icon={faTrash}  />
+				</div>
+				<div id='edit' onClick={props.edit}>
+				<FontAwesomeIcon icon={faEdit} />
+				
+			</div>
+			</>
+			) : null}
+
 			<span id='comment'>
 				<Link
 					to={props.toPost}
