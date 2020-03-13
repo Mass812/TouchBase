@@ -1,25 +1,36 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-	faTrash,
-	faComment,
-	faThumbsUp,
-	faEdit
+	faTrash as darkTrash,
+	faComment as darkComment,
+	faThumbsUp as darkThumb,
+	faEdit as darkEdit
 } from '@fortawesome/free-solid-svg-icons'
+import {
+	
+	faComment as stenciledComment,
+	faThumbsUp as stenciledThumb,
+	faEdit as stenciledEdit
+} from '@fortawesome/free-regular-svg-icons'
 import '../TouchBaseCard.scss'
 import { Link } from 'react-router-dom'
 
+
+
 const OptionBar = (props) => {
+
+
+	
 	return (
 		<div className='side-panel'>
 			{props.authed ? (
 
 				<>
 				<div id='trash' onClick={props.delete}>
-					<FontAwesomeIcon icon={faTrash}  />
+					<FontAwesomeIcon icon={darkTrash}  />
 				</div>
 				<div id='edit' onClick={props.edit}>
-				<FontAwesomeIcon icon={faEdit} />
+				<FontAwesomeIcon icon={stenciledEdit} />
 				
 			</div>
 			</>
@@ -32,13 +43,12 @@ const OptionBar = (props) => {
 						textDecoration: 'none',
 						color: '#2993B9'
 					}}>
-					<FontAwesomeIcon icon={faComment} />
-
+					<FontAwesomeIcon icon={stenciledComment} />
 					{props.commentCount}
 				</Link>
 			</span>
-			<span id='like' onClick={props.like}>
-				<FontAwesomeIcon icon={faThumbsUp} /> {props.likeCount}
+			<span id='like' onClick={props.likeAction}>
+				<FontAwesomeIcon icon={stenciledThumb} /> {props.likes}
 			</span>
 		</div>
 	)

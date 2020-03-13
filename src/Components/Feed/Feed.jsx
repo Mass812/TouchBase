@@ -2,30 +2,33 @@ import React, { useState, useEffect } from 'react'
 import './Feed.scss'
 import '../../App.scss'
 import Navbar from '../Navbar/Navbar'
+//import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
+import { useHistory } from 'react-router-dom'
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { useSelector, useDispatch } from 'react-redux'
 import {
 	getFeedPosts,
 	createFeedPost,
 	deletePostAndAllResponses,
-	editPostAction
+	editPostAction,
+	addLikesToPost
 } from '../../redux/actions/feedActions'
 import { getBasicUserDetails } from '../../redux/actions/profileActions'
 import UserNotificationGem from './UserNotificationGem.jsx/UserNotificationGem'
-import { LOADING } from '../../redux/types'
-import { useHistory } from 'react-router-dom'
-
 import FeedDumb from './FeedDumb'
 
 //TODO gsap animate new post in from left
 
 const Feed = (props) => {
-	const history = useHistory()
 	const feedList = useSelector((state) => state.feed.getFeedPosts)
+
 	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 	const isLoading = useSelector((state) => state.loading.isLoading)
 
 	const dispatch = useDispatch()
+	const history = useHistory()
+
+	//useReducer
 	const [
 		typedPost,
 		setTypedPost
@@ -36,9 +39,11 @@ const Feed = (props) => {
 		setIsEditExpandedValue
 	] = useState(false)
 	const [
-		editKeyedIn,
-		setEditKeyedIn
-	] = useState({post: ''})
+		asTypedEdit,
+		setAsTypedEdit
+	] = useState('')
+	console.log('astyped in feed', asTypedEdit)
+
 	const [
 		editSubmitted,
 		setEditSubmitted
@@ -48,7 +53,10 @@ const Feed = (props) => {
 		setSubmitted
 	] = useState(false)
 
-	const [holdPostId, setHoldPostId] = useState({postDoc: '', userText: ''})
+	const [
+		holdPostId,
+		setHoldPostId
+	] = useState({ postDoc: '', userText: '' })
 
 	useEffect(
 		() => {
@@ -61,31 +69,20 @@ const Feed = (props) => {
 	)
 
 	const onChange = (e) => {
-		console.log(e.target.value)
 		setTypedPost(e.target.value)
+	}
+
+	const onEditAsTyped = (e) => {
+		setAsTypedEdit(e.target.value)
 	}
 
 	const submit = (e) => {
 		setSubmitted(true)
-		dispatch({ type: LOADING, isLoading: true })
 		dispatch(createFeedPost(typedPost))
 		setTypedPost('')
 		setTimeout(() => {
 			setSubmitted(false)
-			dispatch({ type: LOADING, isLoading: false })
 		}, 1000)
-	}
-
-	const onKeyPress = (event) => {
-		if (event.which === 13 || event.keyCode === 13) {
-			setSubmitted(true)
-			dispatch(createFeedPost(typedPost))
-			//event.target.blur();
-			setTypedPost('')
-			setTimeout(() => {
-				setSubmitted(false)
-			}, 1000)
-		}
 	}
 
 	const handleDelete = (postId) => {
@@ -95,31 +92,33 @@ const Feed = (props) => {
 		)
 	}
 
-
-	
 	const isEditBox = (post, user) => {
-		setIsEditExpandedValue((prev) => setIsEditExpandedValue(!prev));
-		let authThisIf = feedList.filter(
+		setIsEditExpandedValue((prev) => setIsEditExpandedValue(!prev))
+
+		let onlyEditPostIfAuthed = feedList.filter(
 			(n) => n.userId === basicUserInfo.userId && n.postId === post
-			)
-			setHoldPostId({...holdPostId, postDoc: authThisIf[0]})
-
+		)
+		setHoldPostId({ ...holdPostId, postDoc: onlyEditPostIfAuthed[0] })
 	}
+
 	const handleEditChange = (e) => {
-		setHoldPostId({...holdPostId, userText: e.target.value})
-		console.log(holdPostId);
+		setHoldPostId({ ...holdPostId, userText: e.target.value })
 	}
 
-	
 	const submitEdit = () => {
 		setEditSubmitted(true)
 		dispatch(editPostAction(holdPostId.postDoc, holdPostId.userText))
 		setInterval(() => {
 			setEditSubmitted(true)
+			setIsEditExpandedValue(false)
 		}, 300)
-		
 	}
 
+	const handleLike = (e, post, user) => {
+		e.preventDefault()
+		dispatch({ type: 'LOADING, isLoading: true' })
+		dispatch(addLikesToPost(post, user))
+	}
 
 	const displayFeed = feedList
 		? feedList
@@ -138,14 +137,17 @@ const Feed = (props) => {
 						to={`/personal_profile/${n.postId}`}
 						delete={() => handleDelete(n.postId, n.userId)}
 						authed={basicUserInfo.userId === n.userId}
-
-
 						edit={() => isEditBox(n.postId, n.userId)}
 						editBoxValue={isEditExpandedValue}
+						placeholder={n.postId}
+						EditOnKeyPress={(e) =>
+							e.which === 13 || e.keyCode === 13 ? (e) => handleEditChange(e) : null}
 						submitEdit={submitEdit}
-						editKeyedIn={editKeyedIn}
+						onEditAsTyped={onEditAsTyped}
+						asTypedEdit={asTypedEdit}
 						handleEditChange={handleEditChange}
-						//from comp
+						likeAction={(e) => handleLike(e, n.postId, n.userId)}
+						likes={n.likes.length}
 					/>
 				))
 		: null
@@ -158,7 +160,8 @@ const Feed = (props) => {
 				isLoading={isLoading}
 				typedPost={typedPost}
 				onChange={onChange}
-				onKeyPress={onKeyPress}
+				onKeyPress={(event) =>
+					event.which === 13 || event.keyCode === 13 ? submit() : null}
 				value={typedPost}
 				submitted={submitted}
 				onClick={submit}

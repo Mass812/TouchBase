@@ -26,15 +26,20 @@ export const createFeedPost = (typedPost) => {
 						displayName,
 						url,
 						userId: userRef,
+						likes: [
+							
+						],
 						createdAt: new Date().toISOString()
 					})
-					.then((docRef) =>
+					.then((docRef) => {
+						//can create any associated docs with post creation here
+
 						firebase
 							.firestore()
 							.collection('posts')
 							.doc(docRef.id)
 							.update({ postId: docRef.id, relatedId: docRef.id })
-					)
+					})
 					.then(() => {
 						dispatch({ type: CREATE_POST, posted: typedPost })
 						dispatch({ type: LOADING, isLoading: false })
@@ -75,9 +80,13 @@ export const deletePostAndAllResponses = (postId) => {
 		await relatedPosts.get().then((dataPool) => {
 			dataPool.forEach((doc) => {
 				doc.ref.delete()
-				dispatch({ type: 'LOADING', isLoading: false })
 			})
 		})
+		await firebase
+			.firestore()
+			.collection('likes')
+			.doc(postId)
+			.delete.then(() => dispatch({ type: 'LOADING', isLoading: false }))
 	}
 }
 
@@ -98,3 +107,51 @@ export const editPostAction = (passed, typed) => {
 			.then((err) => console.log('error in updating database', err))
 	}
 }
+
+export const addLikesToPost = (postId, userId) => {
+	return async (dispatch) => {
+		let values = []
+	
+		let reviewer = auth.currentUser.uid
+		let likeNotificationValues = [
+			postId,
+			userId,
+			reviewer
+		]
+		dispatch({ type: 'GET_LIKE_NOTIFICATION_VALUES', likeNotificationValues })
+
+		let addToArray = firebase.firestore.FieldValue.arrayUnion
+		let removeFromArray = firebase.firestore.FieldValue.arrayRemove
+		let likeCountRef = firebase.firestore().collection('posts').doc(postId)
+
+	
+			//create one and add reviewer
+			await likeCountRef
+				.get()
+				.then(doc => values = doc.data().likes)
+
+				if (values.includes(reviewer) ) {
+				await	likeCountRef.get().then(likes => likes.data().likes.length).then(() => {
+						likeCountRef.update({ likes: removeFromArray(reviewer) })
+						.then(()=>{
+							dispatch(getFeedPosts())
+						})
+						//get updated doc
+						})
+				}
+				else{
+				await	likeCountRef.get().then(likes => likes.data().likes.length).then(() => {
+						likeCountRef.update({ likes: addToArray(reviewer) })
+						})
+						.then(()=>{
+							dispatch(getFeedPosts())
+						})
+				
+				}
+
+		console.log('final doc likes after fx', values)
+		dispatch({ type: 'LIKE_ARRY', values })
+	}
+}
+
+

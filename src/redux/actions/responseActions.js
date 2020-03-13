@@ -72,3 +72,9 @@ export const getResponsePosts = (param) => {
 			})
 	}
 }
+
+export const notifyUserOfResponseMade = () => {
+	return (dispatch) => {}
+}
+
+//commentcount take in relatedId, userId
