@@ -82,12 +82,9 @@ export const deletePostAndAllResponses = (postId) => {
 				doc.ref.delete()
 			})
 		})
-		await firebase
-			.firestore()
-			.collection('likes')
-			.doc(postId)
-			.delete.then(() => dispatch({ type: 'LOADING', isLoading: false }))
+		dispatch({ type: 'LOADING', isLoading: false })
 	}
+
 }
 
 //LASTWORK
@@ -111,7 +108,7 @@ export const editPostAction = (passed, typed) => {
 export const addLikesToPost = (postId, userId) => {
 	return async (dispatch) => {
 		let values = []
-	
+		let getPostLikes
 		let reviewer = auth.currentUser.uid
 		let likeNotificationValues = [
 			postId,
@@ -134,17 +131,19 @@ export const addLikesToPost = (postId, userId) => {
 				await	likeCountRef.get().then(likes => likes.data().likes.length).then(() => {
 						likeCountRef.update({ likes: removeFromArray(reviewer) })
 						.then(()=>{
-							dispatch(getFeedPosts())
+							dispatch(getFeedPosts());
 						})
 						//get updated doc
 						})
 				}
+		
+				
 				else{
 				await	likeCountRef.get().then(likes => likes.data().likes.length).then(() => {
 						likeCountRef.update({ likes: addToArray(reviewer) })
-						})
-						.then(()=>{
-							dispatch(getFeedPosts())
+							dispatch({ type: 'GET_POST_LIKES', getPostLikes})
+						}).then(()=>{
+							dispatch(getFeedPosts());
 						})
 				
 				}

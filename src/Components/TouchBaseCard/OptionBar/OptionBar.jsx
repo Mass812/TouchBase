@@ -17,19 +17,27 @@ import { Link } from 'react-router-dom'
 
 
 
-const OptionBar = (props) => {
+const OptionBar = ({
+	deletePost,
+	editToggle,
+	authed,
+	toPost,
+	commentCount,
+	onClickLike,
+	likesCount
+}) => {
 
 
 	
 	return (
 		<div className='side-panel'>
-			{props.authed ? (
+			{authed ? (
 
 				<>
-				<div id='trash' onClick={props.delete}>
+				<div id='trash' onClick={deletePost}>
 					<FontAwesomeIcon icon={darkTrash}  />
 				</div>
-				<div id='edit' onClick={props.edit}>
+				<div id='edit' onClick={editToggle}>
 				<FontAwesomeIcon icon={stenciledEdit} />
 				
 			</div>
@@ -38,17 +46,17 @@ const OptionBar = (props) => {
 
 			<span id='comment'>
 				<Link
-					to={props.toPost}
+					to={toPost}
 					style={{
 						textDecoration: 'none',
 						color: '#2993B9'
 					}}>
 					<FontAwesomeIcon icon={stenciledComment} />
-					{props.commentCount}
+					{commentCount}
 				</Link>
 			</span>
-			<span id='like' onClick={props.likeAction}>
-				<FontAwesomeIcon icon={stenciledThumb} /> {props.likes}
+			<span id='like' onClick={onClickLike}>
+				<FontAwesomeIcon icon={stenciledThumb} /> {likesCount}
 			</span>
 		</div>
 	)

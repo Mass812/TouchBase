@@ -10,12 +10,12 @@ const ExpandEdit = ({
 	editBoxValue,
 	asTypedEdit,
 	placeholder,
-	editOnKeyPress,
-	handleEditChange,
+	EditOnKeyPress,
+	handleEdit,
 	editSubmitted,
 	value,
-	onEditAsTyped,
-	submitEdit
+	submitEdit,
+	parentKey
 }) => {
 const isLoading = useSelector(state=>state.loading.isLoading)
 console.log(asTypedEdit, 'value asTypedEdit');
@@ -24,10 +24,13 @@ console.log(asTypedEdit, 'value asTypedEdit');
 		<div>
 			{authed && editBoxValue ? (
 				<div className='feed-throw-post-block'>
+								<button onClick={submitEdit} className='nav-button' style={{float: 'right'}}>
+									Update
+								</button>
 					<div className='feed-inner-post-block'>
-						<div className='feed-show-typed' style={{ padding: '7px' }}>
+						<div className='feed-show-typed' style={{ padding: '7px', wordWrap: 'overflow-wrap', wordBreak: 'break-all' }}>
 							
-							{/* {asTypedEdit} */}
+							{asTypedEdit.userText ? asTypedEdit.userText : <span>Begin Editing</span>} 
 						</div>
 
 						<div className='feed-input-form-block'>
@@ -36,19 +39,17 @@ console.log(asTypedEdit, 'value asTypedEdit');
 								className='feed-input'
 								placeholder={placeholder}
 								type='textArea'
-								onChange={onEditAsTyped}
+								onChange={handleEdit}
 								value={value}
-								onKeyPress={editOnKeyPress}
-								autoFocus
+								onKeyPress={EditOnKeyPress}
+								onBlur
+								key={parentKey}
 							/>
 
 							<div className='feed-post-comment-button'>
 								{editSubmitted ? (
 									<span className='post-success'>Updated Successfully!</span>
 								) : null}
-								<button onClick={submitEdit} className='nav-button'>
-									Update
-								</button>
 							</div>
 						</div>
 					</div>

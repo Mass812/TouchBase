@@ -38,11 +38,6 @@ const Feed = (props) => {
 		isEditExpandedValue,
 		setIsEditExpandedValue
 	] = useState(false)
-	const [
-		asTypedEdit,
-		setAsTypedEdit
-	] = useState('')
-	console.log('astyped in feed', asTypedEdit)
 
 	const [
 		editSubmitted,
@@ -54,9 +49,9 @@ const Feed = (props) => {
 	] = useState(false)
 
 	const [
-		holdPostId,
-		setHoldPostId
-	] = useState({ postDoc: '', userText: '' })
+		asTypedEdit,
+		setAsTypedEdit
+	] = useState({ userText: '', postDoc: '' })
 
 	useEffect(
 		() => {
@@ -70,10 +65,6 @@ const Feed = (props) => {
 
 	const onChange = (e) => {
 		setTypedPost(e.target.value)
-	}
-
-	const onEditAsTyped = (e) => {
-		setAsTypedEdit(e.target.value)
 	}
 
 	const submit = (e) => {
@@ -92,22 +83,29 @@ const Feed = (props) => {
 		)
 	}
 
-	const isEditBox = (post, user) => {
+	const toggleEditByAuth = (post, idx) => {
 		setIsEditExpandedValue((prev) => setIsEditExpandedValue(!prev))
 
 		let onlyEditPostIfAuthed = feedList.filter(
 			(n) => n.userId === basicUserInfo.userId && n.postId === post
 		)
-		setHoldPostId({ ...holdPostId, postDoc: onlyEditPostIfAuthed[0] })
+		setAsTypedEdit({ ...asTypedEdit, postDoc: onlyEditPostIfAuthed[0] })
 	}
 
-	const handleEditChange = (e) => {
-		setHoldPostId({ ...holdPostId, userText: e.target.value })
+	const handleEdit = (e) => {
+		setAsTypedEdit({ ...asTypedEdit, userText: e.target.value })
 	}
+
+	console.log(
+		'asTypedEdit.userText:',
+		asTypedEdit.userText,
+		'asTypedEdit.postDoc',
+		asTypedEdit.postDoc
+	)
 
 	const submitEdit = () => {
 		setEditSubmitted(true)
-		dispatch(editPostAction(holdPostId.postDoc, holdPostId.userText))
+		dispatch(editPostAction(asTypedEdit.postDoc, asTypedEdit.userText))
 		setInterval(() => {
 			setEditSubmitted(true)
 			setIsEditExpandedValue(false)
@@ -128,26 +126,26 @@ const Feed = (props) => {
 				.map((n, idx) => (
 					<TouchBaseCard
 						sidebar={true}
-						key={n.postId + idx}
+						key={n.postId}
 						post={n.post}
 						displayName={n.displayName}
 						id={n.postId}
 						picture={`${n.url}`}
 						toPost={`/specific_post/${n.postId}`}
 						to={`/personal_profile/${n.postId}`}
-						delete={() => handleDelete(n.postId, n.userId)}
+						deletePost={() => handleDelete(n.postId, n.userId)}
 						authed={basicUserInfo.userId === n.userId}
-						edit={() => isEditBox(n.postId, n.userId)}
+						editToggle={() => toggleEditByAuth(n.postId, idx)}
 						editBoxValue={isEditExpandedValue}
 						placeholder={n.postId}
 						EditOnKeyPress={(e) =>
-							e.which === 13 || e.keyCode === 13 ? (e) => handleEditChange(e) : null}
+							e.which === 13 || e.keyCode === 13 ? (e) => handleEdit(e) : null}
 						submitEdit={submitEdit}
-						onEditAsTyped={onEditAsTyped}
 						asTypedEdit={asTypedEdit}
-						handleEditChange={handleEditChange}
-						likeAction={(e) => handleLike(e, n.postId, n.userId)}
-						likes={n.likes.length}
+						handleEdit={handleEdit}
+						parentKey={n.postId}
+						onClickLike={(e) => handleLike(e, n.postId, n.userId)}
+						likesCount={n.likes.length}
 					/>
 				))
 		: null

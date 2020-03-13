@@ -15,19 +15,20 @@ const TouchBaseCard = ({
 	toPost,
 	deletePost,
 	authed,
-	edit,
-	likeAction,
-	likes,
+	editToggle,
+	onClickLike,
+	likesCount,
 	editBoxValue,
 	asTypedEdit,
-	handleEditChange,
+	handleEdit,
 	editSubmitted,
 	value,
 	submitEdit,
 	post,
 	sidebar,
-	editOnKeyPress,
-	onEditAsTyped
+
+	EditOnKeyPress,
+	parentKey
 }) => {
 	return (
 		<div>
@@ -46,9 +47,9 @@ const TouchBaseCard = ({
 						toPost={toPost}
 						deletePost={deletePost}
 						authed={authed}
-						edit={edit}
-						likeAction={likeAction}
-						likes={likes}
+						editToggle={editToggle}
+						onClickLike={onClickLike}
+						likesCount={likesCount}
 					/>
 				) : null}
 			</div>
@@ -56,13 +57,13 @@ const TouchBaseCard = ({
 			<ExpandEdit
 				authed={authed}
 				editBoxValue={editBoxValue}
-				asTypedEdit={asTypedEdit}
-				handleEditChange={handleEditChange}
+				handleEdit={handleEdit}
 				editSubmitted={editSubmitted}
 				value={value}
-				editOnKeyPress={editOnKeyPress}
+				editOnKeyPress={EditOnKeyPress}
 				submitEdit={submitEdit}
-				onEditAsTyped={onEditAsTyped}
+				parentKey={parentKey}
+				asTypedEdit={asTypedEdit}
 			/>
 		</div>
 	)
