@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import './Feed.scss'
 import '../../App.scss'
 import Navbar from '../Navbar/Navbar'
@@ -16,8 +16,11 @@ import {
 import { getBasicUserDetails } from '../../redux/actions/profileActions'
 import UserNotificationGem from './UserNotificationGem.jsx/UserNotificationGem'
 import FeedDumb from './FeedDumb'
+import ExpandEdit from '../TouchBaseCard/ExpandEdit'
 
 //TODO gsap animate new post in from left
+//TODOD **enter function on edit to submit post, I did move button up
+//fix profile profile nav should direct to normal, add children element to profile if auth with button to edit Profile
 
 const Feed = (props) => {
 	const feedList = useSelector((state) => state.feed.getFeedPosts)
@@ -83,39 +86,47 @@ const Feed = (props) => {
 		)
 	}
 
-	const toggleEditByAuth = (post, idx) => {
-		setIsEditExpandedValue((prev) => setIsEditExpandedValue(!prev))
-
+	const toggleEdit = async (post, idx) => {
 		let onlyEditPostIfAuthed = feedList.filter(
 			(n) => n.userId === basicUserInfo.userId && n.postId === post
-		)
-		setAsTypedEdit({ ...asTypedEdit, postDoc: onlyEditPostIfAuthed[0] })
-	}
+			)
+			setAsTypedEdit({ ...asTypedEdit, postDoc: onlyEditPostIfAuthed[0] })
 
-	const handleEdit = (e) => {
+	
+
+
+			setIsEditExpandedValue(
+					feedList.map((indx, i) => {
+						if (i === idx) {
+							indx = true
+							console.log(typeof isEditExpandedValue)
+						} 
+						else {
+							indx = false;
+						}
+						return indx
+					})
+					)
+	}
+	const captureUserEditTextAsTyped = (e) => {
 		setAsTypedEdit({ ...asTypedEdit, userText: e.target.value })
 	}
-
-	console.log(
-		'asTypedEdit.userText:',
-		asTypedEdit.userText,
-		'asTypedEdit.postDoc',
-		asTypedEdit.postDoc
-	)
 
 	const submitEdit = () => {
 		setEditSubmitted(true)
 		dispatch(editPostAction(asTypedEdit.postDoc, asTypedEdit.userText))
-		setInterval(() => {
-			setEditSubmitted(true)
-			setIsEditExpandedValue(false)
-		}, 300)
+		setTimeout(() => {
+			setEditSubmitted(false)
+			setAsTypedEdit('')
+			setIsEditExpandedValue(isEditExpandedValue.fill(false))
+		}, 100)
 	}
 
 	const handleLike = (e, post, user) => {
 		e.preventDefault()
 		dispatch({ type: 'LOADING, isLoading: true' })
 		dispatch(addLikesToPost(post, user))
+		
 	}
 
 	const displayFeed = feedList
@@ -124,29 +135,34 @@ const Feed = (props) => {
 					return f.postId === f.relatedId
 				})
 				.map((n, idx) => (
-					<TouchBaseCard
-						sidebar={true}
-						key={n.postId}
-						post={n.post}
-						displayName={n.displayName}
-						id={n.postId}
-						picture={`${n.url}`}
-						toPost={`/specific_post/${n.postId}`}
-						to={`/personal_profile/${n.postId}`}
-						deletePost={() => handleDelete(n.postId, n.userId)}
-						authed={basicUserInfo.userId === n.userId}
-						editToggle={() => toggleEditByAuth(n.postId, idx)}
-						editBoxValue={isEditExpandedValue}
-						placeholder={n.postId}
-						EditOnKeyPress={(e) =>
-							e.which === 13 || e.keyCode === 13 ? (e) => handleEdit(e) : null}
-						submitEdit={submitEdit}
-						asTypedEdit={asTypedEdit}
-						handleEdit={handleEdit}
-						parentKey={n.postId}
-						onClickLike={(e) => handleLike(e, n.postId, n.userId)}
-						likesCount={n.likes.length}
-					/>
+					<Fragment key={n.postId}>
+						<TouchBaseCard
+							sidebar={true}
+							post={n.post}
+							displayName={n.displayName}
+							id={n.postId}
+							picture={`${n.url}`}
+							toPost={`/specific_post/${n.postId}`}
+							to={`/personal_profile/${n.postId}`}
+							deletePost={() => handleDelete(n.postId, n.userId)}
+							onClickLike={(e) => handleLike(e, n.postId, n.userId)}
+							likesCount={n.likes.length}
+							authed={basicUserInfo.userId === n.userId}
+							editToggle={() => toggleEdit(n.postId, idx)}
+						/>
+						<ExpandEdit
+							value={asTypedEdit.userText}
+							editOnKeyPress={(e) =>
+								e.key === 'Enter' ? (e) => captureUserEditTextAsTyped(e) : null}
+							authed={basicUserInfo.userId === n.userId}
+							submitEdit={submitEdit}
+							asTypedEdit={asTypedEdit}
+							captureUserEditTextAsTyped={(e) => captureUserEditTextAsTyped(e)}
+							editSubmitted={editSubmitted}
+							placeholder={n.post}
+							editBoxValue={isEditExpandedValue[idx]}
+						/>
+					</Fragment>
 				))
 		: null
 
@@ -158,8 +174,7 @@ const Feed = (props) => {
 				isLoading={isLoading}
 				typedPost={typedPost}
 				onChange={onChange}
-				onKeyPress={(event) =>
-					event.which === 13 || event.keyCode === 13 ? submit() : null}
+				onKeyPress={(event) => (event.key === 'Enter' ? submit() : null)}
 				value={typedPost}
 				submitted={submitted}
 				onClick={submit}

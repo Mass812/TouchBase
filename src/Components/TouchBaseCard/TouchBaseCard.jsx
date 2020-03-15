@@ -26,8 +26,7 @@ const TouchBaseCard = ({
 	submitEdit,
 	post,
 	sidebar,
-
-	EditOnKeyPress,
+	editOnKeyPress,
 	parentKey
 }) => {
 	return (
@@ -54,17 +53,7 @@ const TouchBaseCard = ({
 				) : null}
 			</div>
 
-			<ExpandEdit
-				authed={authed}
-				editBoxValue={editBoxValue}
-				handleEdit={handleEdit}
-				editSubmitted={editSubmitted}
-				value={value}
-				editOnKeyPress={EditOnKeyPress}
-				submitEdit={submitEdit}
-				parentKey={parentKey}
-				asTypedEdit={asTypedEdit}
-			/>
+		
 		</div>
 	)
 }

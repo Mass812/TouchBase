@@ -153,3 +153,145 @@ $background2: rgb(2, 0, 36);
 	font-size: $iconSize;
 	grid-area: edit;
 }
+
+
+ @media all and (min-width: 990px){
+	
+		
+	 
+	.touchbase-card {
+		font-size: $font_size;
+		font-family: $font;
+		font-weight: $comm_boldness;
+		background: white;
+		text-align: left;
+		justify-content: space-evenly;
+		padding: 10px;
+		color: black;
+		margin: 10px 0px;
+		border-radius: 10px;
+		border: .5px inset black;
+		display: grid;
+		grid-template-columns: 1fr 3fr 16fr 3fr 1fr;
+		grid-template-rows: auto auto auto;
+		grid-template-areas: " postingPicture postersName postersName posterName ."
+			" originalPosting originalPosting originalPosting originalPosting originalPosting"
+			"likeSpan likeSpan likeSpan likeSpan .";
+		box-shadow: 2px 2px 4px black;
+		max-width: 1000px;
+	}
+	.response-post-component-container {
+		background-color: white;
+		border: 2px solid black;
+		box-shadow: 2px 2px 2px black;
+		padding: 5px;
+		border-radius: 10px;
+	}
+	
+	.posting-picture {
+		grid-area: postingPicture;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		display: flex;
+		height: 55px;
+		width: 55px;
+		border-radius: 50%;
+		background: $background;
+		background: $gradient;
+		padding: 1px;
+	}
+	.default-user-image {
+		align-self: center;
+		justify-self: center;
+		height: 85px;
+		width: 85px;
+		overflow: hidden;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.touchbase-user-handle {
+		grid-area: postersName;
+		font-weight: 500;
+		justify-self: left;
+		align-self: center;
+		font-family: $font;
+		font-size: 20px;
+		color: rgb(0, 0, 0);
+		padding-left: 5px;
+	}
+	
+	.response-body {
+		border-top: 2px solid rgb(10, 146, 224);
+		border-bottom: 2px solid rgb(10, 146, 224);
+		grid-area: originalPosting;
+		margin: 25px 30px;
+		padding-top: 1px;
+		font-family: $font;
+		font-size: $font_size;
+		font-weight: $comm_boldness;
+		text-align: center;
+	}
+	
+	.body-paragraph {
+		margin: 10px;
+		font-weight: 500;
+	}
+	.side-panel {
+		grid-area: likeSpan;
+		text-align: center;
+		align-content: flex-start;
+		align-items: center;
+		justify-content: flex-start;
+		background: $background;
+		background-color: rgba(248, 250, 250, 0.781);
+		box-shadow: 1px 1px 3px;
+		border-radius: 10px;
+		height: 100%;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: 1fr;
+		grid-template-areas: 'trash edit comment like';
+	}
+	
+	.user-handle-post-body {
+		margin: 5px;
+		border-top: 2px solid rgb(10, 146, 224);
+		grid-area: originalPosting;
+		padding: 5px 5px;
+		font-family: $font;
+		font-size: $font_size;
+		font-weight: $comm_boldness;
+	}
+	
+	#trash {
+		color: #111e48;
+		grid-area: trash;
+		font-size: $iconSize;
+	}
+	#sad {
+		color: $color;
+		grid-area: sad;
+		font-size: $iconSize;
+	}
+	#like {
+		color: #298eb4;
+		grid-area: like;
+		font-size: $iconSize;
+	
+		&:active {
+			color: yellow;
+		}
+	}
+	#comment {
+		font-size: $iconSize;
+		grid-area: comment;
+	}
+	#edit {
+		color: #2e5d91;
+	
+		font-size: $iconSize;
+		grid-area: edit;
+	}
+	
+	}    

@@ -7,22 +7,30 @@ import { useSelector } from 'react-redux';
 
 const ExpandEdit = ({
 	authed,
+	children,
 	editBoxValue,
 	asTypedEdit,
 	placeholder,
-	EditOnKeyPress,
+	editOnKeyPress,
 	handleEdit,
 	editSubmitted,
 	value,
 	submitEdit,
-	parentKey
+	parentKey,
+	idx,
+	captureUserEditTextAsTyped
 }) => {
 const isLoading = useSelector(state=>state.loading.isLoading)
+const feedList = useSelector(state=>state.feed.getFeedPosts)
+const basicUserInfo = useSelector(state=> state.profile.basicUserInfo)
+
+
+
 console.log(asTypedEdit, 'value asTypedEdit');
 
 	return (
-		<div>
-			{authed && editBoxValue ? (
+		<div style = {!editBoxValue? ({display: 'none'}) : null}>
+			{authed ? (
 				<div className='feed-throw-post-block'>
 								<button onClick={submitEdit} className='nav-button' style={{float: 'right'}}>
 									Update
@@ -36,14 +44,14 @@ console.log(asTypedEdit, 'value asTypedEdit');
 						<div className='feed-input-form-block'>
 						<label>Edit Post</label>
 							<input
+
 								className='feed-input'
 								placeholder={placeholder}
 								type='textArea'
-								onChange={handleEdit}
+								onChange={captureUserEditTextAsTyped}
 								value={value}
-								onKeyPress={EditOnKeyPress}
-								onBlur
-								key={parentKey}
+								onKeyPress ={editOnKeyPress}
+								
 							/>
 
 							<div className='feed-post-comment-button'>
