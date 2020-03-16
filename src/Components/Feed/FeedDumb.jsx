@@ -2,10 +2,21 @@ import React from 'react'
 import Spinner from '../Spinner/Spinner'
 import { useSelector, useDispatch } from 'react-redux'
 import defaultPic from '../../Assets/default.png'
+import {auth} from '../../Components/Firebase/firebaseConfig'
+import {useHistory } from 'react-router-dom'
 
 const FeedDumb = (props) => {
 	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 	const isLoading = useSelector((state) => state.loading.isLoading)
+	const history=useHistory();
+
+	const pushToProfile = (e) => {
+		e.preventDefault()
+		console.log(auth.currentUser.uid)
+		history.push(`/personal_profile/${auth.currentUser.uid}`)
+	}
+
+
 	return (
 		<div className=' '>
 			<div>
@@ -33,7 +44,9 @@ const FeedDumb = (props) => {
 								</span>
 								<div>
 									<div>
+										
 										<img
+											onClick={pushToProfile}
 											className='header-user-image'
 											src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
 											alt={basicUserInfo.displayName}

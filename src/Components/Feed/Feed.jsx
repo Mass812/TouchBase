@@ -143,7 +143,8 @@ const Feed = (props) => {
 							id={n.postId}
 							picture={`${n.url}`}
 							toPost={`/specific_post/${n.postId}`}
-							to={`/personal_profile/${n.postId}`}
+						//	to={`/personal_profile/${n.postId}`}
+							to={`/personal_profile/${n.userId}`}
 							deletePost={() => handleDelete(n.postId, n.userId)}
 							onClickLike={(e) => handleLike(e, n.postId, n.userId)}
 							likesCount={n.likes.length}

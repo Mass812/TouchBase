@@ -1,7 +1,11 @@
 import firebase from '../../Components/Firebase/firebaseConfig'
 import { db, auth } from '../../Components/Firebase/firebaseConfig'
 import { LOADING } from '../types'
-import { GET_USER_INFO_OFF_POST_BY_USER_ID, GET_BASIC_USER_INFO } from '../types'
+import {
+	GET_BASIC_USER_INFO,
+	GET_NOTIFICATIONS,
+	GET_MASTER_POSTS
+} from '../types'
 
 export const getBasicUserDetails = () => {
 	return async (dispatch) => {
@@ -25,8 +29,6 @@ export const getBasicUserDetails = () => {
 
 						dispatch({ type: GET_BASIC_USER_INFO, basicUserInfo })
 						dispatch({ type: LOADING, isLoading: false })
-
-						console.log('Basic User Info: ', basicUserInfo)
 					})
 					.catch((err) => console.log(err))
 			}
@@ -36,30 +38,16 @@ export const getBasicUserDetails = () => {
 	}
 }
 
-export const getUserDetailsFromPostId = (param) => {
+export const findUserInfo = (userId) => {
 	return async (dispatch) => {
 		dispatch({ type: LOADING, isLoading: true })
+		let discoveredUserInfo = []
 
-		let userId, usersDocFromPic
-
-		await firebase
-			.firestore()
-			.collection('posts')
-			.doc(param)
-			.get()
-			.then((snap) => {
-				userId = snap.data().userId
-				console.log(snap.data().userId)
-			})
-			.then(async () => {
-				await firebase.firestore().collection('users').doc(userId).get().then((res) => {
-					usersDocFromPic = res.data()
-					console.log('userDocsFromPic Value', usersDocFromPic)
-					dispatch({ type: GET_USER_INFO_OFF_POST_BY_USER_ID, usersDocFromPic })
-					dispatch({ type: LOADING, isLoading: false })
-				})
-			})
-			.catch((err) => console.log(err))
+		await firebase.firestore().collection('users').doc(userId).get().then((snap) => {
+			discoveredUserInfo = snap.data()
+			dispatch({ type: 'FIND_USER_INFO', discoveredUserInfo })
+			dispatch({ type: LOADING, isLoading: false })
+		})
 	}
 }
 
@@ -80,17 +68,56 @@ export const updateAndReturnUserProfile = (id, newProfileData) => {
 				hobbies: hobbies
 			})
 
-			firebase.firestore().collection('users').doc(id).get().then((doc) => {
-				getProfile = doc.data()
-				console.log('updatedUserProfile Action Value', getProfile)
-				dispatch({ type: 'GET_PROFILE_DATA', getProfile })
-				dispatch({ type: LOADING, isLoading: false })
-			})
+			firebase
+				.firestore()
+				.collection('users')
+				.doc(id)
+				.get()
+				.then((doc) => {
+					getProfile = doc.data()
+					console.log('updatedUserProfile Action Value', getProfile)
+					dispatch({ type: 'GET_PROFILE_DATA', getProfile })
+					dispatch({ type: LOADING, isLoading: false })
+				})
+				.catch(function(error) {
+					console.log('Error getting documents: ', error)
+				})
 		} else {
 			return
 		}
 	}
 }
 
-//editButton
-export const editFormData = () => {}
+export const getNotifications = (userId) => {
+	return (dispatch) => {
+		//reference all master posts
+		console.log('ACTION NOTIFICATION FIRED')
+		let notifications,
+			masterPosts = []
+		const postMasters = firebase.firestore().collection('posts').where('master', '==', true)
+
+		//get all master posts
+		postMasters
+			.get()
+			.then((main) => {
+				console.log(main)
+				main.forEach((doc) => {
+					masterPosts.push(doc.data())
+					console.log('Master Posts Action', doc.data())
+
+					dispatch({ type: GET_MASTER_POSTS, masterPosts })
+				})
+			})
+			.catch(function(error) {
+				console.log('Error getting documents: ', error)
+			})
+
+		masterPosts.map((masterPost, i) => {
+			firebase.firestore().collection('posts').doc(masterPost.postId).onSnapshot((doc) => {
+				console.log('MASTER DOC CHANGED', doc.data())
+				notifications.push(doc.data())
+				dispatch({ type: GET_NOTIFICATIONS, notifications })
+			})
+		})
+	}
+}

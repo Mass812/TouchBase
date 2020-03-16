@@ -6,15 +6,15 @@ import { faMapMarkerAlt, faBriefcase, faSpinner } from '@fortawesome/free-solid-
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { auth, db } from '../Firebase/firebaseConfig'
-import { getUserDetailsFromPostId, getBasicUserDetails } from '../../redux/actions/profileActions'
+import { getUserDetailsFromPostId, findUserInfo } from '../../redux/actions/profileActions'
 import { useHistory } from 'react-router-dom'
 import Spinner from '../Spinner/Spinner'
 
 const PersonalProfile = () => {
 	const defaultPic = require('../../Assets/default.png')
 	const param = useParams().id
-	const getProfile = useSelector((state) => state.profile.usersDocFromPic)
-	const basicUserDetails = useSelector((state) => state.profile.basicUserDetails)
+	const discoveredUserInfo = useSelector((state) => state.profile.discoveredUserInfo)
+	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 	const isLoading = useSelector((state) => state.loading.isLoading)
 	const dispatch = useDispatch()
 	const history = useHistory()
@@ -23,7 +23,8 @@ const PersonalProfile = () => {
 		() => {
 		
 			function lookForProfileOrCreateOne() {
-			dispatch(getUserDetailsFromPostId(param))
+			dispatch(findUserInfo(param))
+
 			}
 			// Execute the created function directly
 			lookForProfileOrCreateOne()
@@ -34,6 +35,11 @@ const PersonalProfile = () => {
 			
 		]
 	)
+	const pushToProfile = (e) => {
+		e.preventDefault()
+		console.log(basicUserInfo.userId)
+		history.push(`/edit_personal_profile/${basicUserInfo.userId}`)
+	}
 
 	return (
 		<div>
@@ -42,20 +48,21 @@ const PersonalProfile = () => {
 			<div className='edge-case-large'>
 				<section className='profile-container'>
 					<div>
+					{basicUserInfo.userId === discoveredUserInfo.userId ? <button className='nav-button' onClick={pushToProfile}>edit profile</button>: null}
 						<div>
 							<img
 								className='profile-image'
-								src={getProfile ? getProfile.url : defaultPic}
+								src={discoveredUserInfo ? discoveredUserInfo.url : defaultPic}
 								alt={'default'}
 							/>
 						</div>
 						<div className='profile-user-display-name'>
-							{getProfile ? getProfile.displayName : null}
+							{discoveredUserInfo ? discoveredUserInfo.displayName : null}
 						</div>
 						<div className='under-icon-pair-group'>
 							<FontAwesomeIcon icon={faBriefcase} size={'sm'} color={'white'} />{' '}
 							<span className='image-upload-bar'>
-								{getProfile ? getProfile.work : 'Work'}
+								{discoveredUserInfo ? discoveredUserInfo.work : 'Work'}
 							</span>
 						</div>
 						<div className='under-icon-pair-group'>
@@ -65,7 +72,7 @@ const PersonalProfile = () => {
 								color={'white'}
 							/>{' '}
 							<span className='image-upload-bar'>
-								{getProfile ? getProfile.location : 'location'}
+								{discoveredUserInfo ? discoveredUserInfo.location : 'location'}
 							</span>
 						</div>
 					</div>
@@ -74,13 +81,13 @@ const PersonalProfile = () => {
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Bio: </span>
 								<blockquote className='profile-detail-value-font'>
-									{getProfile ? getProfile.bio : 'Bio Details'}
+									{discoveredUserInfo ? discoveredUserInfo.bio : 'Bio Details'}
 								</blockquote>
 							</div>
 							<div className='profile-detail-item'>
 								<span className='profile-detail-key-font'>Hobbies:</span>
 								<blockquote className='profile-detail-value-font'>
-									{getProfile ? getProfile.hobbies : 'edit hobbies'}
+									{discoveredUserInfo ? discoveredUserInfo.hobbies : 'edit hobbies'}
 								</blockquote>
 							</div>
 							<button onClick={() => history.push('/feed')} className='nav-button'>

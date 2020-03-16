@@ -26,9 +26,7 @@ export const createFeedPost = (typedPost) => {
 						displayName,
 						url,
 						userId: userRef,
-						likes: [
-							
-						],
+						likes: [],
 						createdAt: new Date().toISOString()
 					})
 					.then((docRef) => {
@@ -38,7 +36,7 @@ export const createFeedPost = (typedPost) => {
 							.firestore()
 							.collection('posts')
 							.doc(docRef.id)
-							.update({ postId: docRef.id, relatedId: docRef.id })
+							.update({ postId: docRef.id, relatedId: docRef.id, master: true })
 					})
 					.then(() => {
 						dispatch({ type: CREATE_POST, posted: typedPost })
@@ -84,7 +82,6 @@ export const deletePostAndAllResponses = (postId) => {
 		})
 		dispatch({ type: 'LOADING', isLoading: false })
 	}
-
 }
 
 //LASTWORK
@@ -121,36 +118,30 @@ export const addLikesToPost = (postId, userId) => {
 		let removeFromArray = firebase.firestore.FieldValue.arrayRemove
 		let likeCountRef = firebase.firestore().collection('posts').doc(postId)
 
-	
-			//create one and add reviewer
+		//create one and add reviewer
+		await likeCountRef.get().then((doc) => (values = doc.data().likes))
+
+		if (values.includes(reviewer)) {
+			await likeCountRef.get().then((likes) => likes.data().likes.length).then(() => {
+				likeCountRef.update({ likes: removeFromArray(reviewer) }).then(() => {
+					dispatch(getFeedPosts())
+				})
+				//get updated doc
+			})
+		} else {
 			await likeCountRef
 				.get()
-				.then(doc => values = doc.data().likes)
-
-				if (values.includes(reviewer) ) {
-				await	likeCountRef.get().then(likes => likes.data().likes.length).then(() => {
-						likeCountRef.update({ likes: removeFromArray(reviewer) })
-						.then(()=>{
-							dispatch(getFeedPosts());
-						})
-						//get updated doc
-						})
-				}
-		
-				
-				else{
-				await	likeCountRef.get().then(likes => likes.data().likes.length).then(() => {
-						likeCountRef.update({ likes: addToArray(reviewer) })
-							dispatch({ type: 'GET_POST_LIKES', getPostLikes})
-						}).then(()=>{
-							dispatch(getFeedPosts());
-						})
-				
-				}
+				.then((likes) => likes.data().likes.length)
+				.then(() => {
+					likeCountRef.update({ likes: addToArray(reviewer) })
+					dispatch({ type: 'GET_POST_LIKES', getPostLikes })
+				})
+				.then(() => {
+					dispatch(getFeedPosts())
+				})
+		}
 
 		console.log('final doc likes after fx', values)
 		dispatch({ type: 'LIKE_ARRY', values })
 	}
 }
-
-

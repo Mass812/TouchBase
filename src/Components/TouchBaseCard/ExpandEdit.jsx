@@ -20,13 +20,10 @@ const ExpandEdit = ({
 	idx,
 	captureUserEditTextAsTyped
 }) => {
-const isLoading = useSelector(state=>state.loading.isLoading)
-const feedList = useSelector(state=>state.feed.getFeedPosts)
-const basicUserInfo = useSelector(state=> state.profile.basicUserInfo)
 
 
 
-console.log(asTypedEdit, 'value asTypedEdit');
+
 
 	return (
 		<div style = {!editBoxValue? ({display: 'none'}) : null}>

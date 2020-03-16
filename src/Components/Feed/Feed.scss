@@ -36,8 +36,6 @@ $background: rgb(2, 0, 36);
 	font-family: "Comfortaa", cursive;
 	font-size: 18px;
 	font-weight: 700;
-
-	
 }
 
 .feed-input-form-block {
@@ -95,53 +93,52 @@ $background: rgb(2, 0, 36);
 	border-radius: 50%;
 	object-fit: cover;
 }
-.header-user-image{
+.header-user-image {
 	align-self: center;
-justify-self: center;
-height: 120px;
-width: 120px;
-overflow: hidden;
-border-radius: 50%;
-object-fit: cover;
+	justify-self: center;
+	height: 120px;
+	width: 120px;
+	overflow: hidden;
+	border-radius: 50%;
+	object-fit: cover;
 }
-.header-user-name{
+.header-user-name {
 	font-size: 24px;
 	color: rgb(2, 136, 136);
-	font-weight: 100px;;
+	font-weight: 100px;
 }
 
 @media all and (min-width: 1000px) {
-	.feed-container-component{
+	.feed-container-component {
 		width: 98vw;
 		align-content: center;
 		justify-content: center;
 		flex: 2;
 	}
 
-	.feed-large-screen-block{
+	.feed-large-screen-block {
 		width: 98vw;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	align-content: center;
+		align-content: center;
 		flex-direction: column;
 		position: relative;
-		
 	}
-	.header-user-image{
+	.header-user-image {
 		align-self: center;
-	justify-self: center;
-	height: 125px;
-	width: 125px;
-	overflow: hidden;
-	border-radius: 50%;
-	object-fit: cover;
+		justify-self: center;
+		height: 125px;
+		width: 125px;
+		overflow: hidden;
+		border-radius: 50%;
+		object-fit: cover;
 	}
 
 	.feed-throw-post-block {
 		margin-left: 10px;
 		padding: 7px;
-		width: 400px;;
+		width: 400px;
 		background-color: white;
 		justify-content: flex-start;
 		align-items: center;
@@ -150,9 +147,8 @@ object-fit: cover;
 		display: flex;
 		flex-direction: column;
 		max-height: 700px;
-		
 	}
-	
+
 	.feed-inner-post-block {
 		width: 80%;
 		margin-top: 50px;
@@ -165,8 +161,6 @@ object-fit: cover;
 		font-size: 18px;
 		font-weight: 700;
 		padding-right: -10px;
-
-		
 	}
 	.feed-input-form-block {
 		margin: 10px 0px;
@@ -183,7 +177,6 @@ object-fit: cover;
 		color: darkslategrey;
 		border-bottom: lightgreen;
 		border-width: 2px;
-	
 	}
 	.feed-post-comment-button {
 		float: right;
@@ -195,17 +188,17 @@ object-fit: cover;
 		padding-right: 100px;
 		font-weight: 700;
 	}
-	
+
 	.db-posts {
 		width: 98vw;
 	}
-	
+
 	.tb-posting-title {
 		border: none;
 		font-weight: 100;
 		align-content: flex-start;
 	}
-	
+
 	.posting-picture {
 		grid-area: postingPicture;
 		justify-content: center;
@@ -217,7 +210,7 @@ object-fit: cover;
 		border-radius: 50%;
 		background: $background;
 		background: $gradient;
-	
+
 		padding: 1px;
 	}
 	.default-user-image {
@@ -229,10 +222,10 @@ object-fit: cover;
 		border-radius: 50%;
 		object-fit: cover;
 	}
-	
-	.header-user-name{
+
+	.header-user-name {
 		font-size: 24px;
 		color: rgb(2, 136, 136);
-		font-weight: 100px;;
+		font-weight: 100px;
 	}
 }
