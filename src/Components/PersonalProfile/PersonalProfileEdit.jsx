@@ -5,31 +5,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import firebase, { auth, db } from '../Firebase/firebaseConfig'
 import { updateAndReturnUserProfile, getBasicUserDetails } from '../../redux/actions/profileActions'
-import { getCurrentUserByAuth } from '../../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../App.scss'
-import { useParams, useHistory } from 'react-router-dom'
-
+import { useHistory } from 'react-router-dom'
 
 const PersonalProfileEdit = () => {
-
 	const dispatch = useDispatch()
-
 	const history = useHistory()
+	const isLoading = useSelector(state => state.loading.isLoading)
+
+	//move to initial state of editProfile Reducer
+	useEffect(
+		() => {
+			dispatch(getBasicUserDetails())
+		},
+		[
+			dispatch
+		]
+	)
+
+	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
+	//userProfile data from page user
 
 	const [
 		completed,
 		setCompleted
 	] = useState(false)
-	//move to initial state of editProfile Reducer
-	useEffect(() => {
-		dispatch(getCurrentUserByAuth())
-		dispatch(getBasicUserDetails())
-	}, [])
-
-	//userProfile data from page user
-
-	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 
 	const [
 		newProfileData,
@@ -149,7 +150,10 @@ const PersonalProfileEdit = () => {
 	return (
 		<div>
 			<Navbar />
-			<div className='edge-case-large'>
+			
+			{!isLoading ? 
+			
+			(<div className='edge-case-large'>
 				<section className='profile-container'>
 					<div>
 						<div>
@@ -280,7 +284,8 @@ const PersonalProfileEdit = () => {
 						</div>
 					</div>
 				</section>
-			</div>
+			</div>)
+			:null}
 		</div>
 	)
 }

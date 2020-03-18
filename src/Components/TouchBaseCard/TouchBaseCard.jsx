@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import './TouchBaseCard.scss'
 import '../ResponsePostPage/PostingBody.scss'
 import OptionBar from './OptionBar/OptionBar'
@@ -18,6 +18,7 @@ const TouchBaseCard = ({
 	editToggle,
 	onClickLike,
 	likesCount,
+	commentCount,
 	editBoxValue,
 	asTypedEdit,
 	handleEdit,
@@ -30,7 +31,7 @@ const TouchBaseCard = ({
 	parentKey
 }) => {
 	return (
-		<div>
+		<Fragment>
 			<div className='touchbase-card'>
 				<UserPhoto to={to} picture={picture} displayName={displayName} />
 
@@ -49,12 +50,13 @@ const TouchBaseCard = ({
 						editToggle={editToggle}
 						onClickLike={onClickLike}
 						likesCount={likesCount}
+						commentCount={commentCount}
 					/>
 				) : null}
 			</div>
 
 		
-		</div>
+		</Fragment>
 	)
 }
 

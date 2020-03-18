@@ -1,25 +1,12 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Spinner from '../Spinner/Spinner'
-import { useSelector, useDispatch } from 'react-redux'
-import defaultPic from '../../Assets/default.png'
-import {auth} from '../../Components/Firebase/firebaseConfig'
-import {useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const FeedDumb = (props) => {
-	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 	const isLoading = useSelector((state) => state.loading.isLoading)
-	const history=useHistory();
-
-	const pushToProfile = (e) => {
-		e.preventDefault()
-		console.log(auth.currentUser.uid)
-		history.push(`/personal_profile/${auth.currentUser.uid}`)
-	}
-
 
 	return (
-		<div className=' '>
-			<div>
+		<Fragment >
 				{!isLoading ? (
 					<div className='feed-large-screen-block'>
 						<div className='feed-throw-post-block'>
@@ -42,20 +29,10 @@ const FeedDumb = (props) => {
 										}}
 									/>
 								</span>
-								<div>
-									<div>
-										
-										<img
-											onClick={pushToProfile}
-											className='header-user-image'
-											src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
-											alt={basicUserInfo.displayName}
-										/>
-									</div>
-									<div className='header-user-name'>
-										{basicUserInfo.displayName}
-									</div>
-								</div>
+								<div style={{
+											color: 'teal',
+											fontFamily: 'SansSerif'
+										}}>Post something and begin a conversation</div>
 							</div>
 							<div className='feed-inner-post-block'>
 								<div className='feed-show-typed'> {props.typedPost} </div>
@@ -89,8 +66,7 @@ const FeedDumb = (props) => {
 				) : (
 					<Spinner />
 				)}
-			</div>
-		</div>
+		</Fragment>
 	)
 }
 export default FeedDumb

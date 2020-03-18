@@ -7,7 +7,7 @@ $inBodyColor: white;
 $gradient: linear-gradient(
 	90deg,
 	rgba(2, 0, 36, 1) 0%,
-	rgba(47, 88, 141, 1) 43%,
+	rgb(170, 224, 255, 1) 43%,
 	rgba(41, 147, 184, 1) 100%
 );
 $background: rgb(2, 0, 36);
@@ -32,6 +32,7 @@ $background2: rgb(2, 0, 36);
 	margin: 10px 0px;
 	border-radius: 10px;
 	border: .5px inset black;
+	width:94vw;
 	display: grid;
 	grid-template-columns: 1fr 3fr 16fr 3fr 1fr;
 	grid-template-rows: auto auto auto;
@@ -45,6 +46,7 @@ $background2: rgb(2, 0, 36);
 	border: 2px solid black;
 	box-shadow: 2px 2px 2px black;
 	padding: 5px;
+	
 	border-radius: 10px;
 }
 
@@ -58,7 +60,7 @@ $background2: rgb(2, 0, 36);
 	width: 55px;
 	border-radius: 50%;
 	background: $background;
-	background: $gradient;
+	background: $gradient2;
 	padding: 1px;
 }
 .default-user-image {
@@ -82,8 +84,8 @@ $background2: rgb(2, 0, 36);
 }
 
 .response-body {
-	border-top: 2px solid rgb(10, 146, 224);
-	border-bottom: 2px solid rgb(10, 146, 224);
+	border-top: 2px solid rgb(170, 224, 255);
+	border-bottom: 2px solid rgb(170, 224, 255);
 	grid-area: originalPosting;
 	margin: 25px 30px;
 	padding-top: 1px;
@@ -154,21 +156,22 @@ $background2: rgb(2, 0, 36);
 	grid-area: edit;
 }
 
-
- @media all and (min-width: 990px){
-	
-		
-	 
+@media all and (min-width: 990px) {
 	.touchbase-card {
 		font-size: $font_size;
 		font-family: $font;
 		font-weight: $comm_boldness;
 		background: white;
 		text-align: left;
-		justify-content: space-evenly;
+//	justify-content: space-evenly;
 		padding: 10px;
 		color: black;
 		margin: 10px 0px;
+		position: relative;
+		left: 50%;
+		transform: translateX(-50%);
+	
+		
 		border-radius: 10px;
 		border: .5px inset black;
 		display: grid;
@@ -177,8 +180,10 @@ $background2: rgb(2, 0, 36);
 		grid-template-areas: " postingPicture postersName postersName posterName ."
 			" originalPosting originalPosting originalPosting originalPosting originalPosting"
 			"likeSpan likeSpan likeSpan likeSpan .";
+		
+			
 		box-shadow: 2px 2px 4px black;
-		max-width: 1000px;
+		max-width: 600px;
 	}
 	.response-post-component-container {
 		background-color: white;
@@ -187,7 +192,7 @@ $background2: rgb(2, 0, 36);
 		padding: 5px;
 		border-radius: 10px;
 	}
-	
+
 	.posting-picture {
 		grid-area: postingPicture;
 		justify-content: center;
@@ -220,10 +225,10 @@ $background2: rgb(2, 0, 36);
 		color: rgb(0, 0, 0);
 		padding-left: 5px;
 	}
-	
+
 	.response-body {
-		border-top: 2px solid rgb(10, 146, 224);
-		border-bottom: 2px solid rgb(10, 146, 224);
+		border-top: 2px solid rgb(170, 224, 255);
+		border-bottom: 2px solid rgb(170, 224, 255);
 		grid-area: originalPosting;
 		margin: 25px 30px;
 		padding-top: 1px;
@@ -232,7 +237,7 @@ $background2: rgb(2, 0, 36);
 		font-weight: $comm_boldness;
 		text-align: center;
 	}
-	
+
 	.body-paragraph {
 		margin: 10px;
 		font-weight: 500;
@@ -253,7 +258,7 @@ $background2: rgb(2, 0, 36);
 		grid-template-rows: 1fr;
 		grid-template-areas: 'trash edit comment like';
 	}
-	
+
 	.user-handle-post-body {
 		margin: 5px;
 		border-top: 2px solid rgb(10, 146, 224);
@@ -263,7 +268,7 @@ $background2: rgb(2, 0, 36);
 		font-size: $font_size;
 		font-weight: $comm_boldness;
 	}
-	
+
 	#trash {
 		color: #111e48;
 		grid-area: trash;
@@ -278,7 +283,7 @@ $background2: rgb(2, 0, 36);
 		color: #298eb4;
 		grid-area: like;
 		font-size: $iconSize;
-	
+
 		&:active {
 			color: yellow;
 		}
@@ -289,9 +294,8 @@ $background2: rgb(2, 0, 36);
 	}
 	#edit {
 		color: #2e5d91;
-	
+
 		font-size: $iconSize;
 		grid-area: edit;
 	}
-	
-	}    
+}

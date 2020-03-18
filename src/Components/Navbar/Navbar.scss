@@ -1,6 +1,6 @@
 .navbar {
 	height: auto;
-	width: 100vw;
+	width: 98vw;
 	color: white;
 	position: sticky;
 	font-family: 'Comfortaa', cursive;
@@ -25,11 +25,21 @@
 	padding: 5px;
 }
 
-.nav-icon-image {
+.nav-image-block {
 	grid-area: icon;
-	height: 5vh;
+
+	height: 60px;
+	width: 60px;
+}
+
+.nav-user-image {
+	grid-area: icon;
+	height: 40px;
+	width: 40px;
+	object-fit: cover;
 	padding: 0px;
-	margin: 15px;
+	margin-top: 10px;
+	border-radius: 50%;
 }
 
 .nav-icon-bar {
@@ -72,10 +82,9 @@
 		margin-top: 8px;
 		padding: 5px;
 		float: left;
-	
 	}
 
-	.navbar{
+	.navbar {
 		width: 98vw;
 	}
 }

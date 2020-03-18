@@ -1,0 +1,27 @@
+.help-parent {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.help-title {
+	padding: 40px 0px 20px 0px;
+	font-size: 30px;
+	font-family: 'Lobster', cursive;
+	color: rgb(245, 237, 128);
+}
+.help-subtitle {
+	padding: 25px 0px;
+	font-size: 20px;
+	color: rgb(245, 237, 128);
+	font-family: 'Lobster', cursive;
+}
+
+.help-image {
+	max-width: 365px;
+
+	justify-self: 'center';
+}

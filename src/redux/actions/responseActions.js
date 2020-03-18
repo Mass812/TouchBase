@@ -6,6 +6,7 @@ export const createResponsePost = (post, param) => {
 		dispatch({ type: LOADING, isLoading: true })
 
 		//get user auth uid
+		let commentCount = []
 		const userRef = auth.currentUser.uid
 		//get the users profile
 		const userProfile = await firebase
@@ -41,6 +42,29 @@ export const createResponsePost = (post, param) => {
 				dispatch({ type: CREATE_RESPONSE, createResponsePost })
 				dispatch({ type: LOADING, isLoading: false })
 			})
+			.then(() => {
+				const relatedPosts = firebase
+					.firestore()
+					.collection('posts')
+					.where('relatedId', '==', param)
+
+				relatedPosts.get().then((dataPool) => {
+					dataPool
+						.forEach((doc) => {
+							commentCount.push(doc.data().userId)
+							console.log('commentCount', commentCount)
+						})
+					})
+					.then(() => {
+						console.log('aram in final', param)
+						const pushCommentArray = firebase
+							.firestore()
+							.collection('posts')
+							.doc(param)
+
+						pushCommentArray.update({ comments: commentCount })
+					})
+				})
 			.catch((err) => {
 				console.log('error from action creator createResponsePost', err)
 			})

@@ -4,11 +4,12 @@ import { Link, useHistory } from 'react-router-dom'
 import { auth } from '../Firebase/firebaseConfig'
 import { getBasicUserDetails } from '../../redux/actions/profileActions'
 import {} from '../../redux/actions/profileActions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const NotIdentifiedScreen = (e) => {
 	const history = useHistory()
 	const dispatch = useDispatch()
+	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 
 	const signInAsGuest = async (e) => {
 		//TODO set up reducer and action later
@@ -16,7 +17,10 @@ const NotIdentifiedScreen = (e) => {
 
 		await auth
 			.signInWithEmailAndPassword('guest@guest.com', 'Guest123!')
-			.then(() => dispatch(getBasicUserDetails()))
+			.then(async () => {
+				dispatch(getBasicUserDetails())
+				await basicUserInfo
+			})
 			.then(() => {
 				history.push(`/feed`)
 			})
@@ -57,7 +61,6 @@ const NotIdentifiedScreen = (e) => {
 				<button onClick={signInAsGuest} className='nav-button'>
 					Site Guest
 				</button>
-			
 			</div>
 		</div>
 	)

@@ -28,6 +28,7 @@ const ExpandEdit = ({
 	return (
 		<div style = {!editBoxValue? ({display: 'none'}) : null}>
 			{authed ? (
+				<div className = 'feed-large-screen-block-edit'>
 				<div className='feed-throw-post-block'>
 								<button onClick={submitEdit} className='nav-button' style={{float: 'right'}}>
 									Update
@@ -58,6 +59,7 @@ const ExpandEdit = ({
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			) : null}
 		</div>

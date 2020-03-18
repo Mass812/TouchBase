@@ -11,28 +11,27 @@ $backgroundColor: transparent;
 	}
 }
 .profile-detail-key-font {
-	font-weight: 200;
+	font-weight: 900;
 	margin: 10px;
 	padding: 10px;
 	line-height: auto;
-	color: rgb(251, 255, 0);
+	color: white;
 }
 .profile-detail-value-font {
-	font-weight: 600;
+	font-weight: 400;
 	padding: 0px;
-	color: rgb(229, 243, 241);
+	color: yellow;
 	font-size: 17px;
 	margin-top: 5px;
 	padding-bottom: 20px;
 }
 
-.profile-edit-detail-value-font{
+.profile-edit-detail-value-font {
 	font-size: 16px;
 	font-weight: 100;
-	color: rgb(228, 228, 228);
+	color: yellow;
 	padding: 10px 0px;
 	margin: 10px;
-
 }
 
 .profile-container {
@@ -48,10 +47,10 @@ $backgroundColor: transparent;
 	font-size: $fontSize;
 }
 
-.profile-user-display-name{
+.profile-user-display-name {
 	font-family: 'Comfortaa', cursive;
 	padding-top: 30px;
-	color: rgb(229, 233, 10);
+	color: rgb(251, 251, 241);
 	font-weight: 500;
 	font-size: 32px;
 }
@@ -69,10 +68,10 @@ $backgroundColor: transparent;
 	padding: 4px;
 	font-weight: 700;
 	font-size: 16px;
+	color: yellow;
 }
 
 .under-icon-pair-group {
-	
 	margin: 7px;
 }
 

@@ -27,6 +27,7 @@ export const createFeedPost = (typedPost) => {
 						url,
 						userId: userRef,
 						likes: [],
+						comments: [],
 						createdAt: new Date().toISOString()
 					})
 					.then((docRef) => {
@@ -120,14 +121,14 @@ export const addLikesToPost = (postId, userId) => {
 
 		//create one and add reviewer
 		await likeCountRef.get().then((doc) => (values = doc.data().likes))
-
+		//remove user if user already exists in like array
 		if (values.includes(reviewer)) {
 			await likeCountRef.get().then((likes) => likes.data().likes.length).then(() => {
 				likeCountRef.update({ likes: removeFromArray(reviewer) }).then(() => {
 					dispatch(getFeedPosts())
 				})
 				//get updated doc
-			})
+			}) //add user to like array if they do not previously exist in like array
 		} else {
 			await likeCountRef
 				.get()

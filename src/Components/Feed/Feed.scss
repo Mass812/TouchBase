@@ -16,9 +16,9 @@ $background: rgb(2, 0, 36);
 }
 
 .feed-throw-post-block {
-	margin: 2px;
+
 	padding: 3px;
-	width: inherit;
+	width: 97vw;
 	background-color: white;
 	justify-content: center;
 	align-items: center;
@@ -108,23 +108,43 @@ $background: rgb(2, 0, 36);
 	font-weight: 100px;
 }
 
-@media all and (min-width: 1000px) {
+@media all and (min-width: 990px) {
+
+
+
 	.feed-container-component {
-		width: 98vw;
-		align-content: center;
-		justify-content: center;
-		flex: 2;
+		
+		
+		
+		
+		
 	}
 
 	.feed-large-screen-block {
+	
 		width: 98vw;
-		display: flex;
 		justify-content: center;
+		display: flex;
+		flex-direction: column;
 		align-items: center;
 		align-content: center;
-		flex-direction: column;
-		position: relative;
+		
+	
+		
+	;
+
+	
 	}
+
+	.feed-large-screen-block-edit{
+		width: 97vw;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		align-content: center;
+	}
+
+
 	.header-user-image {
 		align-self: center;
 		justify-self: center;
@@ -136,9 +156,10 @@ $background: rgb(2, 0, 36);
 	}
 
 	.feed-throw-post-block {
+		grid-area: throw;
 		margin-left: 10px;
 		padding: 7px;
-		width: 400px;
+		
 		background-color: white;
 		justify-content: flex-start;
 		align-items: center;
@@ -147,6 +168,8 @@ $background: rgb(2, 0, 36);
 		display: flex;
 		flex-direction: column;
 		max-height: 700px;
+		max-width: 600px;
+		
 	}
 
 	.feed-inner-post-block {

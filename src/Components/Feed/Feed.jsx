@@ -89,24 +89,20 @@ const Feed = (props) => {
 	const toggleEdit = async (post, idx) => {
 		let onlyEditPostIfAuthed = feedList.filter(
 			(n) => n.userId === basicUserInfo.userId && n.postId === post
-			)
-			setAsTypedEdit({ ...asTypedEdit, postDoc: onlyEditPostIfAuthed[0] })
+		)
+		setAsTypedEdit({ ...asTypedEdit, postDoc: onlyEditPostIfAuthed[0] })
 
-	
-
-
-			setIsEditExpandedValue(
-					feedList.map((indx, i) => {
-						if (i === idx) {
-							indx = true
-							console.log(typeof isEditExpandedValue)
-						} 
-						else {
-							indx = false;
-						}
-						return indx
-					})
-					)
+		setIsEditExpandedValue(
+			feedList.map((indx, i) => {
+				if (i === idx) {
+					indx = true
+					console.log(typeof isEditExpandedValue)
+				} else {
+					indx = false
+				}
+				return indx
+			})
+		)
 	}
 	const captureUserEditTextAsTyped = (e) => {
 		setAsTypedEdit({ ...asTypedEdit, userText: e.target.value })
@@ -126,7 +122,6 @@ const Feed = (props) => {
 		e.preventDefault()
 		dispatch({ type: 'LOADING, isLoading: true' })
 		dispatch(addLikesToPost(post, user))
-		
 	}
 
 	const displayFeed = feedList
@@ -143,13 +138,14 @@ const Feed = (props) => {
 							id={n.postId}
 							picture={`${n.url}`}
 							toPost={`/specific_post/${n.postId}`}
-						//	to={`/personal_profile/${n.postId}`}
+							//	to={`/personal_profile/${n.postId}`}
 							to={`/personal_profile/${n.userId}`}
 							deletePost={() => handleDelete(n.postId, n.userId)}
 							onClickLike={(e) => handleLike(e, n.postId, n.userId)}
 							likesCount={n.likes.length}
 							authed={basicUserInfo.userId === n.userId}
 							editToggle={() => toggleEdit(n.postId, idx)}
+							commentCount={n.comments.length < 1 ? 0 : n.comments.length -1 }
 						/>
 						<ExpandEdit
 							value={asTypedEdit.userText}
@@ -168,8 +164,8 @@ const Feed = (props) => {
 		: null
 
 	return (
-		<div className='feed-container-component'>
-			<Navbar />
+		<Fragment>
+			<Navbar basicUserInfo={basicUserInfo} />
 			<UserNotificationGem />
 			<FeedDumb
 				isLoading={isLoading}
@@ -181,7 +177,7 @@ const Feed = (props) => {
 				onClick={submit}
 				displayFeed={displayFeed}
 			/>
-		</div>
+		</Fragment>
 	)
 }
 

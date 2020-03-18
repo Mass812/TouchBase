@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {Link} from 'react-router-dom'
 import './TouchBaseCard.scss';
 import '../ResponsePostPage/PostingBody.scss'
@@ -9,7 +9,7 @@ import '../ResponsePostPage/PostingBody.scss'
 	const defaultImage = require('../../Assets/default.png')
 
     return (  
-		<>
+		<Fragment>
     	<div className='postingPicture'>
 		<Link to={to}>
 			<img
@@ -21,7 +21,7 @@ import '../ResponsePostPage/PostingBody.scss'
 
 		</div>
 		<div className='touchbase-user-handle'> {displayName}</div>
-		</>
+		</Fragment>
     )
 };
 export default UserPhoto ;

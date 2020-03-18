@@ -104,6 +104,7 @@ const CreateInfo = () => {
 		}
 		dispatch({ type: 'LOADING', isLoading: false })
 		history.push('/feed')
+		//TODO app instructions
 	}
 
 	return (
