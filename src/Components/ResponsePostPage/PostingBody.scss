@@ -48,6 +48,7 @@ $background: rgb(2, 0, 36);
 	border: .5px inset black;
 	text-align: center;
 	position: relative;
+	max-width: 95vw;
 }
 
 .typed-post {
@@ -189,10 +190,12 @@ $background: rgb(2, 0, 36);
 	border-radius: 10px;
 	border: .5px inset black;
 	padding: 10px;
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: 1fr;
-	grid-template-areas: "commentOnPost postButton";
+	display: flex;
+	flex-direction: column;
+
+	// grid-template-columns: 1fr;
+	// grid-template-rows: 1fr;
+	// grid-template-areas: "commentOnPost postButton";
 	justify-content: space-around;
 }
 

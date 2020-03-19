@@ -98,8 +98,8 @@ const CreateInfo = () => {
 		if (!basicUserDetails) {
 			dispatch({ type: 'LOADING', isLoading: true })
 			setTimeout(() => {
-				history.push('/feed')
 				dispatch({ type: 'LOADING', isLoading: false })
+				history.push('/feed')
 			}, 300)
 		}
 		dispatch({ type: 'LOADING', isLoading: false })

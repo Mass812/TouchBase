@@ -43,7 +43,7 @@ export const findUserInfo = (userId) => {
 		dispatch({ type: LOADING, isLoading: true })
 		let discoveredUserInfo = []
 
-		await firebase.firestore().collection('users').doc(userId).get().then((snap) => {
+		await db.collection('users').doc(userId).get().then((snap) => {
 			discoveredUserInfo = snap.data()
 			dispatch({ type: 'FIND_USER_INFO', discoveredUserInfo })
 			dispatch({ type: LOADING, isLoading: false })
@@ -59,7 +59,7 @@ export const updateAndReturnUserProfile = (id, newProfileData) => {
 
 		let getProfile
 		if (auth.currentUser.uid === id) {
-			const refUserAndUpdatedInfo = firebase.firestore().collection('users').doc(id)
+			const refUserAndUpdatedInfo = db.collection('users').doc(id)
 
 			refUserAndUpdatedInfo.update({
 				work: work,
@@ -94,7 +94,7 @@ export const getNotifications = (userId) => {
 		console.log('ACTION NOTIFICATION FIRED')
 		let notifications,
 			masterPosts = []
-		const postMasters = firebase.firestore().collection('posts').where('master', '==', true)
+		const postMasters = db.collection('posts').where('master', '==', true)
 
 		//get all master posts
 		postMasters
@@ -113,7 +113,7 @@ export const getNotifications = (userId) => {
 			})
 
 		masterPosts.map((masterPost, i) => {
-			firebase.firestore().collection('posts').doc(masterPost.postId).onSnapshot((doc) => {
+			db.collection('posts').doc(masterPost.postId).onSnapshot((doc) => {
 				console.log('MASTER DOC CHANGED', doc.data())
 				notifications.push(doc.data())
 				dispatch({ type: GET_NOTIFICATIONS, notifications })

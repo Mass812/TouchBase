@@ -17,9 +17,14 @@ import { useDispatch } from 'react-redux'
 function App() {
 	const dispatch = useDispatch()
 
-	useEffect(() => {
-		dispatch(getBasicUserDetails())
-	}, [])
+	useEffect(
+		() => {
+			dispatch(getBasicUserDetails())
+		},
+		[
+			dispatch
+		]
+	)
 
 	return (
 		<Router>

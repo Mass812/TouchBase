@@ -53,6 +53,7 @@ form {
 	  }
 }
 
+
 .UserNotificationGem-parent{
 	
 	display: flex;
@@ -63,5 +64,57 @@ form {
 	color: rgb(0, 255, 13);
 	text-shadow: 1px 1px black;
 
+}
+
+.feed-throw-post-block {
+
+	padding: 3px;
+	width: 97vw;
+	background-color: white;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	border: 2px solid black;
+}
+
+.feed-inner-post-block {
+	max-width: 90%;
+	padding: 20px;
+
+	background-color: white;
+
+}
+.feed-show-typed {
+	min-height: 20px;
+	// word-break: break-all;
+	color: rgb(3, 100, 100);
+	font-family: "Comfortaa", cursive;
+	font-size: 18px;
+	font-weight: 700;
+	padding: 20px;
+	background-color: white;
+}
+
+.feed-input-form-block {
+	margin: 10px 0px;
+	padding: 15px 0px;
+	background-color: white;
+}
+.feed-input {
+	border-radius: 5px;
+	width: 95%;
+	font-size: 18px;
+	height: 24px;
+	padding: 5px;
+}
+.feed-post-comment-button {
+	float: right;
+}
+.feed-post-success {
+	color: rgb(24, 179, 10);
+	font-size: 12px;
+	font-family: 'Comfortaa';
+	padding-right: 100px;
+	font-weight: 700;
 }
 

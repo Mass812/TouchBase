@@ -67,7 +67,7 @@ export const deletePostAndAllResponses = (postId) => {
 		//delete original Post
 		dispatch({ type: 'LOADING', isLoading: true })
 
-		await firebase.firestore().collection('posts').doc(postId).delete()
+		await db.collection('posts').doc(postId).delete()
 
 		//authUser.delete()
 
@@ -117,7 +117,7 @@ export const addLikesToPost = (postId, userId) => {
 
 		let addToArray = firebase.firestore.FieldValue.arrayUnion
 		let removeFromArray = firebase.firestore.FieldValue.arrayRemove
-		let likeCountRef = firebase.firestore().collection('posts').doc(postId)
+		let likeCountRef = db.collection('posts').doc(postId)
 
 		//create one and add reviewer
 		await likeCountRef.get().then((doc) => (values = doc.data().likes))

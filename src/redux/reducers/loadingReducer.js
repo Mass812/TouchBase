@@ -1,18 +1,17 @@
-import { LOADING, DONE_LOADING, FETCH_ERROR} from '../types';
+import { LOADING } from '../types'
 
 const initialState = {
-	isLoading: false,
-
-};
+	isLoading: false
+}
 
 const loadingReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case LOADING:
-			return { ...state, isLoading: action.isLoading};
+			return { ...state, isLoading: action.isLoading }
 
 		default:
-			return state;
+			return state
 	}
-};
+}
 
-export default loadingReducer;
+export default loadingReducer

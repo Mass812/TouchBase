@@ -1,7 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Navbar from '../Navbar/Navbar'
+import Input from '../Input/Input'
 import './PostingBody.scss'
+import '../../App.scss'
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { createResponsePost, getResponsePosts } from '../../redux/actions/responseActions'
 import { useParams } from 'react-router-dom'
@@ -24,7 +26,6 @@ const Response = () => {
 		setSubmitted
 	] = useState(false)
 
-
 	const onChange = (e) => {
 		setTypedPost(e.target.value)
 	}
@@ -39,9 +40,10 @@ const Response = () => {
 			}, 1000)
 		}
 	}
-	const storeResponse = (e) => {
-		if (e.target.value.trim() !== '') {
+	const submit = () => {
+		if (typedPost.trim() !== '') {
 			setSubmitted(true)
+			console.log('response input submit fired');
 
 			dispatch(createResponsePost(typedPost, param))
 			setTypedPost('')
@@ -115,7 +117,6 @@ const Response = () => {
 					id={n.postId}
 					picture={n.url}
 					to={`${param}`}
-
 				/>
 			))
 
@@ -125,52 +126,21 @@ const Response = () => {
 			{!isLoading ? (
 				<div className='edge-case-large'>
 					<div className='original-sticky'> {displayFeed}</div>
-					<div className='tb-card-container'>
+					<Fragment>
 						{!submitted ? (
-								<Fragment>
-							<div className='response-input-container'>
-									<div className='typed-post'> {typedPost} </div>
-									<div className='comment-on-post'>
-										<input
-											className='input-field-posts'
-											placeholder='Enter a new post here'
-											type='textArea'
-											onChange={onChange}
-											onBlur={storeResponse}
-											onKeyPress={onEnter}
-											value={typedPost}
-											autoFocus
-										/>
-									</div>{' '}
-									<div className='post-comment-button'>
-										{submitted ? (
-											<span className='post-success'>
-												Posted Successfully!
-											</span>
-										) : null}
-										<button
-											style={
-												!submitted ? (
-													{
-														opacity: '1'
-													}
-												) : (
-													{
-														opacity: '.4'
-													}
-												)
-											}
-											disabled={submitted}
-											onClick={storeResponse}
-											className='nav-button'>
-											Post
-										</button>
-									</div>
-								</div>
-							</Fragment>
+							<div className='feed-throw-post-block'>
+								<Input
+									onChange={onChange}
+									onKeyPress={onEnter}
+									submit={submit}
+									value={typedPost}
+									typedPost={typedPost}
+									submitted={submitted}
+								/>
+							</div>
 						) : null}
+					</Fragment>
 						<div className='previous-comments-block'>{displayResponses}</div>
-					</div>
 				</div>
 			) : (
 				<Spinner />

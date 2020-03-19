@@ -3,7 +3,6 @@ import './Feed.scss'
 import '../../App.scss'
 import Navbar from '../Navbar/Navbar'
 //import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
-import { useHistory } from 'react-router-dom'
 import TouchBaseCard from '../TouchBaseCard/TouchBaseCard'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -29,7 +28,6 @@ const Feed = (props) => {
 	const isLoading = useSelector((state) => state.loading.isLoading)
 
 	const dispatch = useDispatch()
-	const history = useHistory()
 
 	//useReducer
 	const [
@@ -70,13 +68,15 @@ const Feed = (props) => {
 		setTypedPost(e.target.value)
 	}
 
-	const submit = (e) => {
+	const submit = () => {
+		if (typedPost.trim() !== '') {
 		setSubmitted(true)
 		dispatch(createFeedPost(typedPost))
 		setTypedPost('')
 		setTimeout(() => {
 			setSubmitted(false)
 		}, 1000)
+	}
 	}
 
 	const handleDelete = (postId) => {
@@ -145,7 +145,7 @@ const Feed = (props) => {
 							likesCount={n.likes.length}
 							authed={basicUserInfo.userId === n.userId}
 							editToggle={() => toggleEdit(n.postId, idx)}
-							commentCount={n.comments.length < 1 ? 0 : n.comments.length -1 }
+							commentCount={n.comments.length < 1 ? 0 : n.comments.length - 1}
 						/>
 						<ExpandEdit
 							value={asTypedEdit.userText}
@@ -174,7 +174,7 @@ const Feed = (props) => {
 				onKeyPress={(event) => (event.key === 'Enter' ? submit() : null)}
 				value={typedPost}
 				submitted={submitted}
-				onClick={submit}
+				submit={submit}
 				displayFeed={displayFeed}
 			/>
 		</Fragment>

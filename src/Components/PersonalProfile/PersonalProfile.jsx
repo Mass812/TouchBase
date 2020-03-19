@@ -2,10 +2,9 @@ import React, { useEffect } from 'react'
 import './PersonalProfile.scss'
 import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt, faBriefcase, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faMapMarkerAlt, faBriefcase } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { auth, db } from '../Firebase/firebaseConfig'
 import { getBasicUserDetails, findUserInfo } from '../../redux/actions/profileActions'
 import { getCurrentUserByAuth } from '../../redux/actions/authActions'
 import { useHistory } from 'react-router-dom'
@@ -95,7 +94,7 @@ const PersonalProfile = () => {
 										{discoveredUserInfo ? (
 											discoveredUserInfo.bio
 										) : (
-											'Bio Details'
+											''
 										)}
 									</blockquote>
 								</div>
@@ -105,7 +104,7 @@ const PersonalProfile = () => {
 										{discoveredUserInfo ? (
 											discoveredUserInfo.hobbies
 										) : (
-											'edit hobbies'
+											''
 										)}
 									</blockquote>
 								</div>

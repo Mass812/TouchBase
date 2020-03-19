@@ -1,38 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-	faTrash,
-	faComment,
-	faBriefcase,
-	faEdit,
-	faMapMarkedAlt
-} from '@fortawesome/free-solid-svg-icons'
+import { faComment } from '@fortawesome/free-solid-svg-icons'
 import '../../../App.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { getNotifications, getBasicUserDetails } from '../../../redux/actions/profileActions'
 //TODO GSAP NOTIFICATION
 
 const UserNotificationGem = (props) => {
-	const dispatch = useDispatch()
-	const notification = useSelector((state) => state.profile.getNotifications)
-	const basicUserInfo = useSelector((state) => state.profile.basicUserInfo)
 	const [
 		notifications,
 		setNotifications
 	] = useState(false)
 
-
-
-
 	useEffect(() => {
-	//	dispatch(getBasicUserDetails())
 		setNotifications(false)
-	//	dispatch(getNotifications(basicUserInfo.userId))
 	}, [])
-
-
-
-
 
 	return (
 		<div>

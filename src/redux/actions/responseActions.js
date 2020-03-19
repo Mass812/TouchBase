@@ -1,4 +1,4 @@
-import firebase, { auth } from '../../Components/Firebase/firebaseConfig'
+import firebase, { auth, db } from '../../Components/Firebase/firebaseConfig'
 import { CREATE_RESPONSE, LOADING } from '../types'
 
 export const createResponsePost = (post, param) => {
@@ -9,15 +9,13 @@ export const createResponsePost = (post, param) => {
 		let commentCount = []
 		const userRef = auth.currentUser.uid
 		//get the users profile
-		const userProfile = await firebase
-			.firestore()
+		const userProfile = await db
 			.collection('users')
 			.doc(userRef)
 			.get()
 			.then((snap) => snap.data())
 
-		firebase
-			.firestore()
+		db
 			.collection('posts')
 			// .doc(`${param}`)
 			// .collection('responses')
@@ -77,8 +75,7 @@ export const getResponsePosts = (param) => {
 		dispatch({ type: LOADING, isLoading: true })
 
 		let getResponses = []
-		firebase
-			.firestore()
+		db
 			//	.collection(`posts/${param}/responses`)
 			.collection('posts')
 			.where('relatedId', '==', param)

@@ -22,8 +22,6 @@ const SignIn = () => {
 	const history = useHistory()
 	const dispatch = useDispatch()
 
-
-
 	const userEmailEntered = (e) => {
 		setInfo({
 			...info,
@@ -40,15 +38,17 @@ const SignIn = () => {
 
 	const userInfoEntered = async (e) => {
 		e.preventDefault()
-		dispatch({type: 'LOADING', isLoading: true})
+		dispatch({ type: 'LOADING', isLoading: true })
 		await auth
 			.signInWithEmailAndPassword(info.email, info.password)
 			.then(() => {
 				dispatch(getBasicUserDetails())
 			})
-			.then(async() => {
+			.then(async () => {
 				await basicUserInfo
-				dispatch({type: 'LOADING', isLoading: false})
+			})
+			.then(() => {
+				dispatch({ type: 'LOADING', isLoading: false })
 				history.push(`/feed`)
 			})
 			.catch((err) => {
@@ -56,7 +56,6 @@ const SignIn = () => {
 				console.log(err)
 			})
 	}
-
 
 	return (
 		<SignInDumb

@@ -6,7 +6,6 @@ const profileReducer = (state = {}, action) => {
 			return { ...state, basicUserInfo: action.basicUserInfo }
 		case 'FIND_USER_INFO':
 			return { ...state, discoveredUserInfo: action.discoveredUserInfo }
-
 		case GET_MASTER_POSTS:
 			return { ...state, getMasterPosts: action.getMasterPosts }
 		case GET_NOTIFICATIONS:
