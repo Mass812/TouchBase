@@ -243,17 +243,38 @@ $background: rgb(2, 0, 36);
 	}
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 990px) {
 	.edge-case-large {
-		display: grid;
-		grid-template-columns: 33fr 34fr 33fr;
-		grid-template-rows: 1fr;
-		grid-template-areas: '. app .';
+		display: flex;
+		flex-direction: column;
 		background: rgb(40, 154, 189);
+		align-content: center;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.tb-card-container {
-		//grid-area: app;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.response-input-container{
+		width: 600px;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+
+	}
+
+	.input-field-posts{
+		max-width: 475px;
+		word-wrap: break-word;
+		word-break: break-all;
+	}
+
+	.typed-post{
+		max-width: 475px;
+		color: teal;
 	}
 
 	.feed-container {
@@ -263,4 +284,6 @@ $background: rgb(2, 0, 36);
 		align-self: center;
 		place-self: center;
 	}
+
+
 }

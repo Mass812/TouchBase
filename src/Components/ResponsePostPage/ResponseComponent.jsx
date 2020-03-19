@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Navbar from '../Navbar/Navbar'
 import './PostingBody.scss'
@@ -120,15 +120,15 @@ const Response = () => {
 			))
 
 	return (
-		<div>
+		<Fragment>
 			<Navbar />
 			{!isLoading ? (
 				<div className='edge-case-large'>
 					<div className='original-sticky'> {displayFeed}</div>
 					<div className='tb-card-container'>
 						{!submitted ? (
+								<Fragment>
 							<div className='response-input-container'>
-								<div>
 									<div className='typed-post'> {typedPost} </div>
 									<div className='comment-on-post'>
 										<input
@@ -167,7 +167,7 @@ const Response = () => {
 										</button>
 									</div>
 								</div>
-							</div>
+							</Fragment>
 						) : null}
 						<div className='previous-comments-block'>{displayResponses}</div>
 					</div>
@@ -175,7 +175,7 @@ const Response = () => {
 			) : (
 				<Spinner />
 			)}
-		</div>
+		</Fragment>
 	)
 }
 export default Response

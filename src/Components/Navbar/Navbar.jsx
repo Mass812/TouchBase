@@ -42,8 +42,8 @@ const Navbar = () => {
 							src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
 							alt={basicUserInfo.displayName}
 						/>
-					</div>
-					<div style={{ fontSize: '6px', marginTop: '-10px', color: 'darkGrey' }}>
+					<h1 style={{ fontSize: '6px', marginTop: '-15px', color: 'darkGrey' }}>
+					</h1>
 						Edit
 					</div>
 				</Fragment>
