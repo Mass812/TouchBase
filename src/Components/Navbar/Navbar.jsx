@@ -35,10 +35,8 @@ const Navbar = () => {
 
 	const pushToProfile = (e) => {
 		e.preventDefault()
-		console.log(basicUserInfo.userId)
 		history.push(`/personal_profile/${basicUserInfo.userId}`)
 	}
-	console.log('nav:', basicUserInfo)
 
 	return (
 		<div className='navbar'>
@@ -49,7 +47,7 @@ const Navbar = () => {
 							onClick={pushToProfile}
 							className='nav-user-image'
 							src={basicUserInfo ? basicUserInfo.url : defaultPic}
-							alt={basicUserInfo ? basicUserInfo.displayName: 'user name'}
+							alt={basicUserInfo ? basicUserInfo.displayName : 'user name'}
 						/>
 					</div>
 					<h6 style={{ fontSize: '3px', marginTop: '-15px', color: 'darkGrey' }}>Edit</h6>

@@ -70,13 +70,13 @@ const Feed = (props) => {
 
 	const submit = () => {
 		if (typedPost.trim() !== '') {
-		setSubmitted(true)
-		dispatch(createFeedPost(typedPost))
-		setTypedPost('')
-		setTimeout(() => {
-			setSubmitted(false)
-		}, 1000)
-	}
+			setSubmitted(true)
+			dispatch(createFeedPost(typedPost))
+			setTypedPost('')
+			setTimeout(() => {
+				setSubmitted(false)
+			}, 1000)
+		}
 	}
 
 	const handleDelete = (postId) => {
@@ -95,8 +95,13 @@ const Feed = (props) => {
 		setIsEditExpandedValue(
 			feedList.map((indx, i) => {
 				if (i === idx) {
-					indx = true
 					console.log(typeof isEditExpandedValue)
+					if (typeof isEditExpandedValue === 'boolean') {
+						indx = true
+					}
+					if (typeof isEditExpandedValue === 'object') {
+						indx = !isEditExpandedValue[i]
+					}
 				} else {
 					indx = false
 				}

@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from '../Input/Input'
+
 import '../Feed/TouchBaseCard/TouchBaseCard.scss'
 
 const PostComponentDumb = (props) => {
@@ -16,7 +16,6 @@ const PostComponentDumb = (props) => {
 				</div>
 			</div>
 
-		
 			<div className='previous-comments-block'>{props.hero}</div>
 		</div>
 	)
