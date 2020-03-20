@@ -26,6 +26,8 @@ export const createResponsePost = (post, param) => {
 				createdAt: new Date().toISOString(),
 				userId: userRef,
 				url: userProfile.url,
+				likes: [],
+			
 				relatedId: param
 			})
 			.then((docRef) =>

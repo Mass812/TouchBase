@@ -51,47 +51,7 @@ $background: rgb(2, 0, 36);
 	max-width: 95vw;
 }
 
-.typed-post {
-	grid-area: commentOnPost;
-	margin: 0px;
-	overflow-wrap: break-word;
-	$font_size: 16px;
-	font-weight: $comm_boldness;
-}
 
-.comment-on-post {
-	grid-area: postButton;
-	$font_size: 16px;
-	margin: 15px;
-	font-weight: $comm_boldness;
-}
-
-.post-comment-button {
-	grid-area: postButton;
-	$font_size: 16px;
-	font-weight: $comm_boldness;
-	float: right;
-}
-.post-success {
-	color: rgb(13, 212, 13);
-	margin-right: 25px;
-	font-family: 'Lobster';
-	font-weight: 100;
-}
-
-.input-field-posts {
-	overflow-wrap: break-word;
-	max-width: 95vw;
-	height: 30px;
-
-	width: 100%;
-	$font_size: 16px;
-	font-weight: $comm_boldness;
-	input[type=textArea]:focus {
-		background-color: rgb(39, 214, 205);
-		color: black;
-	}
-}
 
 .tb-card-original-post {
 	grid-area: originalPost;

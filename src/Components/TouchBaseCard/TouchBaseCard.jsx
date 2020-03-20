@@ -19,16 +19,10 @@ const TouchBaseCard = ({
 	onClickLike,
 	likesCount,
 	commentCount,
-	editBoxValue,
-	asTypedEdit,
-	handleEdit,
-	editSubmitted,
-	value,
-	submitEdit,
+	commentOn,
 	post,
 	sidebar,
-	editOnKeyPress,
-	parentKey
+
 }) => {
 	return (
 		<Fragment>
@@ -51,6 +45,7 @@ const TouchBaseCard = ({
 						onClickLike={onClickLike}
 						likesCount={likesCount}
 						commentCount={commentCount}
+						commentOn={commentOn}
 					/>
 				) : null}
 			</div>

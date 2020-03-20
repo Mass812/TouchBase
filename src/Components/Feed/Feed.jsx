@@ -133,6 +133,7 @@ const Feed = (props) => {
 					<Fragment key={n.postId}>
 						<TouchBaseCard
 							sidebar={true}
+							commentOn={true}
 							post={n.post}
 							displayName={n.displayName}
 							id={n.postId}

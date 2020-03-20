@@ -4,7 +4,7 @@ import '../../App.scss'
 import { useSelector } from 'react-redux'
 import Input from '../Input/Input'
 
-const FeedDumb = ({ onChange, onKeyPress, value, typedPost, submit, submitted, displayFeed }) => {
+const FeedDumb = ({ onChange, onKeyPress, value, typedPost, submit, submitted, displayFeed}) => {
 	const isLoading = useSelector((state) => state.loading.isLoading)
 
 	return (

@@ -21,7 +21,8 @@ const OptionBar = ({
 	toPost,
 	commentCount,
 	onClickLike,
-	likesCount
+	likesCount,
+	commentOn
 }) => {
 	return (
 		<div className='side-panel'>
@@ -36,7 +37,12 @@ const OptionBar = ({
 				</Fragment>
 			) : null}
 
-			<span id='comment'>
+				{commentOn ?
+
+			(
+				<Fragment>
+
+				<span id='comment'>
 				<Link
 					to={toPost}
 					style={{
@@ -49,6 +55,13 @@ const OptionBar = ({
 			<span id='like' onClick={onClickLike}>
 				<FontAwesomeIcon icon={stenciledThumb} /> {likesCount}
 			</span>
+				</Fragment>
+
+			) 
+			
+			: null
+				
+				 }
 		</div>
 	)
 }
