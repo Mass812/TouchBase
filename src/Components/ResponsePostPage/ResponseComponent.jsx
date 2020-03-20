@@ -123,9 +123,9 @@ const Response = () => {
 	const submitEdit = async () => {
 		setEditSubmitted(true)
 		dispatch(editPostAction(asTypedEdit.postDoc, asTypedEdit.userText))
+
 		setTimeout(() => {
 			dispatch(getResponsePosts(param))
-
 			setEditSubmitted(false)
 			setAsTypedEdit('')
 			setIsEditExpandedValue(isEditExpandedValue.fill(false))
@@ -138,7 +138,7 @@ const Response = () => {
 					return f.postId === param && f.relatedId === f.postId
 				})
 				.map((n, idx) => (
-					<div>
+					<Fragment>
 						<TouchBaseCard
 							sidebar={false}
 							key={n.postId + idx}
@@ -150,22 +150,11 @@ const Response = () => {
 						/>
 						<div className='tb-posting-title'>
 							<span>
-								<span
-									style={{
-										color: 'teal'
-									}}>
-									Touch {''}
-								</span>
-								Base with{' '}
-								<span
-									style={{
-										color: 'darkBlue'
-									}}>
-									{n.displayName}
-								</span>
+								<span style={{ color: 'teal' }}>Touch {''}</span>
+								Base with <span style={{ color: 'darkBlue' }}>{n.displayName}</span>
 							</span>
 						</div>
-					</div>
+					</Fragment>
 				))
 		: null
 

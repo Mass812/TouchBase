@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import SignOutButton from './SignOutButton/SignOutButton'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBasicUserDetails } from '../../redux/actions/profileActions'
+import { LOADING } from '../../redux/types'
 
 //dispatch = useDispatch();
 //
@@ -17,7 +18,15 @@ const Navbar = () => {
 
 	useEffect(
 		() => {
-			dispatch(getBasicUserDetails())
+			const waitForProps = async () => {
+				if (!basicUserInfo) {
+					dispatch(getBasicUserDetails())
+					dispatch({ type: LOADING, isLoading: true })
+					await basicUserInfo
+					dispatch({ type: LOADING, isLoading: false })
+				}
+			}
+			waitForProps()
 		},
 		[
 			dispatch
@@ -39,13 +48,11 @@ const Navbar = () => {
 						<img
 							onClick={pushToProfile}
 							className='nav-user-image'
-							src={basicUserInfo.url ? basicUserInfo.url : defaultPic}
-							alt={basicUserInfo.displayName}
+							src={basicUserInfo ? basicUserInfo.url : defaultPic}
+							alt={basicUserInfo ? basicUserInfo.displayName: 'user name'}
 						/>
 					</div>
-					<h6 style={{ fontSize: '3px', marginTop: '-15px', color: 'darkGrey'}}>
-						Edit
-					</h6>
+					<h6 style={{ fontSize: '3px', marginTop: '-15px', color: 'darkGrey' }}>Edit</h6>
 				</Fragment>
 			</div>
 

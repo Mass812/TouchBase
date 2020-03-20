@@ -5,6 +5,7 @@ import { auth } from '../Firebase/firebaseConfig'
 import { getBasicUserDetails } from '../../redux/actions/profileActions'
 import {} from '../../redux/actions/profileActions'
 import { useDispatch, useSelector } from 'react-redux'
+import { LOADING } from '../../redux/types'
 
 const NotIdentifiedScreen = (e) => {
 	const history = useHistory()
@@ -17,9 +18,13 @@ const NotIdentifiedScreen = (e) => {
 
 		await auth
 			.signInWithEmailAndPassword('guest@guest.com', 'Guest123!')
-			.then(async () => {
+			.then(() => {
+				dispatch({ type: LOADING, isLoading: true })
 				dispatch(getBasicUserDetails())
+			})
+			.then(async () => {
 				await basicUserInfo
+				dispatch({ type: LOADING, isLoading: false })
 			})
 			.then(() => {
 				history.push(`/feed`)

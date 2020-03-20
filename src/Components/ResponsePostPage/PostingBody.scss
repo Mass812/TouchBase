@@ -55,6 +55,7 @@ $background: rgb(2, 0, 36);
 
 .tb-card-original-post {
 	grid-area: originalPost;
+
 	font-size: $font_size;
 	font-family: $font;
 	font-weight: $comm_boldness;
@@ -71,6 +72,10 @@ $background: rgb(2, 0, 36);
 	grid-template-rows: auto auto auto;
 	grid-template-areas: "postingPicture postersName" "originalPosting originalPosting"
 		"likeSpan likeSpan";
+		
+}
+.original-sticky{
+	position: sticky;
 }
 
 .postingPicture {
@@ -112,6 +117,7 @@ $background: rgb(2, 0, 36);
 	font-family: $font;
 	font-size: $font_size;
 	font-weight: $comm_boldness;
+
 }
 .like-span {
 	grid-area: likeSpan;

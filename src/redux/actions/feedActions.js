@@ -54,7 +54,7 @@ export const getFeedPosts = () => {
 	return (dispatch) => {
 		dispatch({ type: LOADING, isLoading: true })
 		let getFeedPosts
-		db.collection('posts').limit(10).orderBy('createdAt', 'desc').get().then((snap) => {
+		db.collection('posts').limit(20).orderBy('createdAt', 'desc').get().then((snap) => {
 			getFeedPosts = snap.docs.map((item) => item.data())
 			dispatch({ type: 'GET_FEED_POSTS', getFeedPosts })
 			dispatch({ type: LOADING, isLoading: false })
