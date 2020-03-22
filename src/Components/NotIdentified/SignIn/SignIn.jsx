@@ -45,7 +45,7 @@ const SignIn = () => {
 				dispatch(getBasicUserDetails())
 			})
 			.then(async () => {
-				await basicUserInfo
+				await basicUserInfo.userId
 			})
 			.then(() => {
 				dispatch({ type: 'LOADING', isLoading: false })
@@ -56,6 +56,8 @@ const SignIn = () => {
 				console.log(err)
 			})
 	}
+
+
 
 	return (
 		<SignInDumb

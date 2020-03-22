@@ -23,11 +23,11 @@ const NotIdentifiedScreen = (e) => {
 				dispatch(getBasicUserDetails())
 			})
 			.then(async () => {
-				await basicUserInfo
-				dispatch({ type: LOADING, isLoading: false })
+				await basicUserInfo.userId
 			})
 			.then(() => {
 				history.push(`/feed`)
+				dispatch({ type: LOADING, isLoading: false })
 			})
 			.catch((err) => {
 				console.log(err)

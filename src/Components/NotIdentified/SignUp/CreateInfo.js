@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../NotIdentifiedScreen.scss'
 import '../CreateAccount.scss'
+import '../../../App.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { db, auth, storage } from '../../Firebase/firebaseConfig'
@@ -144,14 +145,17 @@ const CreateInfo = () => {
 								</div>
 								<div className='under-icon-pair-group'>
 									{!pic.name ? (
-										<span>
-											<label htmlFor='changePic'>
-												<FontAwesomeIcon
-													icon={faCloudUploadAlt}
-													size={'1x'}
-													color={'white'}
-												/>{' '}
-											</label>
+										<div>
+											<span className='submit-button'>
+												<label htmlFor='changePic'>
+													<FontAwesomeIcon
+														icon={faCloudUploadAlt}
+														size={'1x'}
+														color={'white'}
+													/>{' '}
+													<span>Upload Profile Pic</span>
+												</label>
+											</span>
 
 											<input
 												id='changePic'
@@ -159,7 +163,7 @@ const CreateInfo = () => {
 												type='file'
 												onChange={fileSelector}
 											/>
-										</span>
+										</div>
 									) : pic.progress > 0 ? (
 										<div>
 											<progress min='1' max='100'>
@@ -171,30 +175,27 @@ const CreateInfo = () => {
 									<span className='image-upload-bar'>
 										{pic.name ? (
 											<span>
-												<span style={{ padding: '4px 15px' }}>
+												<div style={{ padding: '4px 15px' }}>
 													{pic.name}
-												</span>
-												{/* <button type='button' onClick={uploadPic}>
-													upLoad
-												</button> */}
+												</div>
 												<span
-													onClick={uploadPic}
 													style={{
 														paddingLeft: '15px',
-														paddingRight: '15px',
-														border: '1px solid teal'
+														paddingRight: '15px'
 													}}>
 													<FontAwesomeIcon
 														icon={faCheckCircle}
 														size={'1x'}
 														color={'white'}
 													/>{' '}
-													Upload
+													<span
+														onClick={uploadPic}
+														className='submit-button'>
+														Upload
+													</span>
 												</span>
 											</span>
-										) : (
-											'Change Picture'
-										)}
+										) : null}
 									</span>
 								</div>
 							</div>

@@ -1,11 +1,7 @@
 import firebase from '../../Components/Firebase/firebaseConfig'
 import { db, auth } from '../../Components/Firebase/firebaseConfig'
 import { LOADING } from '../types'
-import {
-	GET_BASIC_USER_INFO,
-	GET_NOTIFICATIONS,
-	GET_MASTER_POSTS
-} from '../types'
+import { GET_BASIC_USER_INFO, GET_NOTIFICATIONS, GET_MASTER_POSTS } from '../types'
 
 export const getBasicUserDetails = () => {
 	return async (dispatch) => {
@@ -119,5 +115,53 @@ export const getNotifications = (userId) => {
 				dispatch({ type: GET_NOTIFICATIONS, notifications })
 			})
 		})
+	}
+}
+
+export const deleteAllUserRelatedInfo = () => {
+	return async (dispatch) => {
+		//delete original Post
+
+
+		dispatch({ type: 'LOADING', isLoading: true })
+
+		let user = auth.currentUser.uid
+		let removeFromArray = firebase.firestore.FieldValue.arrayRemove
+
+		//delete user doc
+		
+		//delete user posts
+		
+		const relatedPosts = firebase.firestore().collection('posts').where('userId', '==', user)
+		
+		console.log('where delete related posts ', relatedPosts)
+		
+		await relatedPosts.get().then((dataPool) => {
+			console.log('dataPool get delted Posts ', dataPool)
+			dataPool.forEach((doc) => {
+				console.log('single deleted posts forEach ', doc)
+				doc.ref.delete()
+			})
+		})
+
+		const relatedLikeArrays = db.collection('posts').where('likes', 'array-contains', user)
+		
+		
+
+		await relatedLikeArrays.get().then((dataPool) => {
+			console.log('likes delete dataPool', dataPool)
+
+			dataPool.forEach((doc) => {
+				console.log('each delete like', doc)
+
+				doc.ref.update({ likes: removeFromArray(user) })
+			})
+		})
+	
+		
+
+		localStorage.clear();
+		
+		dispatch({ type: 'LOADING', isLoading: false })
 	}
 }

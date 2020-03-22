@@ -9,7 +9,7 @@ import {
 import {
 	faComment as stenciledComment,
 	faThumbsUp as stenciledThumb,
-	faEdit as stenciledEdit
+	faEdit as stenciledEdit,
 } from '@fortawesome/free-regular-svg-icons'
 import '../TouchBaseCard.scss'
 import { Link } from 'react-router-dom'
@@ -34,6 +34,8 @@ const OptionBar = ({
 					<div id='edit' onClick={editToggle}>
 						<FontAwesomeIcon icon={stenciledEdit} />
 					</div>
+					
+				
 				</Fragment>
 			) : null}
 

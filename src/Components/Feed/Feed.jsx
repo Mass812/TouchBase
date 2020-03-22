@@ -56,7 +56,7 @@ const Feed = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(getBasicUserDetails())
+		//	dispatch(getBasicUserDetails())
 			dispatch(getFeedPosts())
 		},
 		[
