@@ -13,10 +13,10 @@ exports.createUserDoc = functions.auth.user().onCreate((user) => {
 		userId: user.uid,
 		url: '',
 		displayName: '',
-		work: 'Edit Work',
-		location: 'Edit Location',
-		hobbies: 'Edit Hobbies',
-		bio: 'Edit Bio.'
+		work: 'No Details',
+		location: 'No Details',
+		hobbies: 'No Details',
+		bio: 'No Details.'
 	}
 
 	db.collection('users').doc(user.uid).set(newUser)

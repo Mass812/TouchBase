@@ -1,6 +1,6 @@
-$fontFam: 'Comfortaa';
+$fontFam: 'Bellota Text';
 $fontColor: white;
-$fontSize: 18px;
+$fontSize: 16px;
 $backgroundColor: transparent;
 
 .profile-detail-item {
@@ -16,22 +16,33 @@ $backgroundColor: transparent;
 	padding: 10px;
 	line-height: auto;
 	color: white;
+	font-size: 18px;
+	line-height: 22px;
+	letter-spacing: 1.5px;
+	font-weight: 300;
+	font-family: 'Bellota Text', cursive;
 }
 .profile-detail-value-font {
-	font-weight: 400;
 	padding: 0px;
 	color: yellow;
-	font-size: 17px;
 	margin-top: 5px;
 	padding-bottom: 20px;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 1.5px;
+	font-weight: 300;
+	font-family: 'Bellota Text', cursive;
 }
 
 .profile-edit-detail-value-font {
-	font-size: 16px;
-	font-weight: 100;
 	color: yellow;
 	padding: 10px 0px;
 	margin: 10px;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 1.5px;
+	font-weight: 300px;
+	font-family: 'Bellota Text', cursive;
 }
 
 .profile-container {
@@ -48,27 +59,32 @@ $backgroundColor: transparent;
 }
 
 .profile-user-display-name {
-	font-family: 'Comfortaa', cursive;
-	padding-top: 30px;
+	font-family: 'Bellota Text', cursive;
+	padding-top: 10px;
 	color: rgb(251, 251, 241);
-	font-weight: 500;
-	font-size: 32px;
+	font-weight: 100;
+	font-size: 42px;
+	letter-spacing: 2px;
 }
 
 .profile-image {
-	height: 200px;
-	width: 200px;
+	height: 150px;
+	width: 150px;
 	object-fit: cover;
 	margin-top: 20px;
+	margin-bottom: 20px;
 	border-radius: 10px;
+	border-radius: 50%;
 }
 
 .image-upload-bar {
 	max-width: 180px;
 	padding: 4px;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 1.5px;
 	font-weight: 700;
-	font-size: 16px;
-	color: yellow;
+	font-family: 'Bellota Text', cursive;
 }
 
 .under-icon-pair-group {
@@ -94,6 +110,17 @@ $backgroundColor: transparent;
 .more-details {
 	grid-area: interests;
 	height: 150px;
+}
+
+.delete-notice {
+	padding: 40px;
+	justify-self: center;
+	color: white;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 1.5px;
+	font-weight: 300;
+	font-family: 'Bellota Text', cursive;
 }
 
 @media all and (min-width: 1000px) {
@@ -128,7 +155,7 @@ $backgroundColor: transparent;
 	}
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 900px) {
 	.edge-case-large {
 		display: grid;
 		grid-template-columns: 33fr 34fr 33fr;

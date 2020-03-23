@@ -6,7 +6,7 @@
 	border-radius: 50px;
 	width: auto;
 	height: 20px;
-	padding: 2px 20px;
+	padding: 4px 20px;
 	align-self: center;
 
 	&:hover {
@@ -46,28 +46,24 @@ form {
 	input[type=text]:focus {
 		background-color: rgb(39, 214, 205);
 		color: black;
-	  }
+	}
 	input[type=password]:focus {
 		background-color: rgb(39, 214, 205);
 		color: black;
-	  }
+	}
 }
 
-
-.UserNotificationGem-parent{
-	
+.UserNotificationGem-parent {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.UserNotificationGem{
+.UserNotificationGem {
 	color: rgb(0, 255, 13);
 	text-shadow: 1px 1px black;
-
 }
 
 .feed-throw-post-block {
-
 	padding: 3px;
 	width: 97vw;
 	background-color: white;
@@ -82,7 +78,6 @@ form {
 	padding: 20px;
 
 	background-color: white;
-
 }
 .feed-show-typed {
 	min-height: 20px;
@@ -117,4 +112,3 @@ form {
 	padding-right: 100px;
 	font-weight: 700;
 }
-

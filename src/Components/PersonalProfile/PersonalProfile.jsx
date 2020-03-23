@@ -19,7 +19,7 @@ const PersonalProfile = () => {
 		() => {
 			dispatch(findUserInfo(param))
 			dispatch(getCurrentUserByAuth())
-			dispatch(getBasicUserDetails())
+			//	dispatch(getBasicUserDetails())
 		},
 		[
 			dispatch,
@@ -54,7 +54,6 @@ const PersonalProfile = () => {
 				<div className='edge-case-large'>
 					<section className='profile-container'>
 						<div>
-							{editProfile}
 							<div>
 								<img
 									className='profile-image'
@@ -91,21 +90,13 @@ const PersonalProfile = () => {
 								<div className='profile-detail-item'>
 									<span className='profile-detail-key-font'>Bio: </span>
 									<blockquote className='profile-detail-value-font'>
-										{discoveredUserInfo ? (
-											discoveredUserInfo.bio
-										) : (
-											''
-										)}
+										{discoveredUserInfo ? discoveredUserInfo.bio : ''}
 									</blockquote>
 								</div>
 								<div className='profile-detail-item'>
 									<span className='profile-detail-key-font'>Hobbies:</span>
 									<blockquote className='profile-detail-value-font'>
-										{discoveredUserInfo ? (
-											discoveredUserInfo.hobbies
-										) : (
-											''
-										)}
+										{discoveredUserInfo ? discoveredUserInfo.hobbies : ''}
 									</blockquote>
 								</div>
 								<button
@@ -113,6 +104,7 @@ const PersonalProfile = () => {
 									className='nav-button'>
 									Back
 								</button>
+								{editProfile}
 							</div>
 						</div>
 					</section>

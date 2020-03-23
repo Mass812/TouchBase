@@ -109,10 +109,9 @@ const Response = () => {
 					console.log(typeof isEditExpandedValue)
 					if (typeof isEditExpandedValue === 'boolean') {
 						indx = true
-					}  
-					if(typeof isEditExpandedValue === 'object')
-					{
-						 indx = !isEditExpandedValue[i]
+					}
+					if (typeof isEditExpandedValue === 'object') {
+						indx = !isEditExpandedValue[i]
 					}
 				} else {
 					indx = false

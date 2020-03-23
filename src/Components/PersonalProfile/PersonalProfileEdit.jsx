@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment, useRef } from 'react'
 import './PersonalProfile.scss'
 import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -57,6 +57,21 @@ const PersonalProfileEdit = () => {
 	}
 	const handleHobbies = (e) => {
 		setNewProfileData({ ...newProfileData, hobbies: e.target.value })
+	}
+
+	//sideDrawer Delete
+
+	const [
+		expandDeleteSideDrawer,
+		setExpandDeleteSideDrawer
+	] = useState(false)
+
+	const expandDeleteSideDrawerHandler = () => {
+		setExpandDeleteSideDrawer(!expandDeleteSideDrawer)
+
+		setTimeout(() => {
+			window.scrollTo(0, 1900)
+		}, 0.1)
 	}
 
 	const [
@@ -158,6 +173,12 @@ const PersonalProfileEdit = () => {
 			{!isLoading ? (
 				<div className='edge-case-large'>
 					<section className='profile-container'>
+
+					<div className ='profile-user-display-name '>
+
+					{basicUserInfo.displayName}
+					</div>
+
 						<div>
 							<div>
 								<img
@@ -167,28 +188,31 @@ const PersonalProfileEdit = () => {
 								/>
 							</div>
 							<div className='under-icon-pair-group'>
+							
 								{!pic.newImage ? (
-									<span>
-										<label htmlFor='changePic'>
-											<FontAwesomeIcon
-												icon={faCloudUploadAlt}
-												size={'1x'}
-												color={'white'}
-												onClick={updatePic}
-											/>{' '}
-										</label>
+									<div>
+										<span className='submit-button'>
+											<label htmlFor='changePic'>
+												<FontAwesomeIcon
+													icon={faCloudUploadAlt}
+													size={'1x'}
+													color={'white'}
+												/>{' '}
+												<span>Update Profile Pic</span>
+											</label>
+										</span>
 
 										<input
-											className='input-field'
 											id='changePic'
 											style={{ display: 'none' }}
 											type='file'
 											onChange={fileSelector}
 										/>
-									</span>
+									</div>
 								) : pic.progress > 0 ? (
 									<div>
 										<progress min='1' max='100'>
+											{' '}
 											{pic.progress}
 										</progress>
 									</div>
@@ -196,23 +220,25 @@ const PersonalProfileEdit = () => {
 								<span className='image-upload-bar'>
 									{pic.newImage ? (
 										<span>
-											<span style={{ paddingLeft: '15px' }}>
+											<div style={{ padding: '4px 15px' }}>
+												{basicUserInfo.displayName}
+											</div>
+											<span
+												style={{
+													paddingLeft: '15px',
+													paddingRight: '15px'
+												}}>
 												<FontAwesomeIcon
 													icon={faCheckCircle}
 													size={'1x'}
 													color={'white'}
 												/>{' '}
-												<button
-													onClick={updatePic}
-													className='submit-button'>
-													Preview Selected File
-												</button>
+												<span onClick={updatePic} className='submit-button'>
+													Upload
+												</span>
 											</span>
-											<div />
 										</span>
-									) : (
-										'Change Picture'
-									)}
+									) : null}
 								</span>
 							</div>
 						</div>
@@ -222,7 +248,7 @@ const PersonalProfileEdit = () => {
 									<div className='profile-detail-item'>
 										<span className='profile-detail-key-font'>Work </span>
 										<div className='profile-edit-detail-value-font'>
-											<div>{basicUserInfo.work} </div>
+											{basicUserInfo.work}
 											<br />
 											<input
 												className='input-field'
@@ -236,7 +262,7 @@ const PersonalProfileEdit = () => {
 									<div className='profile-detail-item'>
 										<span className='profile-detail-key-font'>Location </span>
 										<div className='profile-edit-detail-value-font'>
-											<div> {basicUserInfo.location} </div>
+											{basicUserInfo.location}
 											<br />
 
 											<input
@@ -252,7 +278,7 @@ const PersonalProfileEdit = () => {
 										<span className='profile-detail-key-font'>Bio: </span>
 
 										<div className='profile-edit-detail-value-font'>
-											<div> {basicUserInfo.bio} </div>
+											{basicUserInfo.bio}
 											<br />
 											<input
 												className='input-field'
@@ -267,7 +293,7 @@ const PersonalProfileEdit = () => {
 										<span className='profile-detail-key-font'>Hobbies:</span>
 
 										<div className='profile-edit-detail-value-font'>
-											<div> {basicUserInfo.hobbies} </div>
+											{basicUserInfo.hobbies}
 											<br />
 											<input
 												className='input-field'
@@ -290,20 +316,47 @@ const PersonalProfileEdit = () => {
 								</button>
 							</div>
 						</div>
-								<div className='pul-tab'>
-
-								<button style={{marginTop: '30px'}}
-									className='submit-button'
-									onClick={() => {
-										history.push('/')
-										dispatch(deleteAllUserRelatedInfo())
-										localStorage.clear();
-									}}>
-									Delete All Posts Likes and Comments from TouchBase
-								</button>
-
-								</div>
-
+						<div className='pul-tab' onClick={expandDeleteSideDrawerHandler}>
+							{expandDeleteSideDrawer ? (
+								<Fragment>
+									<div className='delete-notice'>
+										You can delete all posts, comments and likes from Touchbase
+										by clicking the button below. Your account will remain
+										active, however, for three days at which time it will be
+										automatically deleted from the database. This gives you a
+										window of reconsideration, as we hope you will come back and
+										join us.
+									</div>
+									<button
+										style={{ marginTop: '30px' }}
+										className='nav-button'
+										onClick={() => {
+											history.push('/')
+											dispatch(deleteAllUserRelatedInfo())
+											localStorage.clear()
+										}}>
+										Delete
+									</button>
+								</Fragment>
+							) : (
+								<Fragment>
+									<FontAwesomeIcon
+										icon={faCheckCircle}
+										size={'sm'}
+										color={'red'}
+									/>
+									<div
+										style={{
+											fontSize: '6px',
+											color: 'red',
+											paddingLeft: '5px',
+											alignSelf: 'top'
+										}}>
+										Delete All Data
+									</div>
+								</Fragment>
+							)}
+						</div>
 					</section>
 				</div>
 			) : null}
